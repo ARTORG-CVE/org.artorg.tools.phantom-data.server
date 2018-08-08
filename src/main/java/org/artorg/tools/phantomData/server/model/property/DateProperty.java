@@ -12,21 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.artorg.tools.phantomData.server.connector.property.DatePropertyConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
 public class DateProperty implements Comparable<DateProperty>, Serializable, 
 		DatabasePersistent<DateProperty, Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<DateProperty, Integer> connector;
-	
-	static {
-		connector  = DatePropertyConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,11 +75,6 @@ public class DateProperty implements Comparable<DateProperty>, Serializable,
 	public String toString() {
 	return String.format("[id: %d, propertyField: %s, value: %s]", 
 			getId(), getPropertyField().toString(), getDate().toString());
-	}
-	
-	@Override
-	public HttpDatabaseCrud<DateProperty, Integer> getConnector() {
-	return connector;
 	}
 	
 	@Override

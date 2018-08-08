@@ -9,23 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.AnnulusDiameterConnector;
-import org.artorg.tools.phantomData.server.connector.property.PropertyFieldConnector;
-import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
 public class PropertyField implements Comparable<PropertyField>, Serializable, 
 		DatabasePersistent<PropertyField, Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<PropertyField, Integer> connector;
-	
-	static {
-		connector  = PropertyFieldConnector.get();
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,11 +68,6 @@ public class PropertyField implements Comparable<PropertyField>, Serializable,
 	public String toString() {
 		return String.format("[id: %d, name: %s, descrption: %s]", 
 				getId(), getName(), getDescription());
-	}
-
-	@Override
-	public HttpDatabaseCrud<PropertyField, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

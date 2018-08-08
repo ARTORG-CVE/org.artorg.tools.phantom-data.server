@@ -13,21 +13,13 @@ import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.boot.BootUtils;
-import org.artorg.tools.phantomData.server.connector.FileConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "FILES")
 public class PhantomFile implements Comparable<PhantomFile>, Serializable, 
 	DatabasePersistent<PhantomFile, Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<PhantomFile, Integer> connector;
-	
-	static {
-		connector  = FileConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -129,11 +121,6 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 	public String toString() {
 		return String.format("[id: %d, path: %s, type: %s]", 
 				getId(), getPath(), getFileType().toString());
-	}
-
-	@Override
-	public HttpDatabaseCrud<PhantomFile, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

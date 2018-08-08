@@ -9,21 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.FileTypeConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "FILE_TYPES")
 public class FileType implements Comparable<FileType>, Serializable, 
 	DatabasePersistent<FileType, Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<FileType, Integer> connector;
-	
-	static {
-	connector  = FileTypeConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,11 +56,6 @@ public class FileType implements Comparable<FileType>, Serializable,
 	public String toString() {
 		return String.format("[id: %d, name: %s]", 
 				getId(), getName());
-	}
-
-	@Override
-	public HttpDatabaseCrud<FileType, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

@@ -9,21 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.FabricationTypeConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "FABRICATION_TYPES")
 public class FabricationType implements Comparable<FabricationType>, Serializable,
 		DatabasePersistent<FabricationType, Integer> {
 	private static final long serialVersionUID = 1L;
-
-	private static final HttpDatabaseCrud<FabricationType, Integer> connector;
-	
-	static {
-		connector = FabricationTypeConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,11 +69,6 @@ public class FabricationType implements Comparable<FabricationType>, Serializabl
 	public String toString() {
 		return String.format("id: %d, shortcut: %s, fabricationType: %s", 
 				getId(), getShortcut(), getFabricationType());
-	}
-
-	@Override
-	public HttpDatabaseCrud<FabricationType, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

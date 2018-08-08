@@ -9,23 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.AnnulusDiameterConnector;
-import org.artorg.tools.phantomData.server.connector.property.BooleanPropertyConnector;
-import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
 public class BooleanProperty implements Comparable<BooleanProperty>, Serializable, 
 		DatabasePersistent<BooleanProperty, Integer> {
 	private static final long serialVersionUID = 1L;
-
-	private static final HttpDatabaseCrud<BooleanProperty, Integer> connector;
-
-	static {
-		connector  = BooleanPropertyConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,10 +73,10 @@ public class BooleanProperty implements Comparable<BooleanProperty>, Serializabl
 				getId(), getPropertyField().toString(), getBool().toString());
 	}
 
-	@Override
-	public HttpDatabaseCrud<BooleanProperty, Integer> getConnector() {
-		return connector;
-	}
+//	@Override
+//	public HttpDatabaseCrud<BooleanProperty, Integer> getConnector() {
+//		return connector;
+//	}
 
 	@Override
 	public Integer stringToID(String id) {

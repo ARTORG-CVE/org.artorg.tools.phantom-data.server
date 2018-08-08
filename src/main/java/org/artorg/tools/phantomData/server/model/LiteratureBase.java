@@ -9,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.LiteratureBaseConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "LITERATURE_BASES")
@@ -20,12 +18,6 @@ public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
 
 	private static final long serialVersionUID = 1L;
 
-	private static final HttpDatabaseCrud<LiteratureBase, Integer> connector;
-	
-	static {
-		connector  = LiteratureBaseConnector.get();
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
@@ -78,11 +70,6 @@ public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
 	public String toString() {
 		return String.format("[id: %d, shortcut: %s, literatureBase: %s]", 
 				getId(), getShortcut(), getLiteratureBase());
-	}
-
-	@Override
-	public HttpDatabaseCrud<LiteratureBase, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

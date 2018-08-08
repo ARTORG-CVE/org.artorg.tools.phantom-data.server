@@ -9,21 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.AnnulusDiameterConnector;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "ANNULUS_DIAMETERS")
 public class AnnulusDiameter implements Comparable<AnnulusDiameter>, Serializable, 
 		DatabasePersistent<AnnulusDiameter, Integer> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<AnnulusDiameter, Integer> connector;
-
-	static {
-		connector  = AnnulusDiameterConnector.get();
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,11 +68,6 @@ public class AnnulusDiameter implements Comparable<AnnulusDiameter>, Serializabl
 	public String toString() {
 		return String.format("[id: %d, shortcut: %s, value: %f]", 
 				getId(), getShortcut(), getValue());
-	}
-
-	@Override
-	public HttpDatabaseCrud<AnnulusDiameter, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override

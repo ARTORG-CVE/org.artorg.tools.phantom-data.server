@@ -15,26 +15,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.connector.AnnulusDiameterConnector;
-import org.artorg.tools.phantomData.server.connector.FabricationTypeConnector;
-import org.artorg.tools.phantomData.server.connector.LiteratureBaseConnector;
-import org.artorg.tools.phantomData.server.connector.PhantomConnector;
-import org.artorg.tools.phantomData.server.connector.SpecialConnector;
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-import org.artorg.tools.phantomData.server.specification.HttpDatabaseCrud;
 
 @Entity
 @Table(name = "PHANTOMS")
 public class Phantom implements Comparable<Phantom>, Serializable,
 		DatabasePersistent<Phantom, Integer> {
-private static final long serialVersionUID = 1L;
-	
-	private static final HttpDatabaseCrud<Phantom, Integer> connector;
-
-	static {
-		connector  = PhantomConnector.get();
-	}
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,11 +64,19 @@ private static final long serialVersionUID = 1L;
 	
 	public Phantom() {}
 	
-	public Phantom(int annulusDiameter, String fType, String litBase, String special, int number) {
-		this.annulusDiameter = AnnulusDiameterConnector.get().readByShortcut(annulusDiameter);
-		this.fType = FabricationTypeConnector.get().readByShortcut(fType);
-		this.literatureBase = LiteratureBaseConnector.get().readByShortcut(litBase);
-		this.special = SpecialConnector.get().readByShortcut(special);
+//	public Phantom(int annulusDiameter, String fType, String litBase, String special, int number) {
+//		this.annulusDiameter = AnnulusDiameterConnector.get().readByShortcut(annulusDiameter);
+//		this.fType = FabricationTypeConnector.get().readByShortcut(fType);
+//		this.literatureBase = LiteratureBaseConnector.get().readByShortcut(litBase);
+//		this.special = SpecialConnector.get().readByShortcut(special);
+//		this.number = number;
+//	}
+	
+	public Phantom(AnnulusDiameter annulusDiameter, FabricationType fType, LiteratureBase litBase, Special special, int number) {
+		this.annulusDiameter = annulusDiameter;
+		this.fType = fType;
+		this.literatureBase = litBase;
+		this.special = special;
 		this.number = number;
 	}
 	
@@ -121,11 +117,6 @@ private static final long serialVersionUID = 1L;
 			sb.append(", files: " +getFiles().toString());
 		sb.append("]");
 		return sb.toString();
-	}
-
-	@Override
-	public HttpDatabaseCrud<Phantom, Integer> getConnector() {
-		return connector;
 	}
 	
 	@Override
