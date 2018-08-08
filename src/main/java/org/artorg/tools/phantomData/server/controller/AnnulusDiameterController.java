@@ -24,7 +24,6 @@ public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, I
 	
 	@GetMapping("ANNULUS_DIAMETER/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<AnnulusDiameter> getByShortcut(@PathVariable("SHORTCUT") Integer shortcut) {
-		System.out.println("READ BY SHORTCUT");
 		AnnulusDiameter m = service.getByShortcut(shortcut);
 		return new ResponseEntity<AnnulusDiameter>(m, HttpStatus.OK);
 	}

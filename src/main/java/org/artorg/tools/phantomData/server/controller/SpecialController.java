@@ -24,7 +24,6 @@ public class SpecialController extends ControllerSpec<Special, Integer,
 
 	@GetMapping("SPECIAL/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<Special> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
-		System.out.println("READ BY SHORTCUT");
 		Special m = service.getByShortcut(shortcut);
 		return new ResponseEntity<Special>(m, HttpStatus.OK);
 	}

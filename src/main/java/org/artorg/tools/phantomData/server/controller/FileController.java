@@ -24,7 +24,6 @@ public class FileController extends ControllerSpec<PhantomFile, Integer,
 
 	@GetMapping("FILE/BY_NAME/{NAME}")
 	public ResponseEntity<PhantomFile> getByName(@PathVariable("NAME") String name) {
-		System.out.println("READ BY NAME");
 		PhantomFile f = service.getByName(name);
 		return new ResponseEntity<PhantomFile>(f, HttpStatus.OK);
 	}

@@ -24,7 +24,6 @@ public class PropertyFieldController extends ControllerSpec<PropertyField, Integ
 
 	@GetMapping("PROPERTY_FIELD/BY_NAME/{NAME}")
 	public ResponseEntity<PropertyField> getByPropertyField(@PathVariable("NAME") String name) {
-		System.out.println("READ BY NAME");
 		PropertyField m = service.getByName(name);
 		return new ResponseEntity<PropertyField>(m, HttpStatus.OK);
 	}

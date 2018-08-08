@@ -24,7 +24,6 @@ public class LiteratureBaseController extends ControllerSpec<LiteratureBase, Int
 	
 	@GetMapping("LITERATURE_BASE/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<LiteratureBase> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
-		System.out.println("READ BY SHORTCUT");
 		LiteratureBase m = service.getByShortcut(shortcut);
 		return new ResponseEntity<LiteratureBase>(m, HttpStatus.OK);
 	}

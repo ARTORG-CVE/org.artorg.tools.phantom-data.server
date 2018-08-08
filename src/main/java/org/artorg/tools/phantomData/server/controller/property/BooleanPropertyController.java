@@ -27,7 +27,6 @@ public class BooleanPropertyController extends ControllerSpec<BooleanProperty, I
 
 	@GetMapping("BOOLEAN_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
 	public ResponseEntity<BooleanProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
-		System.out.println("READ BY PROPERTY_FIELD");
 		BooleanProperty m = service.getByPropertyField(propertyField);
 		return new ResponseEntity<BooleanProperty>(m, HttpStatus.OK);
 	}

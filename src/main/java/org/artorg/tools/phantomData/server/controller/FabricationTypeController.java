@@ -24,7 +24,6 @@ public class FabricationTypeController extends ControllerSpec<FabricationType, I
 
 	@GetMapping("FABRICATION_TYPE/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<FabricationType> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
-		System.out.println("READ BY SHORTCUT");
 		FabricationType m = service.getByShortcut(shortcut);
 		return new ResponseEntity<FabricationType>(m, HttpStatus.OK);
 	}
