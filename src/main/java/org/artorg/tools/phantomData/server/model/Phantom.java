@@ -33,7 +33,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 	private AnnulusDiameter annulusDiameter;
 	
 	@OneToOne
-	private FabricationType fType;
+	private FabricationType fabricationType;
 	
 	@OneToOne
 	private LiteratureBase literatureBase;
@@ -74,7 +74,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 	
 	public Phantom(AnnulusDiameter annulusDiameter, FabricationType fType, LiteratureBase litBase, Special special, int number) {
 		this.annulusDiameter = annulusDiameter;
-		this.fType = fType;
+		this.fabricationType = fType;
 		this.literatureBase = litBase;
 		this.special = special;
 		this.number = number;
@@ -93,7 +93,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 		int i;
 		i = getAnnulusDiameter().compareTo(p.getAnnulusDiameter());
 		if (i != 0) return i;
-		i = getfType().getId().compareTo(p.getfType().getId());
+		i = getFabricationType().getId().compareTo(p.getFabricationType().getId());
 		if (i != 0) return i;
 		i = getLiteratureBase().getId().compareTo(p.getLiteratureBase().getId());
 		if (i != 0) return i;
@@ -107,8 +107,8 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 		StringBuffer sb = new StringBuffer();
 		sb.append(String.format("[id: %d, annulus diameter: %f, fabrication type: %s, "
 				+ "literature base: %s, special: %s, number: %d", 
-				getId(), getAnnulusDiameter().getValue(), getfType().getFabricationType(), 
-				getLiteratureBase().getLiteratureBase(), getSpecial().toString(), getNumber()));
+				getId(), getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
+				getLiteratureBase().getValue(), getSpecial().toString(), getNumber()));
 		if (!booleanProperties.isEmpty())
 			sb.append(", boolean properties: " +getBooleanProperties().toString());
 		if (!dateProperties.isEmpty())
@@ -140,13 +140,13 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 	public void setAnnulusDiameter(AnnulusDiameter annulusDiameter) {
 		this.annulusDiameter = annulusDiameter;
 	}
-
-	public FabricationType getfType() {
-		return fType;
+	
+	public FabricationType getFabricationType() {
+		return fabricationType;
 	}
 
-	public void setfType(FabricationType fType) {
-		this.fType = fType;
+	public void setFabricationType(FabricationType fabricationType) {
+		this.fabricationType = fabricationType;
 	}
 
 	public LiteratureBase getLiteratureBase() {

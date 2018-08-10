@@ -25,15 +25,15 @@ public class FabricationType implements Comparable<FabricationType>, Serializabl
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
 
-	@Column(name = "FABRICATION_TYPE", nullable = false)
-	private String fabricationType;
+	@Column(name = "VALUE", nullable = false)
+	private String value;
 
 	
 	public FabricationType() {}
 	
-	public FabricationType(String shortcut, String fabricationType) {
+	public FabricationType(String shortcut, String value) {
 		this.shortcut = shortcut;
-		this.fabricationType = fabricationType;
+		this.value = value;
 	}
 	
 	public Integer getId() {
@@ -51,13 +51,13 @@ public class FabricationType implements Comparable<FabricationType>, Serializabl
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
-
-	public String getFabricationType() {
-		return fabricationType;
+	
+	public String getValue() {
+		return value;
 	}
 
-	public void setFabricationType(String fabricationType) {
-		this.fabricationType = fabricationType;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class FabricationType implements Comparable<FabricationType>, Serializabl
 	@Override
 	public String toString() {
 		return String.format("id: %d, shortcut: %s, fabricationType: %s", 
-				getId(), getShortcut(), getFabricationType());
+				getId(), getShortcut(), getValue());
 	}
 	
 	@Override

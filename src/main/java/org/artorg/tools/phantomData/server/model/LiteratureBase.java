@@ -26,14 +26,14 @@ public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
 	@Column(name = "SHORTCUT",  unique=true, nullable = false)
 	private String shortcut;
 	
-	@Column(name = "LITERATURE_BASE", nullable = false)
-	private String literatureBase;
+	@Column(name = "VALUE", nullable = false)
+	private String value;
 
 	public LiteratureBase() {}
 	
-	public LiteratureBase(String shortcut, String literatureBase) {
+	public LiteratureBase(String shortcut, String value) {
 		this.shortcut = shortcut;
-		this.literatureBase = literatureBase;
+		this.value = value;
 	}
 	
 	public Integer getId() {
@@ -52,14 +52,13 @@ public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
 		this.shortcut = shortcut;
 	}
 	
-	public String getLiteratureBase() {
-		return literatureBase;
+	public String getValue() {
+		return value;
 	}
 
-	public void setLiteratureBase(String literatureBase) {
-		this.literatureBase = literatureBase;
+	public void setValue(String value) {
+		this.value = value;
 	}
-	
 
 	@Override
 	public int compareTo(LiteratureBase that) {
@@ -69,7 +68,7 @@ public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
 	@Override
 	public String toString() {
 		return String.format("[id: %d, shortcut: %s, literatureBase: %s]", 
-				getId(), getShortcut(), getLiteratureBase());
+				getId(), getShortcut(), getValue());
 	}
 	
 	@Override
