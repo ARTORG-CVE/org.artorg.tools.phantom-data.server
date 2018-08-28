@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +26,7 @@ public class DateProperty implements Comparable<DateProperty>, Serializable,
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 	
-	@Column(name = "PROPETY_FIELD", nullable = false)
+	@OneToOne
 	private PropertyField propertyField;
 	
 	@Temporal(TemporalType.DATE)

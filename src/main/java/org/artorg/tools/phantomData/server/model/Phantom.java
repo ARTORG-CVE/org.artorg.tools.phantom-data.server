@@ -3,6 +3,7 @@ package org.artorg.tools.phantomData.server.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,9 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
 	private Integer id;
+	
+	@Column(name = "PRODUCT_ID", nullable = false)
+	private String productId;
 	
 	@OneToOne
 	private AnnulusDiameter annulusDiameter;
@@ -78,7 +82,26 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 		this.literatureBase = litBase;
 		this.special = special;
 		this.number = number;
+		updateProductId();
 	}
+	
+	private void updateProductId() {
+		setProductId(String.format("%s-%s-%s-%s-%s", 
+				helper(() -> annulusDiameter.getShortcut().toString(), "??"),
+				helper(() -> fabricationType.getShortcut(), "?"),
+				helper(() -> literatureBase.getShortcut(), "?"),
+				helper(() -> special.getShortcut(), "?"),
+				helper(() -> ((Integer)number).toString(), "?")));
+	}
+	
+	private String helper(Supplier<String> supplier, String orElse) {
+		try {
+			return supplier.get();
+		} catch(Exception e) {
+			return orElse;
+		}
+	}
+	
 	
 	@Override
 	public boolean equals(Object o) {
@@ -131,6 +154,15 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setId(Integer id) {
 		this.id = id;
+		updateProductId();
+	}
+	
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 
 	public AnnulusDiameter getAnnulusDiameter() {
@@ -139,6 +171,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setAnnulusDiameter(AnnulusDiameter annulusDiameter) {
 		this.annulusDiameter = annulusDiameter;
+		updateProductId();
 	}
 	
 	public FabricationType getFabricationType() {
@@ -147,6 +180,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setFabricationType(FabricationType fabricationType) {
 		this.fabricationType = fabricationType;
+		updateProductId();
 	}
 
 	public LiteratureBase getLiteratureBase() {
@@ -155,6 +189,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setLiteratureBase(LiteratureBase literatureBase) {
 		this.literatureBase = literatureBase;
+		updateProductId();
 	}
 
 	public Special getSpecial() {
@@ -163,6 +198,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setSpecial(Special special) {
 		this.special = special;
+		updateProductId();
 	}
 
 	public int getNumber() {
@@ -171,6 +207,7 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 
 	public void setNumber(int number) {
 		this.number = number;
+		updateProductId();
 	}
 	
 	public Collection<BooleanProperty> getBooleanProperties() {

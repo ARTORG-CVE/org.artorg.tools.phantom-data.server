@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
@@ -22,7 +23,7 @@ public class BooleanProperty implements Comparable<BooleanProperty>, Serializabl
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
-	@Column(name = "PROPERTY_FIELD", nullable = false)
+	@OneToOne
 	private PropertyField propertyField;
 
 	@Column(name = "BOOL", nullable = false)
