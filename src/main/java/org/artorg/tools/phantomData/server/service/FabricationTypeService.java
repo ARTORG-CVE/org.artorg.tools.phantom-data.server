@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class FabricationTypeService implements IfabricationTypeService<FabricationType, Integer> {
 
 	@Autowired
-	private FabricationTypeRepository fabricationTypeRepository;
+	private FabricationTypeRepository repository;
 	
 	@Override
 	public CrudRepository<FabricationType, Integer> getRepository() {
-		return fabricationTypeRepository;
+		return repository;
 	}
 
 	@Override
 	public FabricationType getByShortcut(String shortcut) {
-		List<FabricationType> list = fabricationTypeRepository.findByShortcut(shortcut);
+		List<FabricationType> list = repository.findByShortcut(shortcut);
 		return list.get(0);
 	}
 

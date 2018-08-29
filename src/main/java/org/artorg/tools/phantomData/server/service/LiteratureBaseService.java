@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class LiteratureBaseService implements IliteratureBaseService<LiteratureBase, Integer> {
 	@Autowired
-	private LiteratureBaseRepository literatureBaseRepository;
+	private LiteratureBaseRepository repository;
 
 	@Override
 	public CrudRepository<LiteratureBase, Integer> getRepository() {
-		return literatureBaseRepository;
+		return repository;
 	}
 
 	@Override
 	public LiteratureBase getByShortcut(String shortcut) {
-		List<LiteratureBase> list = literatureBaseRepository.findByShortcut(shortcut);
+		List<LiteratureBase> list = repository.findByShortcut(shortcut);
 		return list.get(0);
 	}
 	

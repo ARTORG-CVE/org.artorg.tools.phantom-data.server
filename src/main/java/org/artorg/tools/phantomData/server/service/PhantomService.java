@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class PhantomService implements IService<Phantom, Integer> {
 
 	@Autowired
-	private PhantomRepository phantomRepository;
+	private PhantomRepository repository;
 	
 	@Override
 	public CrudRepository<Phantom, Integer> getRepository() {
-		return phantomRepository;
+		return repository;
 	}
 
 }

@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class SpecialService implements IspecialService<Special, Integer> {
 
 	@Autowired
-	private SpecialRepository specialRepository;
+	private SpecialRepository repository;
 	
 	@Override
 	public CrudRepository<Special, Integer> getRepository() {
-		return specialRepository;
+		return repository;
 	}
 
 	@Override
 	public Special getByShortcut(String shortcut) {
-		List<Special> list = specialRepository.findByShortcut(shortcut);
+		List<Special> list = repository.findByShortcut(shortcut);
 		return list.get(0);
 	}
 

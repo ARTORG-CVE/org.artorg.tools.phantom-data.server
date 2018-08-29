@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class FileService implements IfileService<PhantomFile, Integer> {
 
 	@Autowired
-	private FileRepository fileRepository;
+	private FileRepository repository;
 	
 	@Override
 	public CrudRepository<PhantomFile, Integer> getRepository() {
-		return fileRepository;
+		return repository;
 	}
 
 	@Override
 	public PhantomFile getByName(String name) {
-		List<PhantomFile> list = fileRepository.findByName(name);
+		List<PhantomFile> list = repository.findByName(name);
 		if (list.size()==1) return list.get(0); 
 		return list.stream().filter(ad -> ad.getName().equals(Double.valueOf(name)))
 				.findFirst().get();

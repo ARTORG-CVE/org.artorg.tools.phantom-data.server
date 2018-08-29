@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class FileTypeService implements IService<FileType, Integer> {
 
 	@Autowired
-	private FileTypeRepository fileTypeRepository;
+	private FileTypeRepository repository;
 	
 	@Override
 	public CrudRepository<FileType, Integer> getRepository() {
-		return fileTypeRepository;
+		return repository;
 	}
 
 }

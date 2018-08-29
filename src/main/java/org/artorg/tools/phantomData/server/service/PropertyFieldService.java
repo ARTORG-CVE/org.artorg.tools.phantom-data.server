@@ -11,16 +11,16 @@ import org.springframework.data.repository.CrudRepository;
 public class PropertyFieldService implements IpropertyFieldService<PropertyField, Integer> {
 
 	@Autowired
-	private PropertyFieldRepository propertyFieldRepository;
+	private PropertyFieldRepository repository;
 	
 	@Override
 	public CrudRepository<PropertyField, Integer> getRepository() {
-		return propertyFieldRepository;
+		return repository;
 	}
 
 	@Override
 	public PropertyField getByName(String name) {
-		List<PropertyField> list = propertyFieldRepository.findByName(name);
+		List<PropertyField> list = repository.findByName(name);
 		return list.get(0);
 	}
 

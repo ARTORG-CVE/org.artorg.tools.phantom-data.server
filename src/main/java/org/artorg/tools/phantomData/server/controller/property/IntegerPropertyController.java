@@ -2,9 +2,9 @@ package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
 
-import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
+import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
-import org.artorg.tools.phantomData.server.service.iService.property.IbooleanPropertyService;
+import org.artorg.tools.phantomData.server.service.iService.property.IintegerPropertyService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,43 +20,43 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class BooleanPropertyController extends ControllerSpec<BooleanProperty, Integer, 
-		IbooleanPropertyService<BooleanProperty,Integer>> {
-
-	@GetMapping("BOOLEAN_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
-	public ResponseEntity<BooleanProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
-		BooleanProperty m = service.getByPropertyField(propertyField);
-		return new ResponseEntity<BooleanProperty>(m, HttpStatus.OK);
+public class IntegerPropertyController extends ControllerSpec<IntegerProperty, Integer, 
+		IintegerPropertyService<IntegerProperty,Integer>> {
+	
+	@GetMapping("INTEGER_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
+	public ResponseEntity<IntegerProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
+		IntegerProperty m = service.getByPropertyField(propertyField);
+		return new ResponseEntity<IntegerProperty>(m, HttpStatus.OK);
 	}
 	
-	@GetMapping("BOOLEAN_PROPERTY/{ID}")
-	public ResponseEntity<BooleanProperty> getById(@PathVariable("ID") Integer id) {
+	@GetMapping("INTEGER_PROPERTY/{ID}")
+	public ResponseEntity<IntegerProperty> getById(@PathVariable("ID") Integer id) {
 		return super.getById(id);
 	}
 	
-	@GetMapping("BOOLEAN_PROPERTIES")
-	public ResponseEntity<List<BooleanProperty>> getAll() {
+	@GetMapping("INTEGER_PROPERTIES")
+	public ResponseEntity<List<IntegerProperty>> getAll() {
 		return super.getAll();
 	}
 	
-	@PostMapping("BOOLEAN_PROPERTY")
-	public ResponseEntity<Void> create(@RequestBody BooleanProperty property, UriComponentsBuilder builder) {
+	@PostMapping("INTEGER_PROPERTY")
+	public ResponseEntity<Void> create(@RequestBody IntegerProperty property, UriComponentsBuilder builder) {
 		return super.create(property, builder);
 	}
 	
-	@PutMapping("BOOLEAN_PROPERTY")
-	public ResponseEntity<BooleanProperty> update(@RequestBody BooleanProperty property) {
+	@PutMapping("INTEGER_PROPERTY")
+	public ResponseEntity<IntegerProperty> update(@RequestBody IntegerProperty property) {
 		return super.update(property);
 	}
 	
-	@DeleteMapping("BOOLEAN_PROPERTY/{ID}")
+	@DeleteMapping("INTEGER_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
 		return super.delete(id);
 	}
 	
 	@Override
 	protected String getModelAnnoString() {
-		return "BOOLEAN_PROPERTY";
+		return "INTEGER_PROPERTY";
 	}
 
 }

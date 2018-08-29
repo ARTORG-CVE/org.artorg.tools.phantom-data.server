@@ -14,16 +14,16 @@ import org.springframework.stereotype.Service;
 public class BooleanPropertyService implements IbooleanPropertyService<BooleanProperty, Integer> {
 	
 	@Autowired
-	private BooleanPropertyRepository booleanPropertyFieldRepository;
+	private BooleanPropertyRepository repository;
 	
 	@Override
 	public CrudRepository<BooleanProperty, Integer> getRepository() {
-		return booleanPropertyFieldRepository;
+		return repository;
 	}
 
 	@Override
 	public BooleanProperty getByPropertyField(PropertyField propertyField) {
-		List<BooleanProperty> list = booleanPropertyFieldRepository.findByPropertyField(propertyField);
+		List<BooleanProperty> list = repository.findByPropertyField(propertyField);
 		return list.get(0);
 	}
 

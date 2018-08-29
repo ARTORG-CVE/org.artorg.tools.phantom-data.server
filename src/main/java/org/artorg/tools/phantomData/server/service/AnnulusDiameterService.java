@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class AnnulusDiameterService implements IannulusDiameterService<AnnulusDiameter, Integer> {
 	
 	@Autowired
-	private AnnulusDiameterRepository annulusDiameterRepository;
+	private AnnulusDiameterRepository repository;
 
 	@Override
 	public CrudRepository<AnnulusDiameter, Integer> getRepository() {
-		return annulusDiameterRepository;
+		return repository;
 	}
 	
 	@Override
 	public AnnulusDiameter getByShortcut(Integer shortcut) {
-		List<AnnulusDiameter> list = annulusDiameterRepository.findByShortcut(shortcut);
+		List<AnnulusDiameter> list = repository.findByShortcut(shortcut);
 		if (list.size()==1) return list.get(0); 
 		return list.stream().filter(ad -> ad.getValue().equals(Double.valueOf(shortcut)))
 				.findFirst().get();

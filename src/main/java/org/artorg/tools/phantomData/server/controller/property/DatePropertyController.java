@@ -3,8 +3,10 @@ package org.artorg.tools.phantomData.server.controller.property;
 import java.util.List;
 
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
+import org.artorg.tools.phantomData.server.model.property.PropertyField;
+import org.artorg.tools.phantomData.server.service.iService.property.IdatePropertyService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
-import org.artorg.tools.phantomData.server.specification.IService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +21,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping("user")
 public class DatePropertyController extends 
-ControllerSpec<DateProperty, Integer, IService<DateProperty,Integer>> {
+ControllerSpec<DateProperty, Integer, IdatePropertyService<DateProperty,Integer>> {
 
+	@GetMapping("DATE_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
+	public ResponseEntity<DateProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
+		DateProperty m = service.getByPropertyField(propertyField);
+		return new ResponseEntity<DateProperty>(m, HttpStatus.OK);
+	}
+	
 	@GetMapping("DATE_PROPERTY/{ID}")
 	public ResponseEntity<DateProperty> getById(@PathVariable("ID") Integer id) {
 		return super.getById(id);
@@ -32,13 +40,13 @@ ControllerSpec<DateProperty, Integer, IService<DateProperty,Integer>> {
 	}
 	
 	@PostMapping("DATE_PROPERTY")
-	public ResponseEntity<Void> create(@RequestBody DateProperty BooleanPropertyField, UriComponentsBuilder builder) {
-		return super.create(BooleanPropertyField, builder);
+	public ResponseEntity<Void> create(@RequestBody DateProperty property, UriComponentsBuilder builder) {
+		return super.create(property, builder);
 	}
 	
 	@PutMapping("DATE_PROPERTY")
-	public ResponseEntity<DateProperty> update(@RequestBody DateProperty BooleanPropertyField) {
-		return super.update(BooleanPropertyField);
+	public ResponseEntity<DateProperty> update(@RequestBody DateProperty property) {
+		return super.update(property);
 	}
 	
 	@DeleteMapping("DATE_PROPERTY/{ID}")

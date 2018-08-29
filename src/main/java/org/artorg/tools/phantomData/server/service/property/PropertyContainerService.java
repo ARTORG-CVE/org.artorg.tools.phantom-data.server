@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class PropertyContainerService implements IpropertyContainerService<PropertyContainer, Integer> {
 
 	@Autowired
-	private PropertyContainerRepository propertyContainerRepository;
+	private PropertyContainerRepository repository;
 	
 	@Override
 	public CrudRepository<PropertyContainer, Integer> getRepository() {
-		return propertyContainerRepository;
+		return repository;
 	}
 
 }
