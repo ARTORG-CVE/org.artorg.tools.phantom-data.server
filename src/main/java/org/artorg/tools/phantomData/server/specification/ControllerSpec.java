@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public abstract class ControllerSpec<MODEL_TYPE extends DatabasePersistent<MODEL_TYPE, ID_TYPE>, ID_TYPE, I_SERVICE_TYPE extends IService<MODEL_TYPE, ID_TYPE>> {
+public abstract class ControllerSpec<MODEL_TYPE extends DatabasePersistent<ID_TYPE>, ID_TYPE, I_SERVICE_TYPE extends IService<MODEL_TYPE, ID_TYPE>> {
 	
 	protected abstract String getModelAnnoString();
 	

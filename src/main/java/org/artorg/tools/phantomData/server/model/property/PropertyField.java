@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "PROPERTY_FIELD")
 public class PropertyField implements Comparable<PropertyField>, Serializable, 
-		DatabasePersistent<PropertyField, Integer> {
+		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -3,6 +3,7 @@ package org.artorg.tools.phantomData.server.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 
 import javax.persistence.Column;
@@ -17,12 +18,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
+import org.artorg.tools.phantomData.server.model.property.DateProperty;
+import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
+import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
+import org.artorg.tools.phantomData.server.model.property.PropertyDistinguishable;
+import org.artorg.tools.phantomData.server.model.property.StringProperty;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom implements Comparable<Phantom>, Serializable,
-		DatabasePersistent<Phantom, Integer> {
+public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Serializable,
+		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -58,23 +64,33 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 	@JoinTable(name = "PHANTOM_DATE_PROPERTIES",
 			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
 			inverseJoinColumns=@JoinColumn(name="DATE_PROPERTIES_ID"))
-	private Collection<BooleanProperty> dateProperties = new ArrayList<BooleanProperty>();
+	private Collection<DateProperty> dateProperties = new ArrayList<DateProperty>();
+	
+	@ManyToMany
+	@JoinTable(name = "PHANTOM_STRING_PROPERTIES",
+			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
+			inverseJoinColumns=@JoinColumn(name="STRING_PROPERTIES_ID"))
+	private Collection<StringProperty> stringProperties = new ArrayList<StringProperty>();
+	
+	@ManyToMany
+	@JoinTable(name = "PHANTOM_INTEGER_PROPERTIES",
+			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
+			inverseJoinColumns=@JoinColumn(name="INTEGER_PROPERTIES_ID"))
+	private Collection<IntegerProperty> integerProperties = new ArrayList<IntegerProperty>();
+	
+	@ManyToMany
+	@JoinTable(name = "PHANTOM_DOUBLE_PROPERTIES",
+			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
+			inverseJoinColumns=@JoinColumn(name="DOUBLE_PROPERTIES_ID"))
+	private Collection<DoubleProperty> doubleProperties = new ArrayList<DoubleProperty>();
 	
 	@ManyToMany
 	@JoinTable(name = "PHANTOM_FILES",
 			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
 			inverseJoinColumns=@JoinColumn(name="FILES_ID"))
-	private Collection<PhantomFile> files = new ArrayList<PhantomFile>();
+	private List<PhantomFile> files = new ArrayList<PhantomFile>();
 	
 	public Phantom() {}
-	
-//	public Phantom(int annulusDiameter, String fType, String litBase, String special, int number) {
-//		this.annulusDiameter = AnnulusDiameterConnector.get().readByShortcut(annulusDiameter);
-//		this.fType = FabricationTypeConnector.get().readByShortcut(fType);
-//		this.literatureBase = LiteratureBaseConnector.get().readByShortcut(litBase);
-//		this.special = SpecialConnector.get().readByShortcut(special);
-//		this.number = number;
-//	}
 	
 	public Phantom(AnnulusDiameter annulusDiameter, FabricationType fType, LiteratureBase litBase, Special special, int number) {
 		this.annulusDiameter = annulusDiameter;
@@ -132,10 +148,9 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 				+ "literature base: %s, special: %s, number: %d", 
 				getId(), getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
 				getLiteratureBase().getValue(), getSpecial().toString(), getNumber()));
-		if (!booleanProperties.isEmpty())
-			sb.append(", boolean properties: " +getBooleanProperties().toString());
-		if (!dateProperties.isEmpty())
-			sb.append(", date properties: " +getDateProperties().toString());
+		String[] properties = this.getAllPropertiesAsString();
+		for (String property: properties)
+			sb.append(property);
 		if (!files.isEmpty())
 			sb.append(", files: " +getFiles().toString());
 		sb.append("]");
@@ -214,23 +229,47 @@ public class Phantom implements Comparable<Phantom>, Serializable,
 		return booleanProperties;
 	}
 
-	public void setBooleanProperties(Collection<BooleanProperty> booleanProperties) {
+	public void setBooleanProperties(List<BooleanProperty> booleanProperties) {
 		this.booleanProperties = booleanProperties;
 	}
 
-	public Collection<BooleanProperty> getDateProperties() {
+	public Collection<DateProperty> getDateProperties() {
 		return dateProperties;
 	}
 
-	public void setDateProperties(Collection<BooleanProperty> dateProperties) {
+	public void setDateProperties(List<DateProperty> dateProperties) {
 		this.dateProperties = dateProperties;
+	}
+	
+	public Collection<StringProperty> getStringProperties() {
+		return stringProperties;
+	}
+
+	public void setStringProperties(List<StringProperty> stringProperties) {
+		this.stringProperties = stringProperties;
+	}
+
+	public Collection<IntegerProperty> getIntegerProperties() {
+		return integerProperties;
+	}
+
+	public void setIntegerProperties(List<IntegerProperty> integerProperties) {
+		this.integerProperties = integerProperties;
+	}
+
+	public Collection<DoubleProperty> getDoubleProperties() {
+		return doubleProperties;
+	}
+
+	public void setDoubleProperties(List<DoubleProperty> doubleProperties) {
+		this.doubleProperties = doubleProperties;
 	}
 
 	public Collection<PhantomFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(Collection<PhantomFile> files) {
+	public void setFiles(List<PhantomFile> files) {
 		this.files = files;
 	}
 

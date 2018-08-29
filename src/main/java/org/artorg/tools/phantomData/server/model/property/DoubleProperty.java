@@ -13,11 +13,11 @@ import javax.persistence.Table;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
-@Table(name = "BOOLEAN_PROPERTIES")
-public class BooleanProperty extends Property<Boolean> implements Comparable<BooleanProperty>, Serializable, 
+@Table(name = "DOUBLE_PROPERTIES")
+public class DoubleProperty extends Property<Double> implements Comparable<DoubleProperty>, Serializable, 
 		DatabasePersistent<Integer> {
-	private static final long serialVersionUID = 4690035196217371829L;
-
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
@@ -27,11 +27,11 @@ public class BooleanProperty extends Property<Boolean> implements Comparable<Boo
 	private PropertyField propertyField;
 
 	@Column(name = "VALUE", nullable = false)
-	private Boolean value;
+	private Double value;
 	
-	public BooleanProperty() {}
+	public DoubleProperty() {}
 	
-	public BooleanProperty(PropertyField propertyField, Boolean value) {
+	public DoubleProperty(PropertyField propertyField, Double value) {
 		this.propertyField = propertyField;
 		this.value = value;
 	}
@@ -52,16 +52,16 @@ public class BooleanProperty extends Property<Boolean> implements Comparable<Boo
 		this.propertyField = propertyField;
 	}
 
-	public Boolean getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(Boolean value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 	
 	@Override
-	public int compareTo(BooleanProperty that) {
+	public int compareTo(DoubleProperty that) {
 		int i = getPropertyField().compareTo(that.getPropertyField());
 		if (i != 0) return i;
 		i = getValue().compareTo(that.getValue());

@@ -5,7 +5,7 @@ import org.artorg.tools.phantomData.server.model.property.PropertyField;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 import org.artorg.tools.phantomData.server.specification.IService;
 
-public interface IbooleanPropertyService<T extends DatabasePersistent<T,ID_TYPE>, ID_TYPE> extends IService<T, ID_TYPE> {
+public interface IbooleanPropertyService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> extends IService<T, ID_TYPE> {
 	
 	BooleanProperty getByPropertyField(PropertyField propertyField);
 

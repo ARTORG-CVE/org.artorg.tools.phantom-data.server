@@ -6,7 +6,7 @@ import java.util.List;
 import org.artorg.tools.phantomData.server.model.FabricationType;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IService<T extends DatabasePersistent<T,ID_TYPE>, ID_TYPE> {
+public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
 	
 	CrudRepository<T, ID_TYPE> getRepository();
 	

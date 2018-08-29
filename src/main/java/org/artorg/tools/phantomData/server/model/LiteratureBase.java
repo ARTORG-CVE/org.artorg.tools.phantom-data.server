@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "LITERATURE_BASES")
 public class LiteratureBase implements Comparable<LiteratureBase>, Serializable,
-		DatabasePersistent<LiteratureBase, Integer> {
+		DatabasePersistent<Integer> {
 
 	private static final long serialVersionUID = 1L;
 

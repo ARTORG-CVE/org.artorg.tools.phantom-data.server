@@ -18,7 +18,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "FILES")
 public class PhantomFile implements Comparable<PhantomFile>, Serializable, 
-	DatabasePersistent<PhantomFile, Integer> {
+	DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

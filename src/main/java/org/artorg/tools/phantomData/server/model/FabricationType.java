@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "FABRICATION_TYPES")
 public class FabricationType implements Comparable<FabricationType>, Serializable,
-		DatabasePersistent<FabricationType, Integer> {
+		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

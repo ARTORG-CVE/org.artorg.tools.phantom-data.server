@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "ANNULUS_DIAMETERS")
 public class AnnulusDiameter implements Comparable<AnnulusDiameter>, Serializable, 
-		DatabasePersistent<AnnulusDiameter, Integer> {
+		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -17,8 +17,8 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
-public class DateProperty implements Comparable<DateProperty>, Serializable, 
-		DatabasePersistent<DateProperty, Integer> {
+public class DateProperty extends Property<Date> implements Comparable<DateProperty>, Serializable, 
+		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -30,14 +30,14 @@ public class DateProperty implements Comparable<DateProperty>, Serializable,
 	private PropertyField propertyField;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "BOOL", nullable = false)
-	private Date date;
+	@Column(name = "VALUE", nullable = false)
+	private Date value;
 	
 	public DateProperty() {}
 	
-	public DateProperty(PropertyField propertyField, Date date) {
+	public DateProperty(PropertyField propertyField, Date value) {
 	this.propertyField = propertyField;
-	this.date = date;
+	this.value = value;
 	}
 	
 	public Integer getId() {
@@ -56,26 +56,26 @@ public class DateProperty implements Comparable<DateProperty>, Serializable,
 	this.propertyField = propertyField;
 	}
 	
-	public Date getDate() {
-	return date;
+	public Date getValue() {
+	return value;
 	}
 	
-	public void setDate(Date date) {
-	this.date = date;
+	public void setValue(Date date) {
+	this.value = date;
 	}
 	
 	@Override
 	public int compareTo(DateProperty that) {
 	int i = getPropertyField().compareTo(that.getPropertyField());
 	if (i != 0) return i;
-	i = getDate().compareTo(that.getDate());
+	i = getValue().compareTo(that.getValue());
 	return i;
 	}
 	
 	@Override
 	public String toString() {
 	return String.format("[id: %d, propertyField: %s, value: %s]", 
-			getId(), getPropertyField().toString(), getDate().toString());
+			getId(), getPropertyField().toString(), getValue().toString());
 	}
 	
 	@Override
