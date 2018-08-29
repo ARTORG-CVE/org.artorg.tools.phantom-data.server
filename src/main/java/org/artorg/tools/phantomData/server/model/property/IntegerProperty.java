@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "INTEGER_PROPERTIES")
-public class IntegerProperty extends Property<Integer> implements Comparable<IntegerProperty>, Serializable, 
+public class IntegerProperty implements Comparable<IntegerProperty>, Serializable, 
 		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	

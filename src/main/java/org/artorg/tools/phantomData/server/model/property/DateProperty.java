@@ -17,7 +17,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
-public class DateProperty extends Property<Date> implements Comparable<DateProperty>, Serializable, 
+public class DateProperty implements Comparable<DateProperty>, Serializable, 
 		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	

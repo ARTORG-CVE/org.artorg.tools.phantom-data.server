@@ -16,8 +16,8 @@ public interface PropertyDistinguishable {
 
 	Collection<DoubleProperty> getDoubleProperties();
 
-	default List<Property<?>> getAllProperties() {
-		List<Property<?>> properties = new ArrayList<Property<?>>();
+	default List<Object> getAllProperties() {
+		List<Object> properties = new ArrayList<Object>();
 		properties.addAll(getBooleanProperties());
 		properties.addAll(getDateProperties());
 		properties.addAll(getStringProperties());
@@ -27,7 +27,7 @@ public interface PropertyDistinguishable {
 		return properties;
 	}
 	
-	default <T> boolean addProperty(Property<T> property) {
+	default <T> boolean addProperty(T property) {
 		if (property instanceof BooleanProperty)
 			return getBooleanProperties().add(((BooleanProperty)property));
 		if (property instanceof DateProperty)
@@ -41,7 +41,7 @@ public interface PropertyDistinguishable {
 		return false;
 	}
 
-	default <T> boolean removeProperty(Property<T> property) {
+	default <T> boolean removeProperty(T property) {
 		if (property instanceof BooleanProperty)
 			return getBooleanProperties().remove(((BooleanProperty)property));
 		if (property instanceof DateProperty)

@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "DOUBLE_PROPERTIES")
-public class DoubleProperty extends Property<Double> implements Comparable<DoubleProperty>, Serializable, 
+public class DoubleProperty implements Comparable<DoubleProperty>, Serializable, 
 		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	

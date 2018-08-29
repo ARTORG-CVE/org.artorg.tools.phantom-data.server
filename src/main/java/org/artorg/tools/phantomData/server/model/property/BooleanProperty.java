@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
-public class BooleanProperty extends Property<Boolean> implements Comparable<BooleanProperty>, Serializable, 
+public class BooleanProperty implements Comparable<BooleanProperty>, Serializable, 
 		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 4690035196217371829L;
 

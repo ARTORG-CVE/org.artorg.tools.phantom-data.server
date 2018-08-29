@@ -14,7 +14,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "STRING_PROPERTIES")
-public class StringProperty extends Property<String> implements Comparable<StringProperty>, Serializable, 
+public class StringProperty implements Comparable<StringProperty>, Serializable, 
 		DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
 	
