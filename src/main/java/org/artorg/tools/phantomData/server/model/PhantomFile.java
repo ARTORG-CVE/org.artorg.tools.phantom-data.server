@@ -12,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.boot.BootUtils;
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
@@ -20,7 +21,17 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 public class PhantomFile implements Comparable<PhantomFile>, Serializable, 
 	DatabasePersistent<Integer> {
 	private static final long serialVersionUID = 1L;
+	private static String filesPath;
 	
+	
+	public static String getFilesPath() {
+		return filesPath;
+	}
+
+	public static void setFilesPath(String filesPath) {
+		PhantomFile.filesPath = filesPath;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
@@ -49,13 +60,11 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 	
 	public void create(String absolutOriginalPath) {
 		File srcFile = new File(absolutOriginalPath);
-		File destFile = new File(BootUtils.ABSOLUTE_FILE_BASE_PATH +"/" +path +"/" +name +"." +extension);
-		System.out.println(srcFile.toString());
-		System.out.println(destFile.toString());
+		File destFile = new File(filesPath 
+				+"\\" +path +"\\" +name +"." +extension);
 		try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		updateNativeFileName();
@@ -63,13 +72,10 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 	}
 	
 	public void updateNativeFileName() {
-		File nativeFile = new File(BootUtils.ABSOLUTE_FILE_BASE_PATH +"/" +path +"/" +name +"." +extension);
-		nativeFile.renameTo(new File(BootUtils.ABSOLUTE_FILE_BASE_PATH +"/" +path +"/" +getId() +"_" +name +"." +extension));
-//		FileUtils.re
-		
-		System.err.println("update native file name");
-		
-		
+		File nativeFile = new File(filesPath 
+				+"/" +path +"/" +name +"." +extension);
+		nativeFile.renameTo(new File(filesPath
+				+"/" +path +"/" +getId() +"_" +name +"." +extension));
 	}
 	
 	public Integer getId() {

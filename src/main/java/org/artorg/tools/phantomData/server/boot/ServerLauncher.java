@@ -43,7 +43,7 @@ import javax.swing.text.StyledDocument;
 
 import org.artorg.tools.phantomData.server.io.ResourceReader;
 
-public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils {
+public class ServerLauncher {
 	private static PrintStream SYSTEM_OUT = System.out;
 	private static PrintStream SYSTEM_ERR = System.err;
 	private String text = "";
@@ -58,15 +58,7 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 	private List<BiConsumer<List<String>, String>> consoleConsumersErr;
 	private boolean errorOccured;
 	private boolean showStartupConsole;
-
-	public boolean isShowStartupConsole() {
-		return showStartupConsole;
-	}
-
-	public void setShowStartupConsole(boolean showStartupConsole) {
-		this.showStartupConsole = showStartupConsole;
-	}
-
+	
 	{
 		startupFrame = new JFrame();
 		consoleFrame = new JFrame();
@@ -79,30 +71,26 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		consoleConsumersErr = new ArrayList<BiConsumer<List<String>, String>>();
 	}
 	
-	public boolean launch(int nConsoleLines, Runnable rc) {
-		this.nLines = nConsoleLines - 1;
+	public boolean launch(Class<?> bootApplicationClass, LaunchConfigurationServer launchConfig, String[] args) {
+		this.nLines = launchConfig.getnStartupConsoleLines() - 1;
 		try {
 			createConsoleFrame();
 			if (showStartupConsole)
 				consoleFrame.setVisible(true);
+			launchConfig.init(bootApplicationClass);
+			if (!BootUtilsServer.isConnected(launchConfig))
+				createAndshowStartupFrame(launchConfig.getMainClass());
 			
-			
-			if (!isConnected())
-				createAndshowStartupFrame();
-			
-			rc.run();
+			launchConfig.getConsumer().accept(args);
 			startupFrame.setVisible(false);
 			startupFrame.dispose();
-
 		} catch (Exception e) {
 			consoleFrame.setTitle("Phantom Database - Exception thrown!");
 			consoleFrame.setVisible(true);
 			e.printStackTrace();
 		}
-		
 		if (!errorOccured)
 			consoleFrame.setVisible(false);
-
 		return false;
 	}
 	
@@ -125,7 +113,7 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		addConsoleOutputPrintStream();
 	}
 	
-	private void createAndshowStartupFrame() {
+	private void createAndshowStartupFrame(Class<?> mainClass) {
 		startupFrame.setTitle("Phantom Database");
 		startupFrame.setResizable(false);
 		startupFrame.setUndecorated(true);
@@ -149,11 +137,11 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		buttonPane.add(closeLabel);
 		content.add(buttonPane, BorderLayout.NORTH);
 		
-		BufferedImage phantomImage = ResourceReader.readAsBufferedImage("img/startup.png");
+		BufferedImage phantomImage = ResourceReader.readAsBufferedImage("img/startup.png", mainClass);
 		JLabel phantomLabel = new JLabel(new ImageIcon(phantomImage));
-		BufferedImage artortgLogoImage = ResourceReader.readAsBufferedImage("img/artorgLogo.png");
+		BufferedImage artortgLogoImage = ResourceReader.readAsBufferedImage("img/artorgLogo.png", mainClass);
 		JLabel artortgLogoLabel = new JLabel(new ImageIcon(artortgLogoImage));
-		BufferedImage inselLogoImage = ResourceReader.readAsBufferedImage("img/inselLogo.png");
+		BufferedImage inselLogoImage = ResourceReader.readAsBufferedImage("img/inselLogo.png", mainClass);
 		JLabel inselLogoLabel = new JLabel(new ImageIcon(inselLogoImage));
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.LINE_AXIS));
@@ -184,7 +172,6 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		addProgressPrintStream();
 		startupFrame.setVisible(true);
 	}
-	
 
 	private void addProgressPrintStream() {
 		System.setOut(createPrintStream(SYSTEM_OUT, this::updateStartupProgress));
@@ -260,8 +247,6 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		throw new IllegalArgumentException();
 	}
 	
-	
-	
 	private void appendToPaneOut(JTextPane tp, String msg) {
 		appendToPane(tp, msg, Color.BLACK);
 	}
@@ -302,6 +287,14 @@ public class Launcher extends org.artorg.tools.phantomData.server.boot.BootUtils
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
+	}
+	
+	public boolean isShowStartupConsole() {
+		return showStartupConsole;
+	}
+
+	public void setShowStartupConsole(boolean showStartupConsole) {
+		this.showStartupConsole = showStartupConsole;
 	}
 
 }
