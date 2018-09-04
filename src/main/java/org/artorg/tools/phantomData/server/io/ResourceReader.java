@@ -52,36 +52,7 @@ public class ResourceReader {
 		throw new IllegalArgumentException();
 	}
 	
-	public static <T> T loadFXML(String path, Object controller) {
-		FXMLLoader loader = new FXMLLoader(Main.class.getClassLoader().getResource(path));
-		loader.setController(controller);
-		try {
-			return loader.<T>load();
-		} catch (IOException e) {}
-		throw new IllegalArgumentException();
-	}
 	
-//	public static <T> T loadFXML(String path, Object controller, Class<?> mainClass) {
-//		FXMLLoader loader = new FXMLLoader(readResource(path, mainClass));
-//		loader.setController(controller);
-//		try {
-//			return loader.<T>load();
-//		} catch (IOException e) {}
-//		throw new IllegalArgumentException();
-//	}
-	
-	public static AnchorPane loadFXMLanchorPane(String path, Object controller, Class<?> mainClass) {
-		FXMLLoader loader = new FXMLLoader(readResource(path, Main.class));
-		loader.setController(controller);
-		try {
-			return loader.load();
-		} catch (IOException e) {}
-		throw new IllegalArgumentException();
-	}
-	
-	public static String readCSSstylesheet(String path, Class<?> mainClass) {
-		return readResource(path, mainClass).toExternalForm();
-	}
 	
 	
 	
