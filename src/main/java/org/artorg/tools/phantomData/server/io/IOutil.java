@@ -6,18 +6,35 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.boot.UnicodeProperties;
 
 public class IOutil {
+
 	
-	public static Properties readProperties(String path) {
-		Properties properties = new Properties();
+	@SuppressWarnings("deprecation")
+	public static void addExternalDirectoryToClassPath(String path) throws Exception {
+		addExternalDirectoryToClassPath(new File(path).toURL());
+	}
+	
+	public static void addExternalDirectoryToClassPath(URL url) throws Exception {
+		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		Method method = URLClassLoader.class.getDeclaredMethod("addURL",
+				new Class[] { URL.class });
+		method.setAccessible(true);
+		method.invoke(classLoader, new Object[] { url });
+	}
+
+	public static UnicodeProperties readProperties(String path) {
+		UnicodeProperties properties = new UnicodeProperties();
 		try {
 			properties.load(readResourceAsStream(path));
 		} catch (IOException e) {
@@ -25,40 +42,40 @@ public class IOutil {
 		}
 		return properties;
 	}
-	
+
 	public static InputStream readExternalFile(String path) throws FileNotFoundException {
 		File file = new File(path);
-		return  new FileInputStream(file);
+		return new FileInputStream(file);
 	}
-	
-	public static InputStream readResourceAsStream(String path) { 
+
+	public static InputStream readResourceAsStream(String path) {
 		return BootApplication.class.getClassLoader().getResourceAsStream(path);
-//		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		// return
+		// Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
-	
+
 	public static URL readResource(String path) {
 		return Thread.currentThread().getContextClassLoader().getResource(path);
 	}
-	
+
 	public static BufferedImage readResourceAsBuffered(String path) {
 		try {
 			return ImageIO.read(readResourceAsStream(path));
-		} catch (IOException e) {}
+		} catch (IOException e) {
+		}
 		throw new IllegalArgumentException();
 	}
-	
+
 	public static File readResourceAsFile(String path) {
 		try {
 			File file = File.createTempFile("model", "stl");
 			InputStream inputStream = readResourceAsStream(path);
 			FileUtils.copyInputStreamToFile(inputStream, file);
 			return file;
-		} catch (IOException e1) {};
+		} catch (IOException e1) {
+		}
+		;
 		throw new IllegalArgumentException();
 	}
-	
-	
-	
-	
-	
+
 }

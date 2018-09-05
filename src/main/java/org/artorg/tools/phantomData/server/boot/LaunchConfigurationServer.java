@@ -1,14 +1,23 @@
 package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Properties;
 import java.util.function.Consumer;
 
 import org.artorg.tools.phantomData.server.BootApplication;
 import org.artorg.tools.phantomData.server.io.IOutil;
-import org.artorg.tools.phantomData.server.io.RestorablePropertiesFile;
+import org.artorg.tools.phantomData.server.io.PropertiesFile;
 import org.artorg.tools.phantomData.server.model.PhantomFile;
+
+import static org.artorg.tools.phantomData.server.io.IOutil.*;
 
 public class LaunchConfigurationServer {
 	private String urlLocalhost;
@@ -28,9 +37,9 @@ public class LaunchConfigurationServer {
 	private String databaseUsername;
 	private String databasePassword;
 	private Class<?> bootApplicationClass;
-	private Properties applicationProperties;
-	private Properties configProperties;
-	public RestorablePropertiesFile restorablePropertiesConfig;
+	private UnicodeProperties applicationProperties;
+	private UnicodeProperties configProperties;
+	public PropertiesFile restorablePropertiesConfig;
 	private Consumer<String[]> consumer;
 	private int nStartupConsoleLines;
 
@@ -53,12 +62,17 @@ public class LaunchConfigurationServer {
 		
 		
 		
-//		this.setRestorablePropertiesConfig(new RestorablePropertiesFile(
-//				"config.properties", 
-//				parentDir +"/phantomData/config/config.properties"));
-//		
-//		this.setConfigProperties(restorablePropertiesConfig.getProperties());
-//		
+		try {
+			this.setRestorablePropertiesConfig(new PropertiesFile(
+					"config.properties", 
+					parentDir +"/phantomData/config/config.properties"));
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		this.setConfigProperties(restorablePropertiesConfig.getProperties());
+		
 //		
 		
 		
@@ -74,12 +88,12 @@ public class LaunchConfigurationServer {
 		
 //		System.out.println("config properties: " +configProperties.toString());
 		
-//		try {
-//			restorablePropertiesConfig.init();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			restorablePropertiesConfig.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		this.setDatabasePath((String) configProperties.get("database.path"));
 //		System.out.println(configProperties.get("database.path"));
@@ -87,12 +101,100 @@ public class LaunchConfigurationServer {
 //		System.out.println(parentDir.getAbsolutePath());
 //		System.out.println("jdbc:h2:" +parentDir.getAbsolutePath() +"/phantomData/db/phantoms;AUTO_SERVER=TRUE");
 		
-		Properties applicationProperties = IOutil.readProperties("application.properties");
+//		CustomProperties applicationProperties = IOutil.readProperties("application.properties");
+		
+		
+		
+		
+		
+//		InputStream inputStream = null;
+//		try {
+//			inputStream = IOutil.readExternalFile("D:\\Users\\Marc\\Desktop\\application.properties");
+//		} catch (FileNotFoundException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+//		
+//		File file = new File(inputStream);
+//		
+//		
+//		
+		
+		
+		
+		UnicodeProperties applicationProperties = new UnicodeProperties();
+		PropertiesFile applicationFile = new PropertiesFile();
+		applicationFile.setProperties(applicationProperties);
+		try {
+			// just .../Desktop for classpath 
+			applicationFile.setExternalPath("D:/Users/Marc/Desktop/application.properties");
+			applicationFile.setResourcePath("application.properties");
+			applicationFile.init();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+//		try {
+//			addExternalDirectoryToClassPath("D:/Users/Marc/Desktop");
+//		} catch (Exception e2) {
+//			e2.printStackTrace();
+//		}
+		
+//		try {
+//			addURL(new File("D:/Users/Marc/Desktop").toURL());
+//		} catch (Exception e2) {
+//			e2.printStackTrace();
+//		}
+		
+		
+//		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
+//		
+//		if (inputStream == null) System.out.println("null");
+//		else
+//			System.out.println(inputStream.toString());
 		
 //		applicationProperties.clear();
 		
+		
+//		Properties properties = new Properties();
+//		try {
+//			properties.load(inputStream);
+//		} catch (IOException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+//		
+		
+//		System.out.println("jdbc:h2:" +"D:/Users/Marc/Desktop/phantomData4w/db" +"/phantoms;AUTO_SERVER=TRUE");
 //		applicationProperties.remove("spring.datasource.url");
-//		applicationProperties.put("spring.datasource.url", "jdbc:h2:" +configProperties.get("database.path") +"/phantomData/db/phantoms;AUTO_SERVER=TRUE");
+//		
+//		applicationProperties.put("spring.datasource.url", "jdbc:h2:" +"D:/Users/Marc/Desktop/phantomData4w/db" +"/phantoms;AUTO_SERVER=TRUE");
+		
+		
+		
+//		\\u003A
+		
+		
+		OutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(new File("D:/Users/Marc/Desktop/appp.properties"), false);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Writer writer = new OutputStreamWriter(outputStream);
+		
+//		try {
+//			applicationProperties.store(outputStream, "");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+		
 		this.setApplicationProperties(applicationProperties);
 		
 //		System.out.println("application properties");
@@ -102,7 +204,10 @@ public class LaunchConfigurationServer {
 //		this.setDatabaseUsername(applicationProperties.getProperty("spring.datasource.username"));
 //		this.setDatabasePassword(applicationProperties.getProperty("spring.datasource.password"));
 //		
-		this.setUrlLocalhost("http://localhost:" +applicationProperties.getProperty("server.port"));
+		
+		
+//		this.setUrlLocalhost("http://localhost:" +applicationProperties.getProperty("server.port"));
+		this.setUrlLocalhost("http://localhost:" +"8183");
 		
 		
 		System.out.println("////// application properties ///////////");
@@ -144,7 +249,7 @@ public class LaunchConfigurationServer {
 		new File(path).mkdirs();
 	}
 	
-	private void setRestorablePropertiesConfig(RestorablePropertiesFile restorablePropertiesConfig) {
+	private void setRestorablePropertiesConfig(PropertiesFile restorablePropertiesConfig) {
 		this.restorablePropertiesConfig = restorablePropertiesConfig;
 	}
 
@@ -159,7 +264,7 @@ public class LaunchConfigurationServer {
 		new File(path).mkdirs();
 	}
 	
-	private void setConfigProperties(Properties configProperties) {
+	private void setConfigProperties(UnicodeProperties configProperties) {
 		this.configProperties = configProperties;
 		
 		
@@ -191,7 +296,7 @@ public class LaunchConfigurationServer {
 	}
 
 
-	private void setApplicationProperties(Properties applicationProperties) {
+	private void setApplicationProperties(UnicodeProperties applicationProperties) {
 		this.applicationProperties = applicationProperties;
 		
 	}
@@ -218,11 +323,11 @@ public class LaunchConfigurationServer {
 		return logsPath;
 	}
 	
-	public Properties getConfigProperties() {
+	public UnicodeProperties getConfigProperties() {
 		return configProperties;
 	}
 	
-	public RestorablePropertiesFile getRestorablePropertiesConfig() {
+	public PropertiesFile getRestorablePropertiesConfig() {
 		return restorablePropertiesConfig;
 	}
 	
@@ -262,7 +367,7 @@ public class LaunchConfigurationServer {
 		return bootApplicationClass;
 	}
 	
-	public Properties getApplicationProperties() {
+	public UnicodeProperties getApplicationProperties() {
 		return applicationProperties;
 	}
 	
