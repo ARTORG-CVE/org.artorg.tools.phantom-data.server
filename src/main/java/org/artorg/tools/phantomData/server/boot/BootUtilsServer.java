@@ -121,7 +121,7 @@ public class BootUtilsServer {
 	}
 	
 	public static void deleteFileStructure(LaunchConfigurationServer launchConfig) {
-		File home = new File(launchConfig.getHomePath());
+		File home = new File(launchConfig.getParentDirectory());
 		File database = new File(launchConfig.getDatabasePath());
 		File filebase = new File(launchConfig.getFilesPath());
 		File log = new File(launchConfig.getLogsPath());
@@ -139,7 +139,7 @@ public class BootUtilsServer {
 	public static void prepareFileStructure(LaunchConfigurationServer config) {
 		List<String> paths = new ArrayList<String>();
 		
-		paths.add(config.getHomePath());
+		paths.add(config.getParentDirectory());
 		paths.add(config.getDatabasePath());
 		paths.add(config.getFilesPath());
 		paths.add(config.getLogsPath());
@@ -154,7 +154,7 @@ public class BootUtilsServer {
 	}
 	
 	public static void startingServer(LaunchConfigurationServer config, String[] args) {
-		startingServer(config.getMainClass(), config.getUrlLocalhost(), args);
+		startingServer(config.getBootApplicationClass(), config.getUrlLocalhost(), args);
 		
 		if (!isConnected(config.getUrlLocalhost())) 
 			SpringApplication.run(BootApplication.class, args);

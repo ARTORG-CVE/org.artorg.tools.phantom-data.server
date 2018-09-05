@@ -1,6 +1,8 @@
 package org.artorg.tools.phantomData.server.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,21 +16,19 @@ public class RestorableCustomFile {
 	private final String externalPath;
 	private final List<Consumer<InputStream>> reader;
 	private final List<Consumer<OutputStream>> writer;
-	private final Class<?> mainClass;
 	
-	public RestorableCustomFile(String resourcePath, String externalPath, Class<?> mainClass) {
+	public RestorableCustomFile(String resourcePath, String externalPath) {
 		this.resourcePath = resourcePath;
 		this.externalPath = externalPath;
 		this.reader = new ArrayList<Consumer<InputStream>>();
 		this.writer = new ArrayList<Consumer<OutputStream>>();
-		this.mainClass = mainClass;
 	}
 	
 	public void readResource() {
 		read(createResourceInputStream());
 	}
 	
-	public void readExternal() {
+	public void readExternal() throws FileNotFoundException {
 		read(createExternalInputStream());
 	}
 	
@@ -79,11 +79,11 @@ public class RestorableCustomFile {
 	}
 	
 	public InputStream createResourceInputStream() {
-		return ResourceReader.readResourceAsStream(resourcePath, mainClass);
+		return IOutil.readResourceAsStream(resourcePath);
 	}
 	
-	public InputStream createExternalInputStream() {
-		return ResourceReader.readResourceAsStream(externalPath, mainClass);
+	public InputStream createExternalInputStream() throws FileNotFoundException {
+		return IOutil.readExternalFile(externalPath);
 	}
 	
 	public OutputStream createResourceOutputStream() throws IOException {
@@ -99,7 +99,7 @@ public class RestorableCustomFile {
 	}
 	
 	public boolean existExternal() {
-		return ResourceReader.readResourceAsStream(externalPath, mainClass) != null;
+			return new File(externalPath).exists();
 	}
 	
 	public boolean addReadConsumer(Consumer<InputStream> readConsumer) {

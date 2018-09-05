@@ -7,32 +7,36 @@ import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.prepareFi
 import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.shutdownServer;
 import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.startingServer;
 
+import org.artorg.tools.phantomData.server.BootApplication;
+
 public class LaunchConfigurationsServer {
-	public static final LaunchConfigurationServer START_SERVER;
-	public static final LaunchConfigurationServer START_SERVER_TEST;
+	public static final LaunchConfigurationServer SWING_BOOT_AUTO;
+	public static final LaunchConfigurationServer SWING_BOOT_TEST;
 	
 	static {
-		START_SERVER = new LaunchConfigurationServer();
-		START_SERVER.setConsumer(args -> {
-			prepareFileStructure(START_SERVER);
+		SWING_BOOT_AUTO = new LaunchConfigurationServer();
+		SWING_BOOT_AUTO.setBootApplicationClass(BootApplication.class);
+		SWING_BOOT_AUTO.setConsumer(args -> {
+			prepareFileStructure(SWING_BOOT_AUTO);
 			
-			new Thread(() -> startingServer(START_SERVER, args)).start();
+			new Thread(() -> startingServer(SWING_BOOT_AUTO, args)).start();
 				
-			while(!isConnected(START_SERVER)) {
+			while(!isConnected(SWING_BOOT_AUTO)) {
 				try {Thread.sleep(1000);
 				} catch (InterruptedException e) {e.printStackTrace();}
 			}
 			
 		});
 		
-		START_SERVER_TEST = new LaunchConfigurationServer();
-		START_SERVER_TEST.setConsumer(args -> {
-			shutdownServer(START_SERVER_TEST);
-			deleteDatabase(START_SERVER_TEST);
-			deleteFileStructure(START_SERVER_TEST);
-			prepareFileStructure(START_SERVER_TEST);
+		SWING_BOOT_TEST = new LaunchConfigurationServer();
+		SWING_BOOT_TEST.setBootApplicationClass(BootApplication.class);
+		SWING_BOOT_TEST.setConsumer(args -> {
+			shutdownServer(SWING_BOOT_TEST);
+			deleteDatabase(SWING_BOOT_TEST);
+			deleteFileStructure(SWING_BOOT_TEST);
+			prepareFileStructure(SWING_BOOT_TEST);
 //			logInfos();
-			startingServer(START_SERVER_TEST, args);
+			startingServer(SWING_BOOT_TEST, args);
 			
 		});
 		

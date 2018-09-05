@@ -41,7 +41,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-import org.artorg.tools.phantomData.server.io.ResourceReader;
+import org.artorg.tools.phantomData.server.io.IOutil;
 
 public class ServerLauncher {
 	private static PrintStream SYSTEM_OUT = System.out;
@@ -77,9 +77,9 @@ public class ServerLauncher {
 			createConsoleFrame();
 			if (showStartupConsole)
 				consoleFrame.setVisible(true);
-			launchConfig.init(bootApplicationClass);
+			launchConfig.init();
 			if (!BootUtilsServer.isConnected(launchConfig))
-				createAndshowStartupFrame(launchConfig.getMainClass());
+				createAndshowStartupFrame(launchConfig.getBootApplicationClass());
 			
 			launchConfig.getConsumer().accept(args);
 			startupFrame.setVisible(false);
@@ -137,11 +137,11 @@ public class ServerLauncher {
 		buttonPane.add(closeLabel);
 		content.add(buttonPane, BorderLayout.NORTH);
 		
-		BufferedImage phantomImage = ResourceReader.readAsBufferedImage("img/startup.png", mainClass);
+		BufferedImage phantomImage = IOutil.readResourceAsBuffered("img/startup.png");
 		JLabel phantomLabel = new JLabel(new ImageIcon(phantomImage));
-		BufferedImage artortgLogoImage = ResourceReader.readAsBufferedImage("img/artorgLogo.png", mainClass);
+		BufferedImage artortgLogoImage = IOutil.readResourceAsBuffered("img/artorgLogo.png");
 		JLabel artortgLogoLabel = new JLabel(new ImageIcon(artortgLogoImage));
-		BufferedImage inselLogoImage = ResourceReader.readAsBufferedImage("img/inselLogo.png", mainClass);
+		BufferedImage inselLogoImage = IOutil.readResourceAsBuffered("img/inselLogo.png");
 		JLabel inselLogoLabel = new JLabel(new ImageIcon(inselLogoImage));
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.LINE_AXIS));

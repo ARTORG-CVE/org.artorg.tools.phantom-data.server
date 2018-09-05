@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BootApplication {
 	
 	public static void main(String[] args) {
-		new ServerLauncher().launch(BootApplication.class, LaunchConfigurationsServer.START_SERVER, args);
+		new ServerLauncher().launch(BootApplication.class, LaunchConfigurationsServer.SWING_BOOT_AUTO, args);
 		
 	}
 

@@ -10,8 +10,8 @@ public class RestorablePropertiesFile extends RestorableCustomFile {
 		properties = new Properties();
 	}
 	
-	public RestorablePropertiesFile(String resourcePath, String externalPath, Class<?> mainClass) {
-		super(resourcePath, externalPath, mainClass);
+	public RestorablePropertiesFile(String resourcePath, String externalPath) {
+		super(resourcePath, externalPath);
 		super.addReadConsumer(inputStream -> {
 			try {
 				properties.clear();

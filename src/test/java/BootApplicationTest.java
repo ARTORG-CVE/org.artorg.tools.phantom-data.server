@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BootApplicationTest {
 	
 	public static void main(String[] args) {
-		new ServerLauncher().launch(BootApplicationTest.class, LaunchConfigurationsServer.START_SERVER_TEST, args);
+		new ServerLauncher().launch(BootApplicationTest.class, LaunchConfigurationsServer.SWING_BOOT_TEST, args);
 		
 	}
 
