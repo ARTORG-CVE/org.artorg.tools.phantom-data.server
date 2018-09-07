@@ -9,17 +9,12 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.boot.UnicodeProperties;
 
 public class IOutil {
-
-	
 	@SuppressWarnings("deprecation")
 	public static void addExternalDirectoryToClassPath(String path) throws Exception {
 		addExternalDirectoryToClassPath(new File(path).toURL());
@@ -49,9 +44,7 @@ public class IOutil {
 	}
 
 	public static InputStream readResourceAsStream(String path) {
-		return BootApplication.class.getClassLoader().getResourceAsStream(path);
-		// return
-		// Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 	}
 
 	public static URL readResource(String path) {

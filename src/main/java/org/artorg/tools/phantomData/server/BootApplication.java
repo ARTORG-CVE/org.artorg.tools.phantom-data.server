@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server;
 
-import org.artorg.tools.phantomData.server.boot.ServerLauncher;
+import org.artorg.tools.phantomData.server.boot.DesktopSwingLauncher;
 import org.artorg.tools.phantomData.server.boot.LaunchConfigurationsServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class BootApplication {
 //        logger.info(environment.getProperty("cmdb.resource-url"));
 		
 		
-		new ServerLauncher().launch(BootApplication.class, LaunchConfigurationsServer.SWING_BOOT_AUTO, args);
+		new DesktopSwingLauncher().launch(BootApplication.class, LaunchConfigurationsServer.DESKTOP_SWING_BOOT, args);
 		
 	}
 

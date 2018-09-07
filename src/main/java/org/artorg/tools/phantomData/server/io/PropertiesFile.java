@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.stream.Collectors;
 
-import org.artorg.tools.phantomData.server.boot.UnicodeProperties;
-
 public class PropertiesFile extends RestorableFile {
 	private UnicodeProperties properties;
 
@@ -40,7 +38,6 @@ public class PropertiesFile extends RestorableFile {
 	public void writeExternal(String externalPath) throws IOException {
 		OutputStream outputStream = this.createExternalOutputStream();
 		properties.store(outputStream, "");
-		
 	}
 	
 	public void init() throws Exception {
@@ -58,8 +55,10 @@ public class PropertiesFile extends RestorableFile {
 	}	
 	
 	public void setProperties(UnicodeProperties properties) {
-		this.properties.clear();
-		this.properties.putAll(properties.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())));
+		this.properties = properties;
+//		
+//		this.properties.clear();
+//		this.properties.putAll(properties.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue())));
 	}
 
 }

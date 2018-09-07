@@ -43,7 +43,7 @@ import javax.swing.text.StyledDocument;
 
 import org.artorg.tools.phantomData.server.io.IOutil;
 
-public class ServerLauncher {
+public class DesktopSwingLauncher {
 	private static PrintStream SYSTEM_OUT = System.out;
 	private static PrintStream SYSTEM_ERR = System.err;
 	private String text = "";

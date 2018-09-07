@@ -48,7 +48,7 @@ public class RestorableFile {
 	}
 	
 	private void readResource(InputStream inputStream, String resourcePath) throws Exception {
-		if (!existResource(resourcePath)) createResource(resourcePath);
+		if (!existResource(resourcePath)) throw new IOException(); 
 		read(inputStream, resourcePath);
 	}
 	
@@ -58,7 +58,6 @@ public class RestorableFile {
 	}
 	
 	private void read(InputStream inputStream, String path) throws IOException {
-		
 		reader.forEach(consumer -> consumer.accept(inputStream));
 		try {
 			inputStream.close();
@@ -96,8 +95,10 @@ public class RestorableFile {
 		createResource(getResourcePath());
 	}
 	
-	public void createResource(String resourcePath) throws Exception {
-		addExternalDirectoryToClassPath(resourcePath);
+	public void createResource(String externalPath) throws Exception {
+		if (existResource()) return;
+		File parentDirectory = new File("src\\main\\resources\\" +externalPath).getParentFile();
+		addExternalDirectoryToClassPath(parentDirectory.getAbsolutePath());
 	}
 	
 	public void createExternal() throws IOException {
@@ -167,7 +168,10 @@ public class RestorableFile {
 	}
 	
 	public boolean existResource() {
-		return existResource(getResourcePath());
+		try {
+			return existResource(getResourcePath());
+		} catch (Exception e) {}
+		return false;
 	}
 	
 	public boolean existResource(String resourcePath) {
@@ -189,7 +193,6 @@ public class RestorableFile {
 
 	public void setResourcePath(String resourcePath) throws Exception {
 		this.resourcePath = resourcePath;
-		createResource();
 	}
 
 	public String getExternalPath() {
@@ -197,9 +200,8 @@ public class RestorableFile {
 		return externalPath;
 	}
 
-	public void setExternalPath(String externalPath) throws IOException {
+	public void setExternalPath(String externalPath) throws Exception {
 		this.externalPath = externalPath;
-		createExternal();
 	}
 
 }

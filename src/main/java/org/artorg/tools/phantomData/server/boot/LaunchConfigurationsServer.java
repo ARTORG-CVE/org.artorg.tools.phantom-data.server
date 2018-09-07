@@ -10,18 +10,18 @@ import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.startingS
 import org.artorg.tools.phantomData.server.BootApplication;
 
 public class LaunchConfigurationsServer {
-	public static final LaunchConfigurationServer SWING_BOOT_AUTO;
+	public static final LaunchConfigurationServer DESKTOP_SWING_BOOT;
 	public static final LaunchConfigurationServer SWING_BOOT_TEST;
 	
 	static {
-		SWING_BOOT_AUTO = new LaunchConfigurationServer();
-		SWING_BOOT_AUTO.setBootApplicationClass(BootApplication.class);
-		SWING_BOOT_AUTO.setConsumer(args -> {
-			prepareFileStructure(SWING_BOOT_AUTO);
+		DESKTOP_SWING_BOOT = new LaunchConfigurationServer();
+		DESKTOP_SWING_BOOT.setBootApplicationClass(BootApplication.class);
+		DESKTOP_SWING_BOOT.setConsumer(args -> {
+			prepareFileStructure(DESKTOP_SWING_BOOT);
 			
-			new Thread(() -> startingServer(SWING_BOOT_AUTO, args)).start();
+			new Thread(() -> startingServer(DESKTOP_SWING_BOOT, args)).start();
 				
-			while(!isConnected(SWING_BOOT_AUTO)) {
+			while(!isConnected(DESKTOP_SWING_BOOT)) {
 				try {Thread.sleep(1000);
 				} catch (InterruptedException e) {e.printStackTrace();}
 			}

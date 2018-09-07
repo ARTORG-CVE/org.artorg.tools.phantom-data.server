@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.io;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

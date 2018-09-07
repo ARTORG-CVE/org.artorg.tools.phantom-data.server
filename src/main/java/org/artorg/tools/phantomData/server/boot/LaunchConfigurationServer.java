@@ -9,12 +9,18 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.artorg.tools.phantomData.server.BootApplication;
 import org.artorg.tools.phantomData.server.io.IOutil;
 import org.artorg.tools.phantomData.server.io.PropertiesFile;
+import org.artorg.tools.phantomData.server.io.UnicodeProperties;
 import org.artorg.tools.phantomData.server.model.PhantomFile;
 
 import static org.artorg.tools.phantomData.server.io.IOutil.*;
@@ -25,9 +31,27 @@ public class LaunchConfigurationServer {
 	private String parentDirectory;
 	private String databasePath;
 	private String homePath;
+	private String configPath;
 	
+	
+	public String getConfigPath() {
+		return configPath;
+	}
 
-	
+
+	public void setConfigPath(String configpath) {
+		this.configPath = configpath;
+	}
+
+	private String sqlDriver;
+	public String getSqlDriver() {
+		return sqlDriver;
+	}
+
+
+	public void setSqlDriver(String sqlDriver) {
+		this.sqlDriver = sqlDriver;
+	}
 
 	private String filesPath;
 	private String logsPath;
@@ -37,9 +61,6 @@ public class LaunchConfigurationServer {
 	private String databaseUsername;
 	private String databasePassword;
 	private Class<?> bootApplicationClass;
-	private UnicodeProperties applicationProperties;
-	private UnicodeProperties configProperties;
-	public PropertiesFile restorablePropertiesConfig;
 	private Consumer<String[]> consumer;
 	private int nStartupConsoleLines;
 
@@ -47,56 +68,97 @@ public class LaunchConfigurationServer {
 		this.setnStartupConsoleLines(192);
 	}
 	
+	private void putProperty(UnicodeProperties properties, String key, String value, Consumer<String> setter) {
+		properties.put(key, value);
+		setter.accept(value);
+		Map<String,String> map =  new HashMap<String,String>();
+		if (map.containsKey(key))
+			map.replace(key, value);
+		else 
+			map.put(key, value);
+	}
+	
+	private class PropertyPut {
+		private final String key;
+		private final Supplier<String> value;
+		private final Consumer<String> setter;
+		PropertyPut(String key, Supplier<String> value, Consumer<String> setter) {
+			this.key = key;
+			this.value = value;
+			this.setter = setter;
+		}
+		PropertyPut(String key, String value, Consumer<String> setter) {
+			this(key, () -> value, setter);
+		}
+		PropertyPut(String key, String value) {
+			this(key, () -> value, s -> {});
+		}
+		public String getKey() {return key;}
+		public Supplier<String> getValue() {return value;}
+		public Consumer<String> getSetter() {return setter;}
+	}
+	
+	private PropertiesFile createProperties(String resourcePath, Supplier<String> externalPath, List<PropertyPut> propertyPuts) {
+		PropertiesFile propertiesFile = new PropertiesFile();
+		
+		UnicodeProperties properties = propertiesFile.getProperties();
+		
+		propertyPuts.forEach(put -> put.getSetter().accept(put.getValue().get()));
+		
+		try {
+			propertiesFile.setResourcePath(resourcePath);
+			propertiesFile.setExternalPath(externalPath.get());
+			propertiesFile.setProperties(properties);
+			
+			if (propertiesFile.existExternal()) {
+				propertiesFile.readExternal();
+				propertyPuts.forEach(put -> {
+					String value = properties.getProperty(put.getKey());
+					System.out.println("value: " +value);
+					properties.put(put.getKey(), value);
+					
+//					putProperty(properties, put.getKey(), value, put.getSetter());
+				});
+			} else {
+				propertiesFile.createExternal();
+				propertyPuts.forEach(put -> {
+					properties.put(put.getKey(), put.getValue().get());
+//					putProperty(properties, put.getKey(), put.getValue().get(), put.getSetter());
+				});
+				propertiesFile.writeExternal();
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		return propertiesFile;
+	}
+	
+	
 	public void init() {
 		if (this.getBootApplicationClass() == null)
 			throw new IllegalArgumentException("use setBootApplicationClass(BootApplication.class)");
 		
-		File parentDir = null;
 		if (BootUtilsServer.isRunnableJarExecution(BootApplication.class)) {
-			parentDir = BootUtilsServer.getRunnableJarExecutionDirectory(BootApplication.class);
+			File parentDir = BootUtilsServer.getRunnableJarExecutionDirectory(BootApplication.class);
 			this.setParentDirectory(parentDir.getPath());
 		} else {
 			this.setParentDirectory(System.getProperty("user.home") +"\\Desktop");
-			parentDir = new File(this.getParentDirectory());
 		}
 		
+		List<PropertyPut> configPuts = new ArrayList<PropertyPut>();
+		configPuts.add(new PropertyPut("parent.directory.path", parentDirectory, this::setParentDirectory));
+		configPuts.add(new PropertyPut("home.path", () -> getParentDirectory() +"\\phantomData", this::setHomePath));
+		configPuts.add(new PropertyPut("database.path", () -> getHomePath() + "\\db", this::setDatabasePath));
+		configPuts.add(new PropertyPut("database.name.file", "h2", this::setDatabaseFilename));
+		configPuts.add(new PropertyPut("database.name.ext", "db", this::setDatabaseFileExtension));
+		configPuts.add(new PropertyPut("config-path", () -> getHomePath() +"\\config", this::setConfigPath));
+		configPuts.add(new PropertyPut("files.path", () -> getHomePath() +"\\data", this::setFilesPath));
+		configPuts.add(new PropertyPut("logs.path", () -> getHomePath() +"\\logs", this::setLogsPath));
+		PropertiesFile configFile = createProperties("config.properties", 
+				() -> getConfigPath() +"\\config.properties", 
+				configPuts);
 		
-		
-		try {
-			this.setRestorablePropertiesConfig(new PropertiesFile(
-					"config.properties", 
-					parentDir +"/phantomData/config/config.properties"));
-		} catch (Exception e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		
-		this.setConfigProperties(restorablePropertiesConfig.getProperties());
-		
-//		
-		
-		
-		this.setHomePath(parentDirectory +"\\phantomData");
-//		this.setDatabasePath(homePath +"\\db");
-		this.setDatabasePath(homePath +"\\test45db");
-		this.setDatabaseFilename("h2");
-		this.setDatabaseFileExtension("db");
-		this.setFilesPath(homePath +"\\data");
-		this.setLogsPath(homePath +"\\logs");
-		
-//		configProperties.put("database.path", homePath +"\\db");
-		
-//		System.out.println("config properties: " +configProperties.toString());
-		
-		try {
-			restorablePropertiesConfig.init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		this.setDatabasePath((String) configProperties.get("database.path"));
-//		System.out.println(configProperties.get("database.path"));
 //		
 //		System.out.println(parentDir.getAbsolutePath());
 //		System.out.println("jdbc:h2:" +parentDir.getAbsolutePath() +"/phantomData/db/phantoms;AUTO_SERVER=TRUE");
@@ -120,51 +182,50 @@ public class LaunchConfigurationServer {
 //		
 //		
 		
+		List<PropertyPut> applicationPuts = new ArrayList<PropertyPut>();
+		applicationPuts.add(new PropertyPut("spring.datasource.hikari.connection-timeout", "20000"));
+		applicationPuts.add(new PropertyPut("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect"));
+		applicationPuts.add(new PropertyPut("spring.datasource.url", () -> 
+			"jdbc:h2:" +getDatabasePath() +"\\" +getDatabaseFilename() +";AUTO_SERVER=TRUE", this::setDatabasePath));
+		applicationPuts.add(new PropertyPut("endpoints.shutdown.sensitive", "false"));
+		applicationPuts.add(new PropertyPut("spring.datasource.password", "1234"));
+		applicationPuts.add(new PropertyPut("spring.jpa.properties.hibernate.format_sql", "true"));
+		applicationPuts.add(new PropertyPut("management.endpoint.shutdown.enabled", "true"));
+		applicationPuts.add(new PropertyPut("spring.h2.console.enabled", "true"));
+		applicationPuts.add(new PropertyPut("management.endpoints.web.exposure.include", "*"));
+		applicationPuts.add(new PropertyPut("spring.datasource.username", "admin"));
+		applicationPuts.add(new PropertyPut("spring.jpa.properties.hibernate.id.new_generator_mappings", "false"));
+		applicationPuts.add(new PropertyPut("endpoints.shutdown.enabled", "true"));
+		applicationPuts.add(new PropertyPut("sql.driver", "org.h2.Driver"));
+		applicationPuts.add(new PropertyPut("spring.datasource.hikari.maximum-pool-size", "12"));
+		applicationPuts.add(new PropertyPut("server.port", () -> "8183", this::setUrlLocalhost));
+		applicationPuts.add(new PropertyPut("spring.jpa.hibernate.ddl-auto", "update"));
+		applicationPuts.add(new PropertyPut("spring.datasource.hikari.max-lifetime", "1200000"));
+		applicationPuts.add(new PropertyPut("spring.datasource.hikari.minimum-idle", "5"));
+		applicationPuts.add(new PropertyPut("spring.datasource.hikari.idle-timeout", "300000"));
+		PropertiesFile applicationFile = createProperties("application.properties", 
+				() -> getConfigPath() +"\\application.properties", 
+				applicationPuts);
 		
 		
-		UnicodeProperties applicationProperties = new UnicodeProperties();
-		PropertiesFile applicationFile = new PropertiesFile();
-		applicationFile.setProperties(applicationProperties);
-		try {
-			// just .../Desktop for classpath 
-			applicationFile.setExternalPath("D:/Users/Marc/Desktop/application.properties");
-			applicationFile.setResourcePath("application.properties");
-			applicationFile.init();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		
-		
-//		try {
-//			addExternalDirectoryToClassPath("D:/Users/Marc/Desktop");
-//		} catch (Exception e2) {
-//			e2.printStackTrace();
-//		}
-		
-//		try {
-//			addURL(new File("D:/Users/Marc/Desktop").toURL());
-//		} catch (Exception e2) {
-//			e2.printStackTrace();
-//		}
-		
-		
-//		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties");
 //		
-//		if (inputStream == null) System.out.println("null");
-//		else
-//			System.out.println(inputStream.toString());
-		
-//		applicationProperties.clear();
-		
-		
-//		Properties properties = new Properties();
+//		
+//		UnicodeProperties applicationProperties = new UnicodeProperties();
+//		
+//		
+//		PropertiesFile applicationFile = new PropertiesFile();
+//		applicationFile.setProperties(applicationProperties);
 //		try {
-//			properties.load(inputStream);
-//		} catch (IOException e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
+//			// just .../Desktop for classpath 
+//			applicationFile.setExternalPath("D:/Users/Marc/Desktop/application.properties");
+//			applicationFile.setResourcePath("application.properties");
+//			applicationFile.init();
+//		} catch (Exception e) {
+//			e.printStackTrace();
 //		}
+		
+		
 //		
 		
 //		System.out.println("jdbc:h2:" +"D:/Users/Marc/Desktop/phantomData4w/db" +"/phantoms;AUTO_SERVER=TRUE");
@@ -174,28 +235,7 @@ public class LaunchConfigurationServer {
 		
 		
 		
-//		\\u003A
-		
-		
-		OutputStream outputStream = null;
-		try {
-			outputStream = new FileOutputStream(new File("D:/Users/Marc/Desktop/appp.properties"), false);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Writer writer = new OutputStreamWriter(outputStream);
-		
-//		try {
-//			applicationProperties.store(outputStream, "");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-		
-		this.setApplicationProperties(applicationProperties);
+//		this.setApplicationProperties(applicationProperties);
 		
 //		System.out.println("application properties");
 //		System.out.println(applicationProperties.toString().replaceAll(", ", "\n"));
@@ -207,11 +247,49 @@ public class LaunchConfigurationServer {
 		
 		
 //		this.setUrlLocalhost("http://localhost:" +applicationProperties.getProperty("server.port"));
-		this.setUrlLocalhost("http://localhost:" +"8183");
+//		this.setUrlLocalhost("http://localhost:" +"8183");
 		
+//		try {
+//			IOutil.addExternalDirectoryToClassPath("src\\main\\resources\\application.properties");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		File file = new File("src\\main\\resources\\application.properties");
+		file.getParentFile().mkdirs();
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(file.canWrite());
+		
+		OutputStream outputstream = null;
+		try {
+			outputstream = new FileOutputStream(file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		Properties props = IOutil.readProperties("application.properties");
+		props.clear();
+		props.putAll(applicationFile.getProperties());
+		
+		try {
+			props.store(outputstream, "");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("////// application properties ///////////");
-//		System.out.println(applicationProperties.toString().replaceAll(", ", "\n"));
+		System.out.println(props.toString().replaceAll(", ", "\n"));
+		System.out.println();
 	}
 	
 	// Setters
@@ -249,9 +327,6 @@ public class LaunchConfigurationServer {
 		new File(path).mkdirs();
 	}
 	
-	private void setRestorablePropertiesConfig(PropertiesFile restorablePropertiesConfig) {
-		this.restorablePropertiesConfig = restorablePropertiesConfig;
-	}
 
 
 	private void setSpringDatasourceUrl(String springDatasourceUrl) {
@@ -262,12 +337,6 @@ public class LaunchConfigurationServer {
 	private void setLogsPath(String path) {
 		this.logsPath = path;
 		new File(path).mkdirs();
-	}
-	
-	private void setConfigProperties(UnicodeProperties configProperties) {
-		this.configProperties = configProperties;
-		
-		
 	}
 	
 	private void setDatabaseFilename(String databaseFilename) {
@@ -296,12 +365,6 @@ public class LaunchConfigurationServer {
 	}
 
 
-	private void setApplicationProperties(UnicodeProperties applicationProperties) {
-		this.applicationProperties = applicationProperties;
-		
-	}
-
-
 	private void setnStartupConsoleLines(int nStartupConsoleLines) {
 		this.nStartupConsoleLines = nStartupConsoleLines;
 	}
@@ -321,14 +384,6 @@ public class LaunchConfigurationServer {
 	
 	public String getLogsPath() {
 		return logsPath;
-	}
-	
-	public UnicodeProperties getConfigProperties() {
-		return configProperties;
-	}
-	
-	public PropertiesFile getRestorablePropertiesConfig() {
-		return restorablePropertiesConfig;
 	}
 	
 	public String getParentDirectory() {
@@ -365,10 +420,6 @@ public class LaunchConfigurationServer {
 	
 	public Class<?> getBootApplicationClass() {
 		return bootApplicationClass;
-	}
-	
-	public UnicodeProperties getApplicationProperties() {
-		return applicationProperties;
 	}
 	
 	public Consumer<String[]> getConsumer() {

@@ -64,7 +64,7 @@ public class BootUtilsServer {
 
 	public static Connection getConnection(LaunchConfigurationServer config) {
 		try {
-			Class.forName (config.getApplicationProperties().getProperty("sql.driver"));
+			Class.forName (config.getSqlDriver());
 			return DriverManager.getConnection (
 					config.getSpringDatasourceUrl(), 
 					config.getDatabaseUsername(),
