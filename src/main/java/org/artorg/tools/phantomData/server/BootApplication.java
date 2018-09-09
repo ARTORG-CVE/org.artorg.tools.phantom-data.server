@@ -28,7 +28,7 @@ public class BootApplication {
 // 
 //        logger.info(environment.getProperty("cmdb.resource-url"));
 		
-		
+		System.err.println("main method");
 		new DesktopSwingLauncher().launch(BootApplication.class, LaunchConfigurationsServer.DESKTOP_SWING_BOOT, args);
 		
 	}

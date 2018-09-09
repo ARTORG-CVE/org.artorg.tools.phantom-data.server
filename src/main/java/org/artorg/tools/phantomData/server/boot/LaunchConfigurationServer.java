@@ -39,9 +39,7 @@ public class LaunchConfigurationServer {
 	}
 
 
-	public void setConfigPath(String configpath) {
-		this.configPath = configpath;
-	}
+	
 
 	private String sqlDriver;
 	public String getSqlDriver() {
@@ -49,9 +47,7 @@ public class LaunchConfigurationServer {
 	}
 
 
-	public void setSqlDriver(String sqlDriver) {
-		this.sqlDriver = sqlDriver;
-	}
+	
 
 	private String filesPath;
 	private String logsPath;
@@ -159,6 +155,48 @@ public class LaunchConfigurationServer {
 				() -> getConfigPath() +"\\config.properties", 
 				configPuts);
 		
+//		InputStream inputStream = null;
+//		try {
+//			inputStream = IOutil.readExternalFile("D:\\Users\\Marc\\Desktop\\application.properties");
+//		} catch (FileNotFoundException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+		
+		File file = new File("src\\main\\resources\\config.properties");
+//		file.getParentFile().mkdirs();
+//		try {
+//			file.createNewFile();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		OutputStream outputstream = null;
+		try {
+			outputstream = new FileOutputStream(file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		UnicodeProperties configProps = IOutil.readProperties("config.properties");
+		configProps.clear();
+		configProps.putAll(configFile.getProperties());
+		
+		try {
+			configProps.store(outputstream, "");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("////// config properties ///////////");
+		System.out.println(configProps.toString().replaceAll(", ", "\n"));
+		System.out.println();
+		
+		
 //		
 //		System.out.println(parentDir.getAbsolutePath());
 //		System.out.println("jdbc:h2:" +parentDir.getAbsolutePath() +"/phantomData/db/phantoms;AUTO_SERVER=TRUE");
@@ -186,7 +224,7 @@ public class LaunchConfigurationServer {
 		applicationPuts.add(new PropertyPut("spring.datasource.hikari.connection-timeout", "20000"));
 		applicationPuts.add(new PropertyPut("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect"));
 		applicationPuts.add(new PropertyPut("spring.datasource.url", () -> 
-			"jdbc:h2:" +getDatabasePath() +"\\" +getDatabaseFilename() +";AUTO_SERVER=TRUE", this::setDatabasePath));
+			"jdbc:h2:" +getDatabasePath() +"\\" +getDatabaseFilename() +";AUTO_SERVER=TRUE", this::setSpringDatasourceUrl));
 		applicationPuts.add(new PropertyPut("endpoints.shutdown.sensitive", "false"));
 		applicationPuts.add(new PropertyPut("spring.datasource.password", "1234"));
 		applicationPuts.add(new PropertyPut("spring.jpa.properties.hibernate.format_sql", "true"));
@@ -256,39 +294,39 @@ public class LaunchConfigurationServer {
 //			e.printStackTrace();
 //		}
 		
-		File file = new File("src\\main\\resources\\application.properties");
-		file.getParentFile().mkdirs();
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		File file = new File("src\\main\\resources\\application.properties");
+//		file.getParentFile().mkdirs();
+//		try {
+//			file.createNewFile();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println(file.canWrite());
+//		
+//		OutputStream outputstream = null;
+//		try {
+//			outputstream = new FileOutputStream(file);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		System.out.println(file.canWrite());
 		
-		OutputStream outputstream = null;
-		try {
-			outputstream = new FileOutputStream(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		Properties props = IOutil.readProperties("application.properties");
-		props.clear();
-		props.putAll(applicationFile.getProperties());
-		
-		try {
-			props.store(outputstream, "");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("////// application properties ///////////");
-		System.out.println(props.toString().replaceAll(", ", "\n"));
+//		UnicodeProperties props = IOutil.readProperties("application.properties");
+//		props.clear();
+//		props.putAll(applicationFile.getProperties());
+//		
+//		try {
+//			props.store(outputstream, "");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("////// application properties ///////////");
+//		System.out.println(props.toString().replaceAll(", ", "\n"));
 		System.out.println();
 	}
 	
@@ -327,6 +365,13 @@ public class LaunchConfigurationServer {
 		new File(path).mkdirs();
 	}
 	
+	private void setConfigPath(String configpath) {
+		this.configPath = configpath;
+	}
+	
+	private void setSqlDriver(String sqlDriver) {
+		this.sqlDriver = sqlDriver;
+	}
 
 
 	private void setSpringDatasourceUrl(String springDatasourceUrl) {
@@ -371,43 +416,54 @@ public class LaunchConfigurationServer {
 	
 	// Getters
 	public String getUrlLocalhost() {
-		return urlLocalhost;
+//		return urlLocalhost;
+		return IOutil.readProperties("application.properties").getProperty("server.port");
 	}
 	
 	public String getDatabasePath() {
-		return databasePath;
+//		return databasePath;
+		return IOutil.readProperties("application.properties").getProperty("database.path");
 	}
 	
 	public String getFilesPath() {
-		return filesPath;
+//		return filesPath;
+		return IOutil.readProperties("application.properties").getProperty("files.path");
 	}
 	
 	public String getLogsPath() {
-		return logsPath;
+//		return logsPath;
+		return IOutil.readProperties("application.properties").getProperty("logs.path");
 	}
 	
 	public String getParentDirectory() {
 		return parentDirectory;
+//		return IOutil.readProperties("config.properties").getProperty("parent.directory.path");
 	}
 	
-	public String getHomePath() {
+	private String getHomePath() {
 		return homePath;
 	}
 	
 	public String getDatabaseFilename() {
-		return databaseFilename;
+//		return databaseFilename;
+		return IOutil.readProperties("application.properties").getProperty("database.name.file");
 	}
 	
 	public String getDatabaseFileExtension() {
-		return databaseFileExtension;
+//		return databaseFileExtension;
+		return IOutil.readProperties("application.properties").getProperty("database.name.ext");
 	}
 	
 	public String getUrlShutdownActuator() {
-		return urlShutdownActuator;
+//		return urlShutdownActuator;
+		return getUrlLocalhost() +"/actuator/shutdown";
+		
+//		return IOutil.readProperties("application.properties").getProperty("database.name.ext");
 	}
 	
 	public String getSpringDatasourceUrl() {
-		return springDatasourceUrl;
+//		return springDatasourceUrl;
+		return IOutil.readProperties("application.properties").getProperty("spring.datasource.url");
 	}
 	
 	public String getDatabaseUsername() {

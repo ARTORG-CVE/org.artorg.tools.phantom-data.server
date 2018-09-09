@@ -2,6 +2,7 @@ package org.artorg.tools.phantomData.server.io;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -34,4 +35,16 @@ public class UnicodeProperties extends Properties {
 	      }
 	      bw.flush();
 	  }
+	  
+	  @Override
+	  public String getProperty(String key) {
+		  String value = super.getProperty(key);
+		  if (value == null) throw new NullPointerException();
+		  return value;
+	  }
+
+	public synchronized void load(InputStream inStream) throws IOException {
+		
 	}
+	
+}
