@@ -66,25 +66,26 @@ public class RestorableFile {
 		}
 	}
 	
+	public void writeResource() throws IOException {
+		writeResource(createResourceOutputStream(), getResourcePath());
+	}
 	
-	public void writeResource(OutputStream outputStream, String resourcePath) throws IOException {
+	public void writeResource(String resourcePath) throws IOException {
+		writeResource(createResourceOutputStream(), resourcePath);
+	}
+	
+	private void writeResource(OutputStream outputStream, String resourcePath) throws IOException {
 		if (!existResource(resourcePath)) throw new IllegalArgumentException();
 		writer.forEach(consumer -> consumer.accept(outputStream));
 		outputStream.close();
 	}
 	
 	public void writeExternal() throws IOException {
-		writeExternal(createExternalOutputStream());
+		writeExternal(createExternalOutputStream(), getExternalPath());
 	}
 	
 	public void writeExternal(String externalPath) throws IOException {
 		writeExternal(createExternalOutputStream(externalPath), externalPath);
-	}
-
-	private void writeExternal(OutputStream outputStream) throws IOException {
-		if (!existExternal()) createExternal();
-		writer.forEach(consumer -> consumer.accept(outputStream));
-		outputStream.close();
 	}
 	
 	private void writeExternal(OutputStream outputStream, String externalPath) throws IOException {
@@ -151,7 +152,8 @@ public class RestorableFile {
 	}
 	
 	public OutputStream createResourceOutputStream() throws IOException {
-		return createResourceOutputStream(getResourcePath());
+		OutputStream outputStream = createResourceOutputStream(getResourcePath()); 
+		return outputStream;
 	}
 	
 	private OutputStream createResourceOutputStream(String path) throws IOException {
@@ -175,14 +177,18 @@ public class RestorableFile {
 	}
 	
 	public boolean existResource() {
-		try {
-			return existResource(getResourcePath());
-		} catch (Exception e) {}
-		return false;
+		return existResource(getResourcePath());
+		
+//		try {
+//			return existResource(getResourcePath());
+//		} catch (Exception e) {}
+//		return false;
 	}
 	
 	public boolean existResource(String resourcePath) {
-		return IOutil.readResourceAsStream(resourcePath) != null;
+		return new File(resourcePath).exists();
+		
+//		return IOutil.readResourceAsStream(resourcePath) != null;
 	}
 	
 	protected boolean addReadConsumer(Consumer<InputStream> readConsumer) {
