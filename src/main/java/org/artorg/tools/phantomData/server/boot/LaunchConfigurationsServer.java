@@ -19,7 +19,7 @@ public class LaunchConfigurationsServer {
 		DESKTOP_SWING_BOOT.setConsumer(args -> {
 //			prepareFileStructure(DESKTOP_SWING_BOOT);
 			
-			new Thread(() -> startingServer(DESKTOP_SWING_BOOT, args)).start();
+			startingServer(DESKTOP_SWING_BOOT, args);
 				
 			while(!isConnected(DESKTOP_SWING_BOOT)) {
 				try {Thread.sleep(1000);

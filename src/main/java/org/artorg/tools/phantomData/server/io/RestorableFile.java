@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.io;
 
-import static org.artorg.tools.phantomData.server.io.IOutil.addExternalDirectoryToClassPath;
+//import static org.artorg.tools.phantomData.server.io.IOutil.addExternalDirectoryToClassPath;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,6 +66,13 @@ public class RestorableFile {
 		}
 	}
 	
+	
+	public void writeResource(OutputStream outputStream, String resourcePath) throws IOException {
+		if (!existResource(resourcePath)) throw new IllegalArgumentException();
+		writer.forEach(consumer -> consumer.accept(outputStream));
+		outputStream.close();
+	}
+	
 	public void writeExternal() throws IOException {
 		writeExternal(createExternalOutputStream());
 	}
@@ -91,15 +98,15 @@ public class RestorableFile {
 		writeExternal();
 	}
 	
-	public void createResource() throws Exception {
-		createResource(getResourcePath());
-	}
+//	public void createResource() throws Exception {
+//		createResource(getResourcePath());
+//	}
 	
-	public void createResource(String externalPath) throws Exception {
-		if (existResource()) return;
-		File parentDirectory = new File("src\\main\\resources\\" +externalPath).getParentFile();
-		addExternalDirectoryToClassPath(parentDirectory.getAbsolutePath());
-	}
+//	public void createResource(String externalPath) throws Exception {
+//		if (existResource()) return;
+//		File parentDirectory = new File("src\\main\\resources\\" +externalPath).getParentFile();
+//		addExternalDirectoryToClassPath(parentDirectory.getAbsolutePath());
+//	}
 	
 	public void createExternal() throws IOException {
 		createExternal(getExternalPath());

@@ -15,18 +15,18 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 
 public class IOutil {
-	@SuppressWarnings("deprecation")
-	public static void addExternalDirectoryToClassPath(String path) throws Exception {
-		addExternalDirectoryToClassPath(new File(path).toURL());
-	}
-	
-	public static void addExternalDirectoryToClassPath(URL url) throws Exception {
-		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-		Method method = URLClassLoader.class.getDeclaredMethod("addURL",
-				new Class[] { URL.class });
-		method.setAccessible(true);
-		method.invoke(classLoader, new Object[] { url });
-	}
+//	@SuppressWarnings("deprecation")
+//	public static void addExternalDirectoryToClassPath(String path) throws Exception {
+//		addExternalDirectoryToClassPath(new File(path).toURL());
+//	}
+//	
+//	public static void addExternalDirectoryToClassPath(URL url) throws Exception {
+//		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+//		Method method = URLClassLoader.class.getDeclaredMethod("addURL",
+//				new Class[] { URL.class });
+//		method.setAccessible(true);
+//		method.invoke(classLoader, new Object[] { url });
+//	}
 
 	public static UnicodeProperties readProperties(String path) {
 		UnicodeProperties properties = new UnicodeProperties();

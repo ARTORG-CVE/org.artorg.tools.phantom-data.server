@@ -2,7 +2,6 @@ package org.artorg.tools.phantomData.server.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.stream.Collectors;
 
 public class PropertiesFile extends RestorableFile {
 	private UnicodeProperties properties;

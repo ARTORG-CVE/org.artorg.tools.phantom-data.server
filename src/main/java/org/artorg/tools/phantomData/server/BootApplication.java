@@ -3,12 +3,6 @@ package org.artorg.tools.phantomData.server;
 import org.artorg.tools.phantomData.server.boot.DesktopSwingLauncher;
 import org.artorg.tools.phantomData.server.boot.LaunchConfigurationsServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
 public class BootApplication {
@@ -28,8 +22,10 @@ public class BootApplication {
 // 
 //        logger.info(environment.getProperty("cmdb.resource-url"));
 		
-		System.err.println("main method");
+//		org.artorg.tools.phantomData.server.boot.BootUtilsServer.startingServer(BootApplication.class, "8183", args);
+		
 		new DesktopSwingLauncher().launch(BootApplication.class, LaunchConfigurationsServer.DESKTOP_SWING_BOOT, args);
+//		System.exit(0);
 		
 	}
 

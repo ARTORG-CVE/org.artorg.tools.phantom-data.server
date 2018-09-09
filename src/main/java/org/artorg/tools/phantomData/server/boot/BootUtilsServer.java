@@ -155,9 +155,9 @@ public class BootUtilsServer {
 	
 	public static void startingServer(LaunchConfigurationServer config, String[] args) {
 		startingServer(config.getBootApplicationClass(), config.getUrlLocalhost(), args);
-		
-		if (!isConnected(config.getUrlLocalhost())) 
-			SpringApplication.run(BootApplication.class, args);
+		String urlLocalhost = config.getUrlLocalhost(); 
+		if (!isConnected(urlLocalhost)) 
+			throw new IllegalArgumentException();
 	}
 	
 	public static void startingServer(Class<?> bootApplicationClass, String urlLocalhost, String[] args) {
