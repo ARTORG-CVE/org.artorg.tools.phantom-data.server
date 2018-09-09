@@ -28,13 +28,9 @@ public class IOutil {
 //		method.invoke(classLoader, new Object[] { url });
 //	}
 
-	public static UnicodeProperties readProperties(String path) {
+	public static UnicodeProperties readProperties(String path) throws IOException {
 		UnicodeProperties properties = new UnicodeProperties();
-		try {
-			properties.load(readResourceAsStream(path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		properties.load(readResourceAsStream(path));
 		return properties;
 	}
 
@@ -44,7 +40,9 @@ public class IOutil {
 	}
 
 	public static InputStream readResourceAsStream(String path) {
-		return Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		if (inputStream == null) throw new IllegalArgumentException("path: " +path);
+		return inputStream;
 	}
 
 	public static URL readResource(String path) {

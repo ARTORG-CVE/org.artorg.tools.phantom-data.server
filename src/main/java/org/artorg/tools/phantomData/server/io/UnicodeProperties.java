@@ -19,6 +19,7 @@ public class UnicodeProperties extends Properties {
 	  public void store(OutputStream out, String comments) throws IOException {
 	      customStore0(new BufferedWriter(new OutputStreamWriter(out, "8859_1")),
 	                   comments, true);
+	      out.close();
 	  }
 	  //Override to stop '/' or ':' chars from being replaced by not called 
 	  //saveConvert(key, true, escUnicode)
@@ -49,7 +50,7 @@ public class UnicodeProperties extends Properties {
 
 	  @Override
 	public synchronized void load(InputStream inStream) throws IOException {
-		customLoad0(new BufferedReader(new InputStreamReader(inStream, "8859_1")));
+		customLoad0(new BufferedReader(new InputStreamReader(inStream)));
 		inStream.close();
 	}
 	

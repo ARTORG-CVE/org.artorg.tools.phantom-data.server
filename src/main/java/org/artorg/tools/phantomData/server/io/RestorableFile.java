@@ -59,11 +59,7 @@ public class RestorableFile {
 	
 	private void read(InputStream inputStream, String path) throws IOException {
 		reader.forEach(consumer -> consumer.accept(inputStream));
-		try {
-			inputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		inputStream.close();
 	}
 	
 	public void writeResource() throws IOException {
