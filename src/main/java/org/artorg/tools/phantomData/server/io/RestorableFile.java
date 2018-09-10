@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
+
 public class RestorableFile {
 	private String resourcePath;
 	private String externalPath;
@@ -95,16 +97,6 @@ public class RestorableFile {
 		writeExternal();
 	}
 	
-//	public void createResource() throws Exception {
-//		createResource(getResourcePath());
-//	}
-	
-//	public void createResource(String externalPath) throws Exception {
-//		if (existResource()) return;
-//		File parentDirectory = new File("src\\main\\resources\\" +externalPath).getParentFile();
-//		addExternalDirectoryToClassPath(parentDirectory.getAbsolutePath());
-//	}
-	
 	public void createExternal() throws IOException {
 		createExternal(getExternalPath());
 	}
@@ -153,6 +145,10 @@ public class RestorableFile {
 	}
 	
 	private OutputStream createResourceOutputStream(String path) throws IOException {
+		if (BootUtilsServer.isRunnableJarExecution(getClass())) {
+			String filename =  new File(path).getName();
+			return new FileOutputStream(filename, false);
+		}
 		return new FileOutputStream(new File(path), false);
 	}
 	
@@ -174,17 +170,14 @@ public class RestorableFile {
 	
 	public boolean existResource() {
 		return existResource(getResourcePath());
-		
-//		try {
-//			return existResource(getResourcePath());
-//		} catch (Exception e) {}
-//		return false;
 	}
 	
 	public boolean existResource(String resourcePath) {
+		if (BootUtilsServer.isRunnableJarExecution(getClass())) {
+			String filename =  new File(resourcePath).getName();
+			return new File(filename).exists();
+		}
 		return new File(resourcePath).exists();
-		
-//		return IOutil.readResourceAsStream(resourcePath) != null;
 	}
 	
 	protected boolean addReadConsumer(Consumer<InputStream> readConsumer) {
@@ -201,7 +194,7 @@ public class RestorableFile {
 	}
 
 	public void setResourcePath(String resourcePath) throws Exception {
-		this.resourcePath = resourcePath;
+		this.resourcePath = resourcePath.replace("\\", "/");
 	}
 
 	public String getExternalPath() {
@@ -210,7 +203,7 @@ public class RestorableFile {
 	}
 
 	public void setExternalPath(String externalPath) throws Exception {
-		this.externalPath = externalPath;
+		this.externalPath = externalPath.replace("\\", "/");
 	}
 
 }

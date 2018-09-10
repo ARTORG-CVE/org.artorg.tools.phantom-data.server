@@ -43,6 +43,8 @@ import javax.swing.text.StyledDocument;
 
 import org.artorg.tools.phantomData.server.io.IOutil;
 
+import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.isRunnableJarExecution;
+
 public class DesktopSwingLauncher {
 	private static PrintStream SYSTEM_OUT = System.out;
 	private static PrintStream SYSTEM_ERR = System.err;
@@ -86,7 +88,8 @@ public class DesktopSwingLauncher {
 			startupFrame.dispose();
 		} catch (Exception e) {
 			consoleFrame.setTitle("Phantom Database - Exception thrown!");
-			consoleFrame.setVisible(true);
+			if (isRunnableJarExecution(launchConfig.getBootApplicationClass()))
+				consoleFrame.setVisible(true);
 			e.printStackTrace();
 		}
 		if (!errorOccured)

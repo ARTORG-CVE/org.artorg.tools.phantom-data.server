@@ -157,7 +157,7 @@ public class BootUtilsServer {
 		startingServer(config.getBootApplicationClass(), config.getUrlLocalhost(), args);
 		String urlLocalhost = config.getUrlLocalhost(); 
 		if (!isConnected(urlLocalhost)) 
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("url Localhost: " +urlLocalhost);
 	}
 	
 	public static void startingServer(Class<?> bootApplicationClass, String urlLocalhost, String[] args) {
