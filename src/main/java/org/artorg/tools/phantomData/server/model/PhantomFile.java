@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
+import org.artorg.tools.phantomData.server.boot.util.BootUtilsServer;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity

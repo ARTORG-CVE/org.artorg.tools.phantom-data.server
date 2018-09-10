@@ -1,13 +1,13 @@
-import org.artorg.tools.phantomData.server.boot.DesktopSwingLauncher;
-import org.artorg.tools.phantomData.server.boot.LaunchConfigurationsServer;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.artorg.tools.phantomData.server.boot.DesktopSwingBoot;
+import org.artorg.tools.phantomData.server.boot.DesktopSwingResetBoot;
+import org.junit.Test;
 
-//@SpringBootApplication
 public class BootApplicationTest {
 	
-//	public static void main(String[] args) {
-//		new DesktopSwingLauncher().launch(BootApplicationTest.class, LaunchConfigurationsServer.SWING_BOOT_TEST, args);
-//		
-//	}
+	@Test
+	public void test() {
+		new DesktopSwingBoot().boot(new String[] {});
+		new DesktopSwingResetBoot().boot(new String[] {});
+	}
 
 }

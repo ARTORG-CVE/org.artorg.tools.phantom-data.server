@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.boot.util;
 
 import static org.toilelibre.libe.curl.Curl.curl;
 
@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.BootApplication;
 import org.springframework.boot.SpringApplication;
 
 public class BootUtilsServer {

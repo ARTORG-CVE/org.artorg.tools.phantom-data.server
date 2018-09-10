@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
-
 public class RestorableFile {
-	private String resourcePath;
 	private String externalPath;
 	private final List<Consumer<InputStream>> reader;
 	private final List<Consumer<OutputStream>> writer;
@@ -23,14 +20,6 @@ public class RestorableFile {
 	public RestorableFile() {
 		this.reader = new ArrayList<Consumer<InputStream>>();
 		this.writer = new ArrayList<Consumer<OutputStream>>();
-	}
-	
-	public void readResource() throws Exception {
-		readResource(createResourceInputStream());
-	}
-	
-	public void readResource(String resourcePath) throws Exception {
-		readResource(createResourceInputStream(resourcePath), resourcePath);
 	}
 	
 	public void readExternal() throws IOException {
@@ -41,17 +30,8 @@ public class RestorableFile {
 		readExternal(createExternalInputStream(externalPath), externalPath);
 	}
 	
-	private void readResource(InputStream inputStream) throws Exception {
-		readResource(inputStream, getResourcePath());
-	}
-	
 	private void readExternal(InputStream inputStream) throws IOException {
 		readExternal(inputStream, getExternalPath());
-	}
-	
-	private void readResource(InputStream inputStream, String resourcePath) throws Exception {
-		if (!existResource(resourcePath)) throw new IOException(); 
-		read(inputStream, resourcePath);
 	}
 	
 	private void readExternal(InputStream inputStream, String externalPath) throws IOException {
@@ -62,20 +42,6 @@ public class RestorableFile {
 	private void read(InputStream inputStream, String path) throws IOException {
 		reader.forEach(consumer -> consumer.accept(inputStream));
 		inputStream.close();
-	}
-	
-	public void writeResource() throws IOException {
-		writeResource(createResourceOutputStream(), getResourcePath());
-	}
-	
-	public void writeResource(String resourcePath) throws IOException {
-		writeResource(createResourceOutputStream(), resourcePath);
-	}
-	
-	private void writeResource(OutputStream outputStream, String resourcePath) throws IOException {
-		if (!existResource(resourcePath)) throw new IllegalArgumentException();
-		writer.forEach(consumer -> consumer.accept(outputStream));
-		outputStream.close();
 	}
 	
 	public void writeExternal() throws IOException {
@@ -123,33 +89,12 @@ public class RestorableFile {
 			throw new IOException("File couldn't delete.");
 	}
 	
-	public InputStream createResourceInputStream() {
-		return IOutil.readResourceAsStream(getResourcePath());
-	}
-	
-	public InputStream createResourceInputStream(String resourcePath) {
-		return IOutil.readResourceAsStream(resourcePath);
-	}
-	
 	public InputStream createExternalInputStream() throws FileNotFoundException {
 		return IOutil.readExternalFile(getExternalPath());
 	}
 	
 	public InputStream createExternalInputStream(String externalPath) throws FileNotFoundException {
 		return IOutil.readExternalFile(externalPath);
-	}
-	
-	public OutputStream createResourceOutputStream() throws IOException {
-		OutputStream outputStream = createResourceOutputStream(getResourcePath()); 
-		return outputStream;
-	}
-	
-	private OutputStream createResourceOutputStream(String path) throws IOException {
-		if (BootUtilsServer.isRunnableJarExecution(getClass())) {
-			String filename =  new File(path).getName();
-			return new FileOutputStream(filename, false);
-		}
-		return new FileOutputStream(new File(path), false);
 	}
 	
 	public OutputStream createExternalOutputStream() throws IOException {
@@ -168,18 +113,6 @@ public class RestorableFile {
 		return new File(externalPath).exists();
 	}
 	
-	public boolean existResource() {
-		return existResource(getResourcePath());
-	}
-	
-	public boolean existResource(String resourcePath) {
-		if (BootUtilsServer.isRunnableJarExecution(getClass())) {
-			String filename =  new File(resourcePath).getName();
-			return new File(filename).exists();
-		}
-		return new File(resourcePath).exists();
-	}
-	
 	protected boolean addReadConsumer(Consumer<InputStream> readConsumer) {
 		return reader.add(readConsumer);
 	}
@@ -187,22 +120,13 @@ public class RestorableFile {
 	protected boolean addWriteConsumer(Consumer<OutputStream> writeConsumer) {
 		return writer.add(writeConsumer);
 	}
-	
-	public String getResourcePath() {
-		if (resourcePath == null) throw new NullPointerException();
-		return resourcePath;
-	}
-
-	public void setResourcePath(String resourcePath) throws Exception {
-		this.resourcePath = resourcePath.replace("\\", "/");
-	}
 
 	public String getExternalPath() {
 		if (externalPath == null) throw new NullPointerException();
 		return externalPath;
 	}
 
-	public void setExternalPath(String externalPath) throws Exception {
+	public void setExternalPath(String externalPath) {
 		this.externalPath = externalPath.replace("\\", "/");
 	}
 

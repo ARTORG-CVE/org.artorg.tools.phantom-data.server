@@ -1,4 +1,6 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.boot.launchers;
+
+import static org.artorg.tools.phantomData.server.boot.util.BootUtilsServer.isRunnableJarExecution;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,9 +43,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import org.artorg.tools.phantomData.server.boot.util.LaunchConfigurationServer;
 import org.artorg.tools.phantomData.server.io.IOutil;
-
-import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.isRunnableJarExecution;
 
 public class DesktopSwingLauncher {
 	private static PrintStream SYSTEM_OUT = System.out;
@@ -73,16 +74,15 @@ public class DesktopSwingLauncher {
 		consoleConsumersErr = new ArrayList<BiConsumer<List<String>, String>>();
 	}
 	
-	public boolean launch(Class<?> bootApplicationClass, LaunchConfigurationServer launchConfig, String[] args) {
+	public void init(LaunchConfigurationServer launchConfig) {
 		this.nLines = launchConfig.getnStartupConsoleLines() - 1;
+		createConsoleFrame();
+		if (showStartupConsole)
+			consoleFrame.setVisible(true);
+	}
+	
+	public boolean launch(LaunchConfigurationServer launchConfig, String[] args) {
 		try {
-			createConsoleFrame();
-			if (showStartupConsole)
-				consoleFrame.setVisible(true);
-			launchConfig.init();
-			if (!BootUtilsServer.isConnected(launchConfig))
-				createAndshowStartupFrame(launchConfig.getBootApplicationClass());
-			
 			launchConfig.getConsumer().accept(args);
 			startupFrame.setVisible(false);
 			startupFrame.dispose();
@@ -116,7 +116,7 @@ public class DesktopSwingLauncher {
 		addConsoleOutputPrintStream();
 	}
 	
-	private void createAndshowStartupFrame(Class<?> mainClass) {
+	public void createAndshowStartupFrame(Class<?> mainClass) {
 		startupFrame.setTitle("Phantom Database");
 		startupFrame.setResizable(false);
 		startupFrame.setUndecorated(true);
@@ -182,9 +182,9 @@ public class DesktopSwingLauncher {
 	
 	@SuppressWarnings("unchecked")
 	private void addConsoleOutputPrintStream() {
-		System.setOut(createPrintStream(SYSTEM_OUT, this::updateStartupProgress, 
+		System.setOut(createPrintStream(SYSTEM_OUT, 
 				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine)));
-		System.setErr(createPrintStream(SYSTEM_ERR, this::updateStartupProgress, 
+		System.setErr(createPrintStream(SYSTEM_ERR, 
 				(consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
 				(consoleLines, newLine) -> errorOccured = true));
 	}
@@ -211,6 +211,7 @@ public class DesktopSwingLauncher {
 	
 	private PrintStream createPrintStream(PrintStream printStream, BiConsumer<List<String>, String> consumer) {
 		List<BiConsumer<List<String>, String>> consumers = new ArrayList<BiConsumer<List<String>, String>>();
+		consumers.add(consumer);
 		return createPrintStream(printStream, consumers);
 	}
 	

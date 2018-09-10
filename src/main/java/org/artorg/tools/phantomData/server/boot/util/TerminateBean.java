@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.boot.util;
 
 
 import javax.annotation.PreDestroy;

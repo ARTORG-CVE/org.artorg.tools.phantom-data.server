@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.boot.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

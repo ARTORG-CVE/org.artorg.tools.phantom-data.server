@@ -1,15 +1,12 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server.boot.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.artorg.tools.phantomData.server.BootApplication;
 import org.artorg.tools.phantomData.server.io.IOutil;
 import org.artorg.tools.phantomData.server.io.PropertiesFile;
 import org.artorg.tools.phantomData.server.io.PropertyPut;
-import org.artorg.tools.phantomData.server.io.UnicodeProperties;
 import org.artorg.tools.phantomData.server.model.PhantomFile;
 
 public class LaunchConfigurationServer {
@@ -21,10 +18,16 @@ public class LaunchConfigurationServer {
 	
 	private Class<?> bootApplicationClass;
 	private Consumer<String[]> consumer;
-	private boolean configurationHidden = false;
-	private boolean externalConfigOverride = false;
+	private boolean externalConfigOverride = true;
 	
-	
+	public boolean isExternalConfigOverride() {
+		return externalConfigOverride;
+	}
+
+	public void setExternalConfigOverride(boolean externalConfigOverride) {
+		this.externalConfigOverride = externalConfigOverride;
+	}
+
 	{
 		this.setnStartupConsoleLines(192);
 	}
@@ -37,8 +40,7 @@ public class LaunchConfigurationServer {
 			File parentDir = BootUtilsServer.getRunnableJarExecutionDirectory(BootApplication.class);
 			parentDirectory = parentDir.getPath().replace("\\", "/");
 		} else {
-			String test = System.getProperty("user.home").replace("\\", "/");
-			parentDirectory = test +"/Desktop";
+			parentDirectory = System.getProperty("user.home").replace("\\", "/") +"/Desktop";
 		}
 		
 		this.setConfigPath(parentDirectory +"/phantomData/config");
@@ -54,9 +56,7 @@ public class LaunchConfigurationServer {
 			new PropertyPut("localhost.url", "http://localhost:" + "8183"),
 			new PropertyPut("shutdown.actuator.url", "http://localhost:" + "8183" +"/actuator/shutdown")
 		};
-		configFile = createProperties("src/main/resources/config.properties", 
-				getConfigPath() +"/config.properties", 
-				configPuts);
+		configFile = new PropertiesFile(getConfigPath() +"/config.properties", configPuts, externalConfigOverride);
 
 		PropertyPut[] applicationPuts = new PropertyPut[] {
 			new PropertyPut("spring.datasource.hikari.connection-timeout", "20000"),
@@ -80,9 +80,13 @@ public class LaunchConfigurationServer {
 			new PropertyPut("spring.datasource.hikari.minimum-idle", "5"),
 			new PropertyPut("spring.datasource.hikari.idle-timeout", "300000")
 		};
-		applicationFile = createProperties("src/main/resources/application.properties", 
-				getConfigPath() +"/application.properties", 
-				applicationPuts);
+		applicationFile = new PropertiesFile(getConfigPath() +"/application.properties", applicationPuts, externalConfigOverride);
+		
+		try {
+			IOutil.addExternalDirectoryToClassPath(configPath +"/");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		new File(getParentDirectory()).mkdirs();
 		new File(getHomePath()).mkdirs();
@@ -94,62 +98,6 @@ public class LaunchConfigurationServer {
 		
 	}
 	
-	private PropertiesFile createProperties(String resourcePath, String externalPath, PropertyPut[] propertyPuts) {
-		PropertiesFile propertiesFile = new PropertiesFile();
-		UnicodeProperties properties = propertiesFile.getProperties();
-		try {
-			propertiesFile.setResourcePath(resourcePath);
-			propertiesFile.setExternalPath(externalPath);
-			propertiesFile.setProperties(properties);
-			
-			if (propertiesFile.existExternal()) {
-				if (externalConfigOverride) {
-					Arrays.stream(propertyPuts).forEach(put -> {
-						properties.put(put.getKey(), put.getValue());
-					});
-					propertiesFile.writeExternal();
-				} else {
-					propertiesFile.readExternal();
-//					Arrays.stream(propertyPuts).forEach(put -> {
-//						String value = properties.getProperty(put.getKey());
-//						properties.put(put.getKey(), value);
-//					});
-				}
-			} else {
-				if (configurationHidden) {
-					Arrays.stream(propertyPuts).forEach(put -> {
-						properties.put(put.getKey(), put.getValue());
-					});
-				} else {
-					propertiesFile.createExternal();
-					Arrays.stream(propertyPuts).forEach(put -> {
-						properties.put(put.getKey(), put.getValue());
-					});
-					propertiesFile.writeExternal();
-				}
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-		try {
-			IOutil.addExternalDirectoryToClassPath(new File(configPath).getParentFile().getPath());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		if (!BootUtilsServer.isRunnableJarExecution(getClass())) {
-//			try {
-//				propertiesFile.writeResource();
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-		
-		return propertiesFile;
-	}
-	
 	// Setters
 	public void setConsumer(Consumer<String[]> consumer) {
 		this.consumer = consumer;
@@ -159,7 +107,7 @@ public class LaunchConfigurationServer {
 		this.configPath = configpath;
 	}
 
-	protected void setBootApplicationClass(Class<?> bootApplicationClass) {
+	public void setBootApplicationClass(Class<?> bootApplicationClass) {
 		if (this.bootApplicationClass != null) throw new UnsupportedOperationException();
 		this.bootApplicationClass = bootApplicationClass;
 	}
@@ -191,52 +139,52 @@ public class LaunchConfigurationServer {
 	
 	// Getters - properties - config
 	private String getHomePath() {
-		return configFile.getResourceProperty("home.path");
+		return configFile.getProperty("home.path");
 	}
 	
 	public String getDatabasePath() {
-		return configFile.getResourceProperty("database.path");
+		return configFile.getProperty("database.path");
 	}
 	
 	public String getDatabaseFilename() {
-		return configFile.getResourceProperty("database.name.file");
+		return configFile.getProperty("database.name.file");
 	}
 	
 	public String getDatabaseFileExtension() {
-		return configFile.getResourceProperty("database.name.ext");
+		return configFile.getProperty("database.name.ext");
 	}
 	
 	public String getUrlLocalhost() {
-		return configFile.getResourceProperty("localhost.url");
+		return configFile.getProperty("localhost.url");
 	}
 	
 	public String getUrlShutdownActuator() {
-		return configFile.getResourceProperty("shutdown.actuator.url");
+		return configFile.getProperty("shutdown.actuator.url");
 	}
 	
 	public String getFilesPath() {
-		return configFile.getResourceProperty("files.path");
+		return configFile.getProperty("files.path");
 	}
 	
 	public String getLogsPath() {
-		return configFile.getResourceProperty("logs.path");
+		return configFile.getProperty("logs.path");
 	}
 	
 	// Getters - properties - application
 	public String getSpringDatasourceUrl() {
-		return applicationFile.getResourceProperty("spring.datasource.url");
+		return applicationFile.getProperty("spring.datasource.url");
 	}
 	
 	public String getDatabaseUsername() {
-		return applicationFile.getResourceProperty("spring.datasource.username");
+		return applicationFile.getProperty("spring.datasource.username");
 	}
 	
 	public String getDatabasePassword() {
-		return applicationFile.getResourceProperty("spring.datasource.password");
+		return applicationFile.getProperty("spring.datasource.password");
 	}
 	
 	public String getSqlDriver() {
-		return applicationFile.getResourceProperty("sql.driver");
+		return applicationFile.getProperty("sql.driver");
 	}
 
 }

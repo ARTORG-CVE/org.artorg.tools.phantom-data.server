@@ -1,28 +1,24 @@
 package org.artorg.tools.phantomData.server.io;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-
-import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
+import java.util.Arrays;
 
 public class PropertiesFile extends RestorableFile {
 	private UnicodeProperties properties;
-	private boolean existExternalPath;
-
-	{
-		properties = new UnicodeProperties();
-	}
+	private PropertyPut[] propertyPuts;
+	private boolean externalConfigOverride = false;
 	
-	public PropertiesFile(String resourcePath, String externalPath) throws Exception {
+	public PropertiesFile(String externalPath, PropertyPut[] propertyPuts, boolean externalConfigOverride) {
 		this();
-		super.setResourcePath(resourcePath);
 		super.setExternalPath(externalPath);
+		this.setPropertyPuts(propertyPuts);
+		this.setExternalConfigOverride(externalConfigOverride);
+		this.init();
 	}
 	
 	public PropertiesFile() {
+		properties = new UnicodeProperties();
 		super.addReadConsumer(inputStream -> {
 			try {
 				properties.clear();
@@ -40,21 +36,35 @@ public class PropertiesFile extends RestorableFile {
 		});
 	}
 	
+	public void init() {
+		try {
+			if (existExternal()) {
+				if (externalConfigOverride) {
+					loadInitProperties();
+					writeExternal();
+				} else {
+					readExternal();
+				}
+			} else {
+				createExternal();
+				loadInitProperties();
+				writeExternal();
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void loadInitProperties() {
+		Arrays.stream(propertyPuts).forEach(put -> {
+			properties.put(put.getKey(), put.getValue());
+		});
+	}
+	
 	public void writeExternal(String externalPath) throws IOException {
 		OutputStream outputStream = this.createExternalOutputStream();
 		properties.store(outputStream, "");
 	}
-	
-//	public void init() throws Exception {
-//		if (existExternal()) {
-//			existExternalPath = true;
-//			readExternal();
-//		} else {
-//			createExternal();
-//			readResource();
-//			writeExternal();
-//		}
-//	}
 	
 	public UnicodeProperties getProperties() {
 		return properties;
@@ -64,33 +74,24 @@ public class PropertiesFile extends RestorableFile {
 		this.properties = properties;
 	}
 	
-	public String getResourceProperty(String key) {
+	public String getProperty(String key) {
 		return this.properties.getProperty(key);
-		
-//		String value = null;
-//		InputStream inputStream = null;
-//		try {
-//			UnicodeProperties properties = new UnicodeProperties();
-//			String filename = getResourcePath();
-//			File file = new File(filename);
-//			if (BootUtilsServer.isRunnableJarExecution(getClass())) {
-//				filename =  file.getName();
-//				file = new File(filename);
-//			}
-//			
-//			inputStream = new FileInputStream(file);
-//			properties.load(inputStream);
-//			value = properties.getProperty(key);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			inputStream.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		if (value == null) throw new NullPointerException("key: " +key +", resourcePath: " +getResourcePath());
-//		return value;
+	}
+
+	public PropertyPut[] getPropertyPuts() {
+		return propertyPuts;
+	}
+
+	public void setPropertyPuts(PropertyPut[] propertyPuts) {
+		this.propertyPuts = propertyPuts;
+	}
+	
+	public boolean isExternalConfigOverride() {
+		return externalConfigOverride;
+	}
+
+	public void setExternalConfigOverride(boolean externalConfigOverride) {
+		this.externalConfigOverride = externalConfigOverride;
 	}
 
 }
