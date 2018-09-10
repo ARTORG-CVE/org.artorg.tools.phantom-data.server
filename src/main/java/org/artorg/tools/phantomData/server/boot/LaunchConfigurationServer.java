@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.io.IOutil;
 import org.artorg.tools.phantomData.server.io.PropertiesFile;
 import org.artorg.tools.phantomData.server.io.PropertyPut;
 import org.artorg.tools.phantomData.server.io.UnicodeProperties;
@@ -131,13 +132,20 @@ public class LaunchConfigurationServer {
 			e1.printStackTrace();
 		}
 		
-		if (!BootUtilsServer.isRunnableJarExecution(getClass())) {
-			try {
-				propertiesFile.writeResource();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+		try {
+			IOutil.addExternalDirectoryToClassPath(new File(configPath).getParentFile().getPath());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+//		if (!BootUtilsServer.isRunnableJarExecution(getClass())) {
+//			try {
+//				propertiesFile.writeResource();
+//			} catch (IOException e1) {
+//				e1.printStackTrace();
+//			}
+//		}
 		
 		return propertiesFile;
 	}

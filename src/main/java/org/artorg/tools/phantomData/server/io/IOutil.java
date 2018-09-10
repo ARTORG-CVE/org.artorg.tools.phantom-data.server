@@ -15,6 +15,19 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 
 public class IOutil {
+	
+	@SuppressWarnings("deprecation")
+	public static void addExternalDirectoryToClassPath(String path) throws Exception {
+		addExternalDirectoryToClassPath(new File(path).toURL());
+	}
+	
+	public static void addExternalDirectoryToClassPath(URL url) throws Exception {
+		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		Method method = URLClassLoader.class.getDeclaredMethod("addURL",
+				new Class[] { URL.class });
+		method.setAccessible(true);
+		method.invoke(classLoader, new Object[] { url });
+	}
 
 	public static InputStream readExternalFile(String path) throws FileNotFoundException {
 		File file = new File(path);
