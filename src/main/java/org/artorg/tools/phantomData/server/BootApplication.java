@@ -1,6 +1,5 @@
-package org.artorg.tools.phantomData.server.boot;
+package org.artorg.tools.phantomData.server;
 
-import org.artorg.tools.phantomData.server.DesktopSwingBootServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication

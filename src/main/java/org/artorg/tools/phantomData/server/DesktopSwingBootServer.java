@@ -3,7 +3,6 @@ package org.artorg.tools.phantomData.server;
 import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.isRunnableJarExecution;
 import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.startingServer;
 
-import org.artorg.tools.phantomData.server.boot.BootApplication;
 import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
 import org.artorg.tools.phantomData.server.boot.ConsoleDiverter;
 import org.artorg.tools.phantomData.server.boot.LaunchConfigurationServer;
