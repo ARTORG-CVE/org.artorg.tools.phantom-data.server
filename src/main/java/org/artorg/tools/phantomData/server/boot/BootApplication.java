@@ -1,13 +1,13 @@
-package org.artorg.tools.phantomData.server;
+package org.artorg.tools.phantomData.server.boot;
 
-import org.artorg.tools.phantomData.server.boot.DesktopSwingBoot;
+import org.artorg.tools.phantomData.server.DesktopSwingBootServer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BootApplication {
 	
 	public static void main(String[] args) {
-		new DesktopSwingBoot().boot(args);
+		new DesktopSwingBootServer().boot(args);
 	}
 
 }

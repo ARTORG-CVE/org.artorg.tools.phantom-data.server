@@ -1,49 +1,35 @@
-package org.artorg.tools.phantomData.server.boot.util;
+package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
-import java.util.function.Consumer;
 
-import org.artorg.tools.phantomData.server.BootApplication;
 import org.artorg.tools.phantomData.server.io.IOutil;
 import org.artorg.tools.phantomData.server.io.PropertiesFile;
 import org.artorg.tools.phantomData.server.io.PropertyPut;
 import org.artorg.tools.phantomData.server.model.PhantomFile;
 
 public class LaunchConfigurationServer {
-	private int nStartupConsoleLines;
 	private String parentDirectory;
 	private String configPath;
 	private PropertiesFile applicationFile;
 	private PropertiesFile configFile;
-	
 	private Class<?> bootApplicationClass;
-	private Consumer<String[]> consumer;
-	private boolean externalConfigOverride = true;
+	private boolean externalConfigOverridable;
 	
-	public boolean isExternalConfigOverride() {
-		return externalConfigOverride;
-	}
-
-	public void setExternalConfigOverride(boolean externalConfigOverride) {
-		this.externalConfigOverride = externalConfigOverride;
-	}
-
-	{
-		this.setnStartupConsoleLines(192);
+	public LaunchConfigurationServer(Class<?> bootApplicationClass, boolean externalConfigOverridable) {
+		this.bootApplicationClass = bootApplicationClass;
+		this.externalConfigOverridable = externalConfigOverridable;
+		init();
 	}
 	
-	public void init() {
-		if (this.getBootApplicationClass() == null)
-			throw new IllegalArgumentException("use setBootApplicationClass(BootApplication.class)");
-		
-		if (BootUtilsServer.isRunnableJarExecution(BootApplication.class)) {
-			File parentDir = BootUtilsServer.getRunnableJarExecutionDirectory(BootApplication.class);
+	private void init() {
+		if (BootUtilsServer.isRunnableJarExecution(bootApplicationClass)) {
+			File parentDir = BootUtilsServer.getRunnableJarExecutionDirectory(bootApplicationClass);
 			parentDirectory = parentDir.getPath().replace("\\", "/");
 		} else {
 			parentDirectory = System.getProperty("user.home").replace("\\", "/") +"/Desktop";
 		}
 		
-		this.setConfigPath(parentDirectory +"/phantomData/config");
+		configPath = parentDirectory +"/phantomData/config";
 		
 		PropertyPut[] configPuts = new PropertyPut[] {
 			new PropertyPut("parent.directory.path", parentDirectory),
@@ -56,7 +42,7 @@ public class LaunchConfigurationServer {
 			new PropertyPut("localhost.url", "http://localhost:" + "8183"),
 			new PropertyPut("shutdown.actuator.url", "http://localhost:" + "8183" +"/actuator/shutdown")
 		};
-		configFile = new PropertiesFile(getConfigPath() +"/config.properties", configPuts, externalConfigOverride);
+		configFile = new PropertiesFile(getConfigPath() +"/config.properties", configPuts, externalConfigOverridable);
 
 		PropertyPut[] applicationPuts = new PropertyPut[] {
 			new PropertyPut("spring.datasource.hikari.connection-timeout", "20000"),
@@ -80,7 +66,7 @@ public class LaunchConfigurationServer {
 			new PropertyPut("spring.datasource.hikari.minimum-idle", "5"),
 			new PropertyPut("spring.datasource.hikari.idle-timeout", "300000")
 		};
-		applicationFile = new PropertiesFile(getConfigPath() +"/application.properties", applicationPuts, externalConfigOverride);
+		applicationFile = new PropertiesFile(getConfigPath() +"/application.properties", applicationPuts, externalConfigOverridable);
 		
 		try {
 			IOutil.addExternalDirectoryToClassPath(configPath +"/");
@@ -97,25 +83,7 @@ public class LaunchConfigurationServer {
 		PhantomFile.setFilesPath(getFilesPath());
 		
 	}
-	
-	// Setters
-	public void setConsumer(Consumer<String[]> consumer) {
-		this.consumer = consumer;
-	}
-	
-	private void setConfigPath(String configpath) {
-		this.configPath = configpath;
-	}
 
-	public void setBootApplicationClass(Class<?> bootApplicationClass) {
-		if (this.bootApplicationClass != null) throw new UnsupportedOperationException();
-		this.bootApplicationClass = bootApplicationClass;
-	}
-	
-	private void setnStartupConsoleLines(int nStartupConsoleLines) {
-		this.nStartupConsoleLines = nStartupConsoleLines;
-	}
-	
 	// Getters
 	public String getParentDirectory() {
 		return parentDirectory;
@@ -129,12 +97,8 @@ public class LaunchConfigurationServer {
 		return bootApplicationClass;
 	}
 	
-	public Consumer<String[]> getConsumer() {
-		return consumer;
-	}
-
-	public int getnStartupConsoleLines() {
-		return nStartupConsoleLines;
+	public void setExternalConfigOverridable(boolean b) {
+		this.externalConfigOverridable = b;
 	}
 	
 	// Getters - properties - config

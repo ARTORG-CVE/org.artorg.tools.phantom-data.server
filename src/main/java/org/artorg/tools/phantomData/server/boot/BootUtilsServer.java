@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.boot.util;
+package org.artorg.tools.phantomData.server.boot;
 
 import static org.toilelibre.libe.curl.Curl.curl;
 

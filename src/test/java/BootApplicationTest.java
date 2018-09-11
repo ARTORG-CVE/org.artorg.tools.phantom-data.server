@@ -1,13 +1,13 @@
-import org.artorg.tools.phantomData.server.boot.DesktopSwingBoot;
-import org.artorg.tools.phantomData.server.boot.DesktopSwingResetBoot;
+import org.artorg.tools.phantomData.server.DesktopSwingBootServer;
+import org.artorg.tools.phantomData.server.DesktopSwingResetBootServer;
 import org.junit.Test;
 
 public class BootApplicationTest {
 	
 	@Test
 	public void test() {
-		new DesktopSwingBoot().boot(new String[] {});
-		new DesktopSwingResetBoot().boot(new String[] {});
+		new DesktopSwingBootServer().boot(new String[] {});
+		new DesktopSwingResetBootServer().boot(new String[] {});
 	}
 
 }
