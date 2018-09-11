@@ -16,6 +16,10 @@ public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
 		return list;
 	}
     
+	default Boolean existById(ID_TYPE id) {
+		return getRepository().existsById(id);
+	}
+	
 	default T getById(ID_TYPE id) {
 		T obj = getRepository().findById(id).get();
 		return obj;

@@ -20,6 +20,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("user")
 public class PhantomController extends ControllerSpec<Phantom, Integer, IService<Phantom,Integer>> {
 
+	@GetMapping("PHANTOM/EXIST/{ID}")
+	public Boolean existById(@PathVariable("ID") Integer id) {
+		return super.existById(id);
+	}
+	
 	@GetMapping("PHANTOM/{ID}")
 	public ResponseEntity<Phantom> getById(@PathVariable("ID") Integer id) {
 		return super.getById(id);
