@@ -1,28 +1,16 @@
 package org.artorg.tools.phantomData.server;
 
-import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.isRunnableJarExecution;
-import static org.artorg.tools.phantomData.server.boot.BootUtilsServer.startingServer;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
-import org.artorg.tools.phantomData.server.boot.ConsoleDiverter;
-import org.artorg.tools.phantomData.server.boot.LaunchConfigurationServer;
-import org.artorg.tools.phantomData.server.boot.ServerBooter;
-import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
-import org.artorg.tools.phantomData.server.boot.SwingStartupProgressFrame;
+import org.artorg.tools.phantomData.server.boot.SwingConsoleStartupServerBooter;
+import org.artorg.tools.phantomData.server.model.PhantomFile;
 
-public class DesktopSwingBootServer extends ServerBooter {
-	private final LaunchConfigurationServer config;
-	private final ConsoleDiverter consoleDiverter;
-	private final SwingConsoleFrame consoleFrame;
-	private final SwingStartupProgressFrame startupFrame;
-	private final boolean externalConfigOverridable = false;
-	private boolean errorOccured;
+public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 	
 	{
-		config = new LaunchConfigurationServer(BootApplication.class, externalConfigOverridable);
-		consoleDiverter = new ConsoleDiverter();
-		consoleFrame = new SwingConsoleFrame(consoleDiverter);
-		startupFrame = new SwingStartupProgressFrame(consoleDiverter);
+		setBootApplicationClass(BootApplication.class);
+		setExternalConfigOverridable(false);
 	}
 	
 	public static void main(String[] args) {
@@ -30,40 +18,26 @@ public class DesktopSwingBootServer extends ServerBooter {
 	}
 	
 	public void boot(String[] args) {
-		try {
-			if (config.isDebugConsoleMode())
+		catchedBoot(() -> {
+			init();
+			prepareFileStructure();
+			PhantomFile.setFilesPath(getFilesPath());
+			
+			if (isDebugConsoleMode())
 				consoleFrame.setVisible(true);
-			if (!BootUtilsServer.isConnected(config))
+			if (!isConnected()) {
 				startupFrame.setVisible(true);
-			startupFrame.setnConsoleLines(191);
-			startupFrame.startProgress();
-			startingServer(config, args);
-			startupFrame.setVisible(false);
+				startupFrame.setnConsoleLines(191);
+				startupFrame.startProgress();
+				startSpringServer(args);
+				startupFrame.setVisible(false);
+			} else {
+				JFrame frame = new JFrame();
+				JOptionPane.showMessageDialog(frame, "Server already started!");
+				frame.dispose();
+			}
 			startupFrame.dispose();
-		} catch (Exception e) {
-			consoleFrame.setTitle("Phantom Database - Exception thrown!");
-			e.printStackTrace();
-			errorOccured = true;
-		}
-		if (!consoleFrame.isErrorOccured() && !errorOccured && !config.isDebugConsoleMode())
-			consoleFrame.setVisible(false);
-		else if (isRunnableJarExecution(config.getBootApplicationClass())) 
-			consoleFrame.setVisible(true);
-	}
-
-	@Override
-	public LaunchConfigurationServer getServerConfig() {
-		return config;
-	}
-
-	@Override
-	public void setStartupFrameVisible(boolean b) {
-		startupFrame.setVisible(b);
-	}
-
-	@Override
-	public void setConsoleFrameVisible(boolean b) {
-		consoleFrame.setVisible(b);
+		});
 	}
 
 }

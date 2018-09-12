@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.boot.BootUtilsServer;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
