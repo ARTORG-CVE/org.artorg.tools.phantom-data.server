@@ -14,7 +14,20 @@ public class LaunchConfigurationServer {
 	private PropertiesFile configFile;
 	private Class<?> bootApplicationClass;
 	private boolean externalConfigOverridable;
+	private boolean serverStartedEmbedded;
 	
+	{
+		serverStartedEmbedded = false;
+	}
+	
+	public boolean isServerStartedEmbedded() {
+		return serverStartedEmbedded;
+	}
+
+	public void setServerStartedEmbedded(boolean serverStartedEmbedded) {
+		this.serverStartedEmbedded = serverStartedEmbedded;
+	}
+
 	public LaunchConfigurationServer(Class<?> bootApplicationClass, boolean externalConfigOverridable) {
 		this.bootApplicationClass = bootApplicationClass;
 		this.externalConfigOverridable = externalConfigOverridable;
@@ -40,7 +53,8 @@ public class LaunchConfigurationServer {
 			new PropertyPut("files.path", parentDirectory +"/phantomData/data"),
 			new PropertyPut("logs.path", parentDirectory +"/phantomData/logs"),
 			new PropertyPut("localhost.url", "http://localhost:" + "8183"),
-			new PropertyPut("shutdown.actuator.url", "http://localhost:" + "8183" +"/actuator/shutdown")
+			new PropertyPut("shutdown.actuator.url", "http://localhost:" + "8183" +"/actuator/shutdown"),
+			new PropertyPut("debug.console.mode", "false")
 		};
 		configFile = new PropertiesFile(getConfigPath() +"/config.properties", configPuts, externalConfigOverridable);
 
@@ -132,6 +146,10 @@ public class LaunchConfigurationServer {
 	
 	public String getLogsPath() {
 		return configFile.getProperty("logs.path");
+	}
+	
+	public boolean isDebugConsoleMode() {
+		return Boolean.valueOf(configFile.getProperty("debug.console.mode"));
 	}
 	
 	// Getters - properties - application

@@ -16,7 +16,6 @@ public class DesktopSwingBootServer extends ServerBooter {
 	private final SwingConsoleFrame consoleFrame;
 	private final SwingStartupProgressFrame startupFrame;
 	private final boolean externalConfigOverridable = false;
-	private final boolean showConsoleFrameOnStartup = false;
 	private boolean errorOccured;
 	
 	{
@@ -24,8 +23,6 @@ public class DesktopSwingBootServer extends ServerBooter {
 		consoleDiverter = new ConsoleDiverter();
 		consoleFrame = new SwingConsoleFrame(consoleDiverter);
 		startupFrame = new SwingStartupProgressFrame(consoleDiverter);
-		
-		
 	}
 	
 	public static void main(String[] args) {
@@ -34,7 +31,7 @@ public class DesktopSwingBootServer extends ServerBooter {
 	
 	public void boot(String[] args) {
 		try {
-			if (showConsoleFrameOnStartup)
+			if (config.isDebugConsoleMode())
 				consoleFrame.setVisible(true);
 			if (!BootUtilsServer.isConnected(config))
 				startupFrame.setVisible(true);
@@ -48,7 +45,7 @@ public class DesktopSwingBootServer extends ServerBooter {
 			e.printStackTrace();
 			errorOccured = true;
 		}
-		if (!consoleFrame.isErrorOccured() && !errorOccured)
+		if (!consoleFrame.isErrorOccured() && !errorOccured && !config.isDebugConsoleMode())
 			consoleFrame.setVisible(false);
 		else if (isRunnableJarExecution(config.getBootApplicationClass())) 
 			consoleFrame.setVisible(true);

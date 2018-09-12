@@ -3,7 +3,6 @@ package org.artorg.tools.phantomData.server.specification;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.artorg.tools.phantomData.server.model.FabricationType;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
@@ -14,10 +13,6 @@ public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
 		List<T> list = new ArrayList<>();
 		getRepository().findAll().forEach(e -> list.add(e));
 		return list;
-	}
-    
-	default Boolean existById(ID_TYPE id) {
-		return getRepository().existsById(id);
 	}
 	
 	default T getById(ID_TYPE id) {

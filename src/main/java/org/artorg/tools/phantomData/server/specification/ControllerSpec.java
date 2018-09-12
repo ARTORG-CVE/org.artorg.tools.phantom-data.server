@@ -17,10 +17,6 @@ public abstract class ControllerSpec<MODEL_TYPE extends DatabasePersistent<ID_TY
 	@Autowired
 	protected I_SERVICE_TYPE service;
 	
-	protected Boolean existById(@PathVariable("ID") ID_TYPE id) {
-		return service.existById(id);
-	}
-	
 	protected ResponseEntity<MODEL_TYPE> getById(@PathVariable("ID") ID_TYPE id) {
 		MODEL_TYPE m = service.getById(id);
 		return new ResponseEntity<MODEL_TYPE>(m, HttpStatus.OK);
