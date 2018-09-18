@@ -18,5 +18,20 @@ public class StringProperty extends Property<String, Integer> implements Compara
 	public Integer stringToID(String id) {
 		return Integer.valueOf(id);
 	}
+
+	@Override
+	public String toString(String value) {
+		return value;
+	}
+
+	@Override
+	public String fromStringToValue(String s) {
+		return s;
+	}
+
+	@Override
+	public Integer fromStringToId(String s) {
+		return Integer.valueOf(s);
+	}
 	
 }

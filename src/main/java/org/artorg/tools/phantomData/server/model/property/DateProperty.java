@@ -21,4 +21,19 @@ public class DateProperty extends Property<Date, Integer> implements ComparableP
 		return Integer.valueOf(id);
 	}
 
+	@Override
+	public String toString(Date value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Date fromStringToValue(String s) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Integer fromStringToId(String s) {
+		return Integer.valueOf(s);
+	}
+
 }

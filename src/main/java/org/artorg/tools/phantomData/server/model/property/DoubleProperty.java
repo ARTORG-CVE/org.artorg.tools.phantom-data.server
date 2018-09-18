@@ -18,5 +18,20 @@ public class DoubleProperty extends Property<Double, Integer> implements Compara
 	public Integer stringToID(String id) {
 		return Integer.valueOf(id);
 	}
+
+	@Override
+	public String toString(Double value) {
+		return Double.toString(value);
+	}
+
+	@Override
+	public Double fromStringToValue(String s) {
+		return Double.valueOf(s);
+	}
+
+	@Override
+	public Integer fromStringToId(String s) {
+		return Integer.valueOf(s);
+	}
 	
 }

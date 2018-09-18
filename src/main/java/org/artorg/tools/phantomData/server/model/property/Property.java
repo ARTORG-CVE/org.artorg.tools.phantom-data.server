@@ -25,6 +25,12 @@ public abstract class Property<U extends Comparable<U>, ID_TYPE>
 	public Property() {}
 	
 	
+	public abstract String toString(U value);
+	
+	public abstract U fromStringToValue(String s);
+	
+	public abstract ID_TYPE fromStringToId(String s);
+	
 	public Property(PropertyField propertyField, U value) {
 		this.propertyField = propertyField;
 		this.value = value;

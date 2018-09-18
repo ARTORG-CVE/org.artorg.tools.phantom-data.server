@@ -18,5 +18,20 @@ public class IntegerProperty extends Property<Integer, Integer> implements Compa
 	public Integer stringToID(String id) {
 		return Integer.valueOf(id);
 	}
+
+	@Override
+	public String toString(Integer value) {
+		return Integer.toString(value);
+	}
+
+	@Override
+	public Integer fromStringToValue(String s) {
+		return Integer.valueOf(s);
+	}
+
+	@Override
+	public Integer fromStringToId(String s) {
+		return Integer.valueOf(s);
+	}
 	
 }

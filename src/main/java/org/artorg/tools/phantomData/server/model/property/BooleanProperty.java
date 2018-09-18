@@ -18,5 +18,20 @@ public class BooleanProperty extends Property<Boolean, Integer> implements Compa
 	public Integer stringToID(String id) {
 		return Integer.valueOf(id);
 	}
+
+	@Override
+	public String toString(Boolean value) {
+		return Boolean.toString(value);
+	}
+
+	@Override
+	public Boolean fromStringToValue(String s) {
+		return Boolean.valueOf(s);
+	}
+
+	@Override
+	public Integer fromStringToId(String s) {
+		return Integer.valueOf(s);
+	}
 	
 }
