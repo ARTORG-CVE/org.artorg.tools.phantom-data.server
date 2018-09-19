@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.Special;
 import org.artorg.tools.phantomData.server.repository.SpecialRepository;
@@ -10,13 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpecialService implements IspecialService<Special, Integer> {
+public class SpecialService implements IspecialService<Special, UUID> {
 
 	@Autowired
 	private SpecialRepository repository;
 	
 	@Override
-	public CrudRepository<Special, Integer> getRepository() {
+	public CrudRepository<Special, UUID> getRepository() {
 		return repository;
 	}
 

@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.Special;
 import org.artorg.tools.phantomData.server.service.iService.IspecialService;
@@ -19,8 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class SpecialController extends ControllerSpec<Special, Integer, 
-		IspecialService<Special,Integer>> {
+public class SpecialController extends ControllerSpec<Special, UUID, 
+		IspecialService<Special,UUID>> {
 
 	@GetMapping("SPECIAL/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<Special> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
@@ -29,7 +30,7 @@ public class SpecialController extends ControllerSpec<Special, Integer,
 	}
 	
 	@GetMapping("SPECIAL/{ID}")
-	public ResponseEntity<Special> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Special> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -49,7 +50,7 @@ public class SpecialController extends ControllerSpec<Special, Integer,
 	}
 	
 	@DeleteMapping("SPECIAL/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

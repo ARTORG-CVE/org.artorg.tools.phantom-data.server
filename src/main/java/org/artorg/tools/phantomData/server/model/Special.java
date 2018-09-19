@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
@@ -17,13 +18,13 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "SPECIALS")
 public class Special implements Comparable<Special>, Serializable,
-		DatabasePersistent<Integer> {
-	private static final long serialVersionUID = 1L;
-	
+		DatabasePersistent<UUID> {
+	private static final long serialVersionUID = 4838372606658297575L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	protected Integer id;
+	protected UUID id = UUID.randomUUID();
 	
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
@@ -46,7 +47,7 @@ public class Special implements Comparable<Special>, Serializable,
 	
 	@Override
 	public String toString() {
-		return String.format("[id: %d, shortcut: %s, properties: %s]", 
+		return String.format("[id: %s, shortcut: %s, properties: %s]", 
 				getId(), getShortcut()
 				,
 				""
@@ -60,15 +61,15 @@ public class Special implements Comparable<Special>, Serializable,
 	}
 	
 	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
+	public UUID stringToID(String id) {
+		return UUID.fromString(id);
 	}
 	
-	public Integer getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	
