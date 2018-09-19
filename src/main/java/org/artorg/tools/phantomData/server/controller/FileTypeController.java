@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.FileType;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
@@ -18,11 +19,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class FileTypeController extends ControllerSpec<FileType, Integer, 
-	IService<FileType,Integer>> {
+public class FileTypeController extends ControllerSpec<FileType, IService<FileType>> {
 
 	@GetMapping("FILE_TYPE/{ID}")
-	public ResponseEntity<FileType> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<FileType> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -42,7 +42,7 @@ public class FileTypeController extends ControllerSpec<FileType, Integer,
 	}
 	
 	@DeleteMapping("FILE_TYPE/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

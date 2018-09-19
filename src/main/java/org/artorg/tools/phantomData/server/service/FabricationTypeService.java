@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.FabricationType;
 import org.artorg.tools.phantomData.server.repository.FabricationTypeRepository;
@@ -10,13 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FabricationTypeService implements IfabricationTypeService<FabricationType, Integer> {
+public class FabricationTypeService implements IfabricationTypeService<FabricationType> {
 
 	@Autowired
 	private FabricationTypeRepository repository;
 	
 	@Override
-	public CrudRepository<FabricationType, Integer> getRepository() {
+	public CrudRepository<FabricationType, UUID> getRepository() {
 		return repository;
 	}
 

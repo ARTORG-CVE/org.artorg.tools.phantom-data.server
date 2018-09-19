@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.LiteratureBase;
 import org.artorg.tools.phantomData.server.repository.LiteratureBaseRepository;
@@ -10,12 +11,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LiteratureBaseService implements IliteratureBaseService<LiteratureBase, Integer> {
+public class LiteratureBaseService implements IliteratureBaseService<LiteratureBase> {
 	@Autowired
 	private LiteratureBaseRepository repository;
 
 	@Override
-	public CrudRepository<LiteratureBase, Integer> getRepository() {
+	public CrudRepository<LiteratureBase, UUID> getRepository() {
 		return repository;
 	}
 

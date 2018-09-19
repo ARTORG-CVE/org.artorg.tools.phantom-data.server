@@ -1,14 +1,21 @@
 package org.artorg.tools.phantomData.server.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<U extends Comparable<U>,V extends Comparable<V>> 
-	extends AbstractIntegerIdentity implements Serializable {
+public abstract class AbstractShortcutValueEntity<U extends Comparable<U>,V extends Comparable<V>>  implements DatabasePersistent, Serializable {
 	private static final long serialVersionUID = -628994366624557217L;
+	
+	@Id
+	@Column(name = "ID", nullable = false)
+	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private U shortcut;
@@ -41,8 +48,17 @@ public abstract class AbstractShortcutValueEntity<U extends Comparable<U>,V exte
 	
 	@Override
 	public String toString() {
-		return String.format("id: %d, shortcut: %s, fabricationType: %s", 
-				getId(), getShortcut(), getValue());
+		return String.format("shortcut: %s, fabricationType: %s", getShortcut(), getValue());
+	}
+
+	@Override
+	public UUID getId() {
+		return id;
+	}
+	
+	@Override
+	public void setId(UUID id) {
+		this.id = id;
 	}
 	
 }

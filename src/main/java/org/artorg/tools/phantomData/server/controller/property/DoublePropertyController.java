@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -20,8 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class DoublePropertyController extends ControllerSpec<DoubleProperty, Integer, 
-		IdoublePropertyService<DoubleProperty,Integer>> {
+public class DoublePropertyController extends ControllerSpec<DoubleProperty, IdoublePropertyService<DoubleProperty>> {
 
 	@GetMapping("DOUBLE_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
 	public ResponseEntity<DoubleProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
@@ -30,7 +30,7 @@ public class DoublePropertyController extends ControllerSpec<DoubleProperty, Int
 	}
 	
 	@GetMapping("DOUBLE_PROPERTY/{ID}")
-	public ResponseEntity<DoubleProperty> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<DoubleProperty> getById(@PathVariable("ID") UUID id) {
 	return super.getById(id);
 	}
 	
@@ -50,7 +50,7 @@ public class DoublePropertyController extends ControllerSpec<DoubleProperty, Int
 	}
 	
 	@DeleteMapping("DOUBLE_PROPERTY/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 	return super.delete(id);
 	}
 	

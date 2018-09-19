@@ -5,7 +5,7 @@ import org.artorg.tools.phantomData.server.model.property.PropertyField;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 import org.artorg.tools.phantomData.server.specification.IService;
 
-public interface IdoublePropertyService <T extends DatabasePersistent<ID_TYPE>, ID_TYPE> extends IService<T, ID_TYPE> {
+public interface IdoublePropertyService <T extends DatabasePersistent> extends IService<T> {
 	
 	DoubleProperty getByPropertyField(PropertyField propertyField);
 

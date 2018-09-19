@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -11,13 +12,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DatePropertyService implements IdatePropertyService<DateProperty, Integer> {
+public class DatePropertyService implements IdatePropertyService<DateProperty> {
 
 	@Autowired
 	private DatePropertyRepository repository;
 	
 	@Override
-	public CrudRepository<DateProperty, Integer> getRepository() {
+	public CrudRepository<DateProperty, UUID> getRepository() {
 		return repository;
 	}
 	

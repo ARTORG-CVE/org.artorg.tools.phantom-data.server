@@ -20,8 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class SpecialController extends ControllerSpec<Special, UUID, 
-		IspecialService<Special,UUID>> {
+public class SpecialController extends ControllerSpec<Special, IspecialService<Special>> {
 
 	@GetMapping("SPECIAL/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<Special> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {

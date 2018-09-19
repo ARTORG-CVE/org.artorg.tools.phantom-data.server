@@ -3,11 +3,10 @@ package org.artorg.tools.phantomData.server.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +16,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "FILES")
 public class PhantomFile implements Comparable<PhantomFile>, Serializable, 
-	DatabasePersistent<Integer> {
+	DatabasePersistent {
 	private static final long serialVersionUID = 1L;
 	private static String filesPath;
 	
@@ -31,9 +30,8 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	private Integer id;
+	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "PATH", nullable = false)
 	private String path;
@@ -76,11 +74,11 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 				+"/" +path +"/" +getId() +"_" +name +"." +extension));
 	}
 	
-	public Integer getId() {
+	public UUID getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	
@@ -123,13 +121,8 @@ public class PhantomFile implements Comparable<PhantomFile>, Serializable,
 	
 	@Override
 	public String toString() {
-		return String.format("[id: %d, path: %s, type: %s]", 
-				getId(), getPath(), getFileType().toString());
-	}
-	
-	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
+		return String.format("path: %s, type: %s", 
+				getPath(), getFileType().toString());
 	}
 
 }

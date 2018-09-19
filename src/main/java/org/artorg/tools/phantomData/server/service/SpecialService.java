@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpecialService implements IspecialService<Special, UUID> {
+public class SpecialService implements IspecialService<Special> {
 
 	@Autowired
 	private SpecialRepository repository;

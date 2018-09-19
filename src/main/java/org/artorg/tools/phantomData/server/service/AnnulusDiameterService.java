@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.repository.AnnulusDiameterRepository;
@@ -10,13 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AnnulusDiameterService implements IannulusDiameterService<AnnulusDiameter, Integer> {
+public class AnnulusDiameterService implements IannulusDiameterService<AnnulusDiameter> {
 	
 	@Autowired
 	private AnnulusDiameterRepository repository;
 
 	@Override
-	public CrudRepository<AnnulusDiameter, Integer> getRepository() {
+	public CrudRepository<AnnulusDiameter, UUID> getRepository() {
 		return repository;
 	}
 	

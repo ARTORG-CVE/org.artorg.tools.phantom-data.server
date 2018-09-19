@@ -1,16 +1,14 @@
 package org.artorg.tools.phantomData.server.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
@@ -18,13 +16,12 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "SPECIALS")
 public class Special implements Comparable<Special>, Serializable,
-		DatabasePersistent<UUID> {
+		DatabasePersistent {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	protected UUID id = UUID.randomUUID();
+	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
@@ -47,8 +44,8 @@ public class Special implements Comparable<Special>, Serializable,
 	
 	@Override
 	public String toString() {
-		return String.format("[id: %s, shortcut: %s, properties: %s]", 
-				getId(), getShortcut()
+		return String.format("shortcut: %s, properties: %s", 
+			getShortcut()
 				,
 				""
 //				propertyContainer.getAllProperties().stream()
@@ -61,14 +58,11 @@ public class Special implements Comparable<Special>, Serializable,
 	}
 	
 	@Override
-	public UUID stringToID(String id) {
-		return UUID.fromString(id);
-	}
-	
 	public UUID getId() {
 		return id;
 	}
-
+	
+	@Override
 	public void setId(UUID id) {
 		this.id = id;
 	}
@@ -88,5 +82,7 @@ public class Special implements Comparable<Special>, Serializable,
 	public void setPropertyContainer(PropertyContainer propertyContainer) {
 		this.propertyContainer = propertyContainer;
 	}
+
+	
 	
 }

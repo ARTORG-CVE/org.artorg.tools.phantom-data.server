@@ -3,11 +3,10 @@ package org.artorg.tools.phantomData.server.model.property;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,13 +17,12 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "PROPERTY_CONTAINERS")
-public class PropertyContainer implements Serializable, DatabasePersistent<Integer> {
+public class PropertyContainer implements Serializable, DatabasePersistent {
 	private static final long serialVersionUID = 7233338141885924205L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	private Integer id;
+	private UUID id = UUID.randomUUID();
 	
 	@ManyToMany
 	@JoinTable(name = "PROPERTY_CONTAINER_BOOLEAN_PROPERTIES",
@@ -102,11 +100,13 @@ public class PropertyContainer implements Serializable, DatabasePersistent<Integ
 		return results;
 	}
 	
-	public Integer getId() {
+	@Override
+	public UUID getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
+	
+	@Override
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	
@@ -150,9 +150,6 @@ public class PropertyContainer implements Serializable, DatabasePersistent<Integ
 		this.doubleProperties = doubleProperties;
 	}
 
-	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
-	}
+	
 
 }

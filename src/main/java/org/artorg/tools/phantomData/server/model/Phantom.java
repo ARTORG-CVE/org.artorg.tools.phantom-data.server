@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,13 +27,12 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "PHANTOMS")
 public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Serializable,
-		DatabasePersistent<Integer> {
+		DatabasePersistent {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	private Integer id;
+	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "PRODUCT_ID", nullable = false)
 	private String productId;
@@ -118,7 +116,6 @@ public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Se
 		}
 	}
 	
-	
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Phantom)
@@ -144,9 +141,9 @@ public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Se
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("[id: %d, annulus diameter: %f, fabrication type: %s, "
+		sb.append(String.format("[annulus diameter: %f, fabrication type: %s, "
 				+ "literature base: %s, special: %s, number: %d", 
-				getId(), getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
+				getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
 				getLiteratureBase().getValue(), getSpecial().toString(), getNumber()));
 		String[] properties = this.getAllPropertiesAsString();
 		for (String property: properties)
@@ -157,19 +154,15 @@ public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Se
 		return sb.toString();
 	}
 	
-	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
-	}
 	
 	// Getters & Setters
-	public Integer getId() {
+	public UUID getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
+	
+	@Override
+	public void setId(UUID id) {
 		this.id = id;
-		updateProductId();
 	}
 	
 	public String getProductId() {

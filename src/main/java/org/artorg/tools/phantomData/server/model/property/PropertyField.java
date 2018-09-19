@@ -1,11 +1,10 @@
 package org.artorg.tools.phantomData.server.model.property;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,13 +13,12 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 @Entity
 @Table(name = "PROPERTY_FIELD")
 public class PropertyField implements Comparable<PropertyField>, Serializable, 
-		DatabasePersistent<Integer> {
+		DatabasePersistent {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
-	private Integer id;
+	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "NAME", unique=true, nullable = false)
 	private String name;
@@ -35,11 +33,13 @@ public class PropertyField implements Comparable<PropertyField>, Serializable,
 		this.description = description;
 	}
 	
-	public Integer getId() {
+	@Override
+	public UUID getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	@Override
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	
@@ -66,13 +66,8 @@ public class PropertyField implements Comparable<PropertyField>, Serializable,
 	
 	@Override
 	public String toString() {
-		return String.format("[id: %d, name: %s, descrption: %s]", 
-				getId(), getName(), getDescription());
+		return String.format("[name: %s, descrption: %s]", 
+				getName(), getDescription());
 	}
 	
-	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
-	}
-
 }

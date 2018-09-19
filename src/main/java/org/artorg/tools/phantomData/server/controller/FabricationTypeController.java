@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.FabricationType;
 import org.artorg.tools.phantomData.server.service.iService.IfabricationTypeService;
@@ -19,8 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class FabricationTypeController extends ControllerSpec<FabricationType, Integer, 
-		IfabricationTypeService<FabricationType,Integer>> {
+public class FabricationTypeController extends ControllerSpec<FabricationType, 
+		IfabricationTypeService<FabricationType>> {
 
 	@GetMapping("FABRICATION_TYPE/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<FabricationType> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
@@ -29,7 +30,7 @@ public class FabricationTypeController extends ControllerSpec<FabricationType, I
 	}
 	
 	@GetMapping("FABRICATION_TYPE/{ID}")
-	public ResponseEntity<FabricationType> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<FabricationType> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -49,7 +50,7 @@ public class FabricationTypeController extends ControllerSpec<FabricationType, I
 	}
 	
 	@DeleteMapping("FABRICATION_TYPE/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

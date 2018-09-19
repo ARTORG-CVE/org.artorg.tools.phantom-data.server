@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.service.iService.IannulusDiameterService;
@@ -19,8 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, Integer, 
-		IannulusDiameterService<AnnulusDiameter,Integer>> {
+public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, IannulusDiameterService<AnnulusDiameter>> {
 	
 	@GetMapping("ANNULUS_DIAMETER/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<AnnulusDiameter> getByShortcut(@PathVariable("SHORTCUT") Integer shortcut) {
@@ -29,7 +29,7 @@ public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, I
 	}
 	
 	@GetMapping("ANNULUS_DIAMETER/{ID}")
-	public ResponseEntity<AnnulusDiameter> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<AnnulusDiameter> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -49,7 +49,7 @@ public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, I
 	}
 	
 	@DeleteMapping("ANNULUS_DIAMETER/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 

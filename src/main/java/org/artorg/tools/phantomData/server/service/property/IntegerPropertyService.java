@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -11,13 +12,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IntegerPropertyService implements IintegerPropertyService<IntegerProperty, Integer> {
+public class IntegerPropertyService implements IintegerPropertyService<IntegerProperty> {
 	
 	@Autowired
 	private IntegerPropertyRepository repository;
 	
 	@Override
-	public CrudRepository<IntegerProperty, Integer> getRepository() {
+	public CrudRepository<IntegerProperty, UUID> getRepository() {
 		return repository;
 	}
 

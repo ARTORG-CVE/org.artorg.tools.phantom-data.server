@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -20,8 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class BooleanPropertyController extends ControllerSpec<BooleanProperty, Integer, 
-		IbooleanPropertyService<BooleanProperty,Integer>> {
+public class BooleanPropertyController extends ControllerSpec<BooleanProperty, 
+		IbooleanPropertyService<BooleanProperty>> {
 
 	@GetMapping("BOOLEAN_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
 	public ResponseEntity<BooleanProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
@@ -30,7 +31,7 @@ public class BooleanPropertyController extends ControllerSpec<BooleanProperty, I
 	}
 	
 	@GetMapping("BOOLEAN_PROPERTY/{ID}")
-	public ResponseEntity<BooleanProperty> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<BooleanProperty> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -50,7 +51,7 @@ public class BooleanPropertyController extends ControllerSpec<BooleanProperty, I
 	}
 	
 	@DeleteMapping("BOOLEAN_PROPERTY/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
 import org.artorg.tools.phantomData.server.model.property.StringProperty;
@@ -20,8 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class StringPropertyController extends ControllerSpec<StringProperty, Integer, 
-		IstringPropertyService<StringProperty,Integer>> {
+public class StringPropertyController extends ControllerSpec<StringProperty, 
+		IstringPropertyService<StringProperty>> {
 	
 	@GetMapping("STRING_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
 	public ResponseEntity<StringProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
@@ -30,7 +31,7 @@ public class StringPropertyController extends ControllerSpec<StringProperty, Int
 	}
 	
 	@GetMapping("STRING_PROPERTY/{ID}")
-	public ResponseEntity<StringProperty> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<StringProperty> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -50,7 +51,7 @@ public class StringPropertyController extends ControllerSpec<StringProperty, Int
 	}
 	
 	@DeleteMapping("STRING_PROPERTY/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 

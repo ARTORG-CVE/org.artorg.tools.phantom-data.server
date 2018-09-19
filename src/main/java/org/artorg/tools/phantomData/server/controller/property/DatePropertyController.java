@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -21,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping("user")
 public class DatePropertyController extends 
-ControllerSpec<DateProperty, Integer, IdatePropertyService<DateProperty,Integer>> {
+ControllerSpec<DateProperty, IdatePropertyService<DateProperty>> {
 
 	@GetMapping("DATE_PROPERTY/BY_PROPERTY_FIELD/{PROPERTY_FIELD}")
 	public ResponseEntity<DateProperty> getByPropertyField(@PathVariable("PROPERTY_FIELD") PropertyField propertyField) {
@@ -30,7 +31,7 @@ ControllerSpec<DateProperty, Integer, IdatePropertyService<DateProperty,Integer>
 	}
 	
 	@GetMapping("DATE_PROPERTY/{ID}")
-	public ResponseEntity<DateProperty> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<DateProperty> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -50,7 +51,7 @@ ControllerSpec<DateProperty, Integer, IdatePropertyService<DateProperty,Integer>
 	}
 	
 	@DeleteMapping("DATE_PROPERTY/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

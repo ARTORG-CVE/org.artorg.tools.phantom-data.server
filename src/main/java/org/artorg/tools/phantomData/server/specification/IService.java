@@ -2,12 +2,13 @@ package org.artorg.tools.phantomData.server.specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
+public interface IService<T extends DatabasePersistent> {
 	
-	CrudRepository<T, ID_TYPE> getRepository();
+	CrudRepository<T, UUID> getRepository();
 	
 	default List<T> getAll() {
 		List<T> list = new ArrayList<>();
@@ -15,7 +16,7 @@ public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
 		return list;
 	}
 	
-	default T getById(ID_TYPE id) {
+	default T getById(UUID id) {
 		T obj = getRepository().findById(id).get();
 		return obj;
 	}
@@ -25,7 +26,7 @@ public interface IService<T extends DatabasePersistent<ID_TYPE>, ID_TYPE> {
 		
 	}
 	
-	default void delete(ID_TYPE id) {
+	default void delete(UUID id) {
 		getRepository().delete(getById(id));
 		
 	}

@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
 import org.artorg.tools.phantomData.server.service.iService.property.IpropertyContainerService;
@@ -18,11 +19,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class PropertyContainerController extends ControllerSpec<PropertyContainer, Integer, 
-	IpropertyContainerService<PropertyContainer,Integer>> {
+public class PropertyContainerController extends ControllerSpec<PropertyContainer, 
+	IpropertyContainerService<PropertyContainer>> {
 	
 	@GetMapping("PROPERTY_CONTAINER/{ID}")
-	public ResponseEntity<PropertyContainer> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<PropertyContainer> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -42,7 +43,7 @@ public class PropertyContainerController extends ControllerSpec<PropertyContaine
 	}
 	
 	@DeleteMapping("PROPERTY_CONTAINER/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

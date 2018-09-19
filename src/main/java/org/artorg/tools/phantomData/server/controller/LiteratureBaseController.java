@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.LiteratureBase;
 import org.artorg.tools.phantomData.server.service.iService.IliteratureBaseService;
@@ -19,8 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("user")
-public class LiteratureBaseController extends ControllerSpec<LiteratureBase, Integer,
-		IliteratureBaseService<LiteratureBase,Integer>> {
+public class LiteratureBaseController extends ControllerSpec<LiteratureBase, IliteratureBaseService<LiteratureBase>> {
 	
 	@GetMapping("LITERATURE_BASE/BY_SHORTCUT/{SHORTCUT}")
 	public ResponseEntity<LiteratureBase> getByShortcut(@PathVariable("SHORTCUT") String shortcut) {
@@ -29,7 +29,7 @@ public class LiteratureBaseController extends ControllerSpec<LiteratureBase, Int
 	}
 	
 	@GetMapping("LITERATURE_BASE/{ID}")
-	public ResponseEntity<LiteratureBase> getById(@PathVariable("ID") Integer id) {
+	public ResponseEntity<LiteratureBase> getById(@PathVariable("ID") UUID id) {
 		return super.getById(id);
 	}
 	
@@ -49,7 +49,7 @@ public class LiteratureBaseController extends ControllerSpec<LiteratureBase, Int
 	}
 	
 	@DeleteMapping("LITERATURE_BASE/{ID}")
-	public ResponseEntity<Void> delete(@PathVariable("ID") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
 		return super.delete(id);
 	}
 	

@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.PhantomFile;
 import org.artorg.tools.phantomData.server.repository.FileRepository;
@@ -10,13 +11,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileService implements IfileService<PhantomFile, Integer> {
+public class FileService implements IfileService<PhantomFile> {
 
 	@Autowired
 	private FileRepository repository;
 	
 	@Override
-	public CrudRepository<PhantomFile, Integer> getRepository() {
+	public CrudRepository<PhantomFile, UUID> getRepository() {
 		return repository;
 	}
 

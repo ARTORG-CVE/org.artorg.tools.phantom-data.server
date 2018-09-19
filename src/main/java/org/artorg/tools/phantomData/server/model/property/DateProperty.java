@@ -7,18 +7,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
-public class DateProperty extends Property<Date, Integer> implements ComparableProperty<DateProperty, Date, Integer> {
+public class DateProperty extends Property<Date> implements ComparableProperty<DateProperty, Date> {
 	private static final long serialVersionUID = -6242701549246630297L;
 
 	public DateProperty() {}
 	
 	public DateProperty(PropertyField propertyField, Date value) {
 		super(propertyField, value);
-	}
-	
-	@Override
-	public Integer stringToID(String id) {
-		return Integer.valueOf(id);
 	}
 
 	@Override
@@ -29,11 +24,6 @@ public class DateProperty extends Property<Date, Integer> implements ComparableP
 	@Override
 	public Date fromStringToValue(String s) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Integer fromStringToId(String s) {
-		return Integer.valueOf(s);
 	}
 
 }

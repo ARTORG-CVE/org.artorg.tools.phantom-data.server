@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.service.property;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.property.PropertyField;
@@ -11,13 +12,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BooleanPropertyService implements IbooleanPropertyService<BooleanProperty, Integer> {
+public class BooleanPropertyService implements IbooleanPropertyService<BooleanProperty> {
 	
 	@Autowired
 	private BooleanPropertyRepository repository;
 	
 	@Override
-	public CrudRepository<BooleanProperty, Integer> getRepository() {
+	public CrudRepository<BooleanProperty, UUID> getRepository() {
 		return repository;
 	}
 
