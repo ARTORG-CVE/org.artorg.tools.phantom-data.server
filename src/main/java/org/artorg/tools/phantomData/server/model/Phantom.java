@@ -16,17 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
-import org.artorg.tools.phantomData.server.model.property.DateProperty;
-import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
-import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
+import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
 import org.artorg.tools.phantomData.server.model.property.PropertyDistinguishable;
-import org.artorg.tools.phantomData.server.model.property.StringProperty;
 import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Serializable,
+public class Phantom extends PropertyContainer implements PropertyDistinguishable, Comparable<Phantom>, Serializable,
 		DatabasePersistent {
 	private static final long serialVersionUID = 1L;
 	
@@ -51,36 +47,6 @@ public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Se
 	
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
-
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_BOOLEAN_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
-			inverseJoinColumns=@JoinColumn(name="BOOLEAN_PROPERTIES_ID"))
-	private Collection<BooleanProperty> booleanProperties = new ArrayList<BooleanProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_DATE_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
-			inverseJoinColumns=@JoinColumn(name="DATE_PROPERTIES_ID"))
-	private Collection<DateProperty> dateProperties = new ArrayList<DateProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_STRING_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
-			inverseJoinColumns=@JoinColumn(name="STRING_PROPERTIES_ID"))
-	private Collection<StringProperty> stringProperties = new ArrayList<StringProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_INTEGER_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
-			inverseJoinColumns=@JoinColumn(name="INTEGER_PROPERTIES_ID"))
-	private Collection<IntegerProperty> integerProperties = new ArrayList<IntegerProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_DOUBLE_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOMS_ID"),
-			inverseJoinColumns=@JoinColumn(name="DOUBLE_PROPERTIES_ID"))
-	private Collection<DoubleProperty> doubleProperties = new ArrayList<DoubleProperty>();
 	
 	@ManyToMany
 	@JoinTable(name = "PHANTOM_FILES",
@@ -218,47 +184,7 @@ public class Phantom implements PropertyDistinguishable, Comparable<Phantom>, Se
 		updateProductId();
 	}
 	
-	public Collection<BooleanProperty> getBooleanProperties() {
-		return booleanProperties;
-	}
-
-	public void setBooleanProperties(List<BooleanProperty> booleanProperties) {
-		this.booleanProperties = booleanProperties;
-	}
-
-	public Collection<DateProperty> getDateProperties() {
-		return dateProperties;
-	}
-
-	public void setDateProperties(List<DateProperty> dateProperties) {
-		this.dateProperties = dateProperties;
-	}
-	
-	public Collection<StringProperty> getStringProperties() {
-		return stringProperties;
-	}
-
-	public void setStringProperties(List<StringProperty> stringProperties) {
-		this.stringProperties = stringProperties;
-	}
-
-	public Collection<IntegerProperty> getIntegerProperties() {
-		return integerProperties;
-	}
-
-	public void setIntegerProperties(List<IntegerProperty> integerProperties) {
-		this.integerProperties = integerProperties;
-	}
-
-	public Collection<DoubleProperty> getDoubleProperties() {
-		return doubleProperties;
-	}
-
-	public void setDoubleProperties(List<DoubleProperty> doubleProperties) {
-		this.doubleProperties = doubleProperties;
-	}
-
-	public Collection<PhantomFile> getFiles() {
+	public List<PhantomFile> getFiles() {
 		return files;
 	}
 

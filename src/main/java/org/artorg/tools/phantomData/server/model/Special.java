@@ -3,11 +3,9 @@ package org.artorg.tools.phantomData.server.model;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
@@ -15,7 +13,7 @@ import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
 
 @Entity
 @Table(name = "SPECIALS")
-public class Special implements Comparable<Special>, Serializable,
+public class Special extends PropertyContainer implements Comparable<Special>, Serializable,
 		DatabasePersistent {
 	private static final long serialVersionUID = 4838372606658297575L;
 
@@ -26,15 +24,10 @@ public class Special implements Comparable<Special>, Serializable,
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
 	
-	@OneToOne (cascade = CascadeType.MERGE)
-	private PropertyContainer propertyContainer;
-	
 	public Special() {}
 	
-	public Special(String shortcut, PropertyContainer propertyContainer) {
+	public Special(String shortcut) {
 		this.shortcut = shortcut;
-		
-		this.propertyContainer = propertyContainer;
 	}
 	
 	@Override
@@ -73,14 +66,6 @@ public class Special implements Comparable<Special>, Serializable,
 
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
-	}
-	
-	public PropertyContainer getPropertyContainer() {
-		return propertyContainer;
-	}
-
-	public void setPropertyContainer(PropertyContainer propertyContainer) {
-		this.propertyContainer = propertyContainer;
 	}
 
 	
