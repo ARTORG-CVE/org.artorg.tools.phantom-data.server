@@ -1,5 +1,7 @@
 package org.artorg.tools.phantomData.server.boot;
 
+import huma.io.ConsoleDiverter;
+
 public abstract class SwingConsoleStartupServerBooter extends ServerBooter {
 	private final ConsoleDiverter consoleDiverter;
 	protected final SwingConsoleFrame consoleFrame;

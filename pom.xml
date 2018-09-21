@@ -24,6 +24,16 @@
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>ch.huma</groupId>
+			<artifactId>huma-library-io</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
+	
+	
+	
 		<!-- Optional - Testing -->
 		<dependency>
 			<groupId>junit</groupId>

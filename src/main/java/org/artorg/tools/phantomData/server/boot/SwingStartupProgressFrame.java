@@ -23,7 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
-import org.artorg.tools.phantomData.server.io.IOutil;
+import huma.io.ConsoleDiverter;
+import huma.io.IOutil;
 
 public class SwingStartupProgressFrame extends JFrame {
 	private static final long serialVersionUID = -844471159054024668L;

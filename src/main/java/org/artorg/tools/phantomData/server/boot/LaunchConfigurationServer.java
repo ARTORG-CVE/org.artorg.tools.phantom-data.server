@@ -5,9 +5,9 @@ import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.artorg.tools.phantomData.server.io.IOutil;
-import org.artorg.tools.phantomData.server.io.PropertiesFile;
-import org.artorg.tools.phantomData.server.io.PropertyPut;
+import huma.io.IOutil;
+import huma.io.PropertiesFile;
+import huma.io.PropertyPut;
 
 public abstract class LaunchConfigurationServer {
 	private String parentDirectory;

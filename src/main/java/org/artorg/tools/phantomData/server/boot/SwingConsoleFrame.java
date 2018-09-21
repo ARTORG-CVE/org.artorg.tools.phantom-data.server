@@ -19,6 +19,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import huma.io.ConsoleDiverter;
+
 public class SwingConsoleFrame extends JFrame{
 	private static final long serialVersionUID = 3224705735339280900L;
 	private final JTextPane textArea;
