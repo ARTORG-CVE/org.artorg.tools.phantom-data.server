@@ -5,9 +5,11 @@ import java.util.UUID;
 
 public interface DbPersistent<ITEM> extends Comparable<ITEM>, Serializable {
 	
-	public UUID getId();
+	UUID getId();
 	
-	public void setId(UUID id);
+	void setId(UUID id);
+	
+	Class<ITEM> getItemClass();
 	
 	default UUID stringToID(String id) {
 		return UUID.fromString(id);

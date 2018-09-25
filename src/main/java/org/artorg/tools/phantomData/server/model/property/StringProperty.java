@@ -23,5 +23,10 @@ public class StringProperty extends Property<StringProperty,String> {
 	public String fromStringToValue(String s) {
 		return s;
 	}
+
+	@Override
+	public Class<StringProperty> getItemClass() {
+		return StringProperty.class;
+	}
 	
 }

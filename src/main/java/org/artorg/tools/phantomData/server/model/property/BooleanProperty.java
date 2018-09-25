@@ -23,5 +23,10 @@ public class BooleanProperty extends Property<BooleanProperty, Boolean> {
 	public Boolean fromStringToValue(String s) {
 		return Boolean.valueOf(s);
 	}
+
+	@Override
+	public Class<BooleanProperty> getItemClass() {
+		return BooleanProperty.class;
+	}
 	
 }

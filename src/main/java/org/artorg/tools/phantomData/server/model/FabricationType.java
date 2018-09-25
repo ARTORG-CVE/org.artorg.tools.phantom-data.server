@@ -14,5 +14,10 @@ public class FabricationType extends AbstractShortcutValueEntity<FabricationType
 	public FabricationType(String shortcut, String value) {
 		super(shortcut, value);
 	}
+
+	@Override
+	public Class<FabricationType> getItemClass() {
+		return FabricationType.class;
+	}
 	
 }

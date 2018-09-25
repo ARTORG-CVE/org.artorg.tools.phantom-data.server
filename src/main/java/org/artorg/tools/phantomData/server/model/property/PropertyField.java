@@ -67,5 +67,10 @@ public class PropertyField implements DbPersistent<PropertyField> {
 		return String.format("[name: %s, descrption: %s]", 
 				getName(), getDescription());
 	}
+
+	@Override
+	public Class<PropertyField> getItemClass() {
+		return PropertyField.class;
+	}
 	
 }

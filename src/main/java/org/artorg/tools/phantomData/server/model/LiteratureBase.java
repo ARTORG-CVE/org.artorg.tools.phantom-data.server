@@ -14,5 +14,10 @@ public class LiteratureBase extends AbstractShortcutValueEntity<LiteratureBase, 
 	public LiteratureBase(String shortcut, String value) {
 		super(shortcut, value);
 	}
+
+	@Override
+	public Class<LiteratureBase> getItemClass() {
+		return LiteratureBase.class;
+	}
 	
 }

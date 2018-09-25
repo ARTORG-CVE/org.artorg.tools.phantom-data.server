@@ -23,5 +23,10 @@ public class IntegerProperty extends Property<IntegerProperty, Integer> {
 	public Integer fromStringToValue(String s) {
 		return Integer.valueOf(s);
 	}
+
+	@Override
+	public Class<IntegerProperty> getItemClass() {
+		return IntegerProperty.class;
+	}
 	
 }

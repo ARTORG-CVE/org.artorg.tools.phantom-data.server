@@ -14,4 +14,9 @@ public class AnnulusDiameter extends AbstractShortcutValueEntity<AnnulusDiameter
 	public AnnulusDiameter(Integer shortcut, Double value) {
 		super(shortcut, value);
 	}
+
+	@Override
+	public Class<AnnulusDiameter> getItemClass() {
+		return AnnulusDiameter.class;
+	}
 }

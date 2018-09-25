@@ -123,4 +123,9 @@ public class PhantomFile implements	DbPersistent<PhantomFile> {
 				getPath(), getFileType().toString());
 	}
 
+	@Override
+	public Class<PhantomFile> getItemClass() {
+		return PhantomFile.class;
+	}
+
 }

@@ -55,4 +55,9 @@ public class FileType implements DbPersistent<FileType> {
 				getName());
 	}
 
+	@Override
+	public Class<FileType> getItemClass() {
+		return FileType.class;
+	}
+
 }

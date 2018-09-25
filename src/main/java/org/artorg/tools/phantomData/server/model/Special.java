@@ -66,6 +66,9 @@ public class Special extends PropertyContainer implements DbPersistent<Special> 
 		this.shortcut = shortcut;
 	}
 
-	
+	@Override
+	public Class<Special> getItemClass() {
+		return Special.class;
+	}
 	
 }

@@ -26,4 +26,9 @@ public class DateProperty extends Property<DateProperty, Date> {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public Class<DateProperty> getItemClass() {
+		return DateProperty.class;
+	}
+
 }

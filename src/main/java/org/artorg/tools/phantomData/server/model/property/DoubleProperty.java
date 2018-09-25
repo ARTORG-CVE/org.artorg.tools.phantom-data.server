@@ -23,5 +23,10 @@ public class DoubleProperty extends Property<DoubleProperty, Double> {
 	public Double fromStringToValue(String s) {
 		return Double.valueOf(s);
 	}
+
+	@Override
+	public Class<DoubleProperty> getItemClass() {
+		return DoubleProperty.class;
+	}
 	
 }
