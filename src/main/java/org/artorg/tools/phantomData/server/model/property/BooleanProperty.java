@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
-public class BooleanProperty extends Property<Boolean> implements ComparableProperty<BooleanProperty, Boolean> {
+public class BooleanProperty extends Property<BooleanProperty, Boolean> {
 	private static final long serialVersionUID = 4690035196217371829L;
 	
 	public BooleanProperty() {}

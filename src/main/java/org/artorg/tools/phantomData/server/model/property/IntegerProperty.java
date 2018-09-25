@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "INTEGER_PROPERTIES")
-public class IntegerProperty extends Property<Integer> implements ComparableProperty<IntegerProperty,Integer> {
+public class IntegerProperty extends Property<IntegerProperty, Integer> {
 	private static final long serialVersionUID = -2138623619328236280L;
 
 	public IntegerProperty() {}

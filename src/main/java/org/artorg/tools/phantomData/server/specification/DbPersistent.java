@@ -1,8 +1,9 @@
 package org.artorg.tools.phantomData.server.specification;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public interface DatabasePersistent {
+public interface DbPersistent<ITEM> extends Comparable<ITEM>, Serializable {
 	
 	public UUID getId();
 	

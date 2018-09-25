@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.model.property;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -8,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
-public class PropertyField implements Comparable<PropertyField>, Serializable, 
-		DatabasePersistent {
+public class PropertyField implements DbPersistent<PropertyField> {
 	private static final long serialVersionUID = 1L;
 
 	@Id

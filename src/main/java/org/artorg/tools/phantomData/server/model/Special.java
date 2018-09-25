@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.model;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -9,12 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "SPECIALS")
-public class Special extends PropertyContainer implements Comparable<Special>, Serializable,
-		DatabasePersistent {
+public class Special extends PropertyContainer implements DbPersistent<Special> {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Id

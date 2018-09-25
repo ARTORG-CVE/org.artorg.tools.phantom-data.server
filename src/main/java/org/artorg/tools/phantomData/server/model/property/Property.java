@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.model.property;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -8,11 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @MappedSuperclass
-public abstract class Property<U extends Comparable<U>> implements DatabasePersistent, Serializable {
-
+public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparable<U>> implements DbPersistent<ITEM> {
 	private static final long serialVersionUID = -6436598935465710135L;
 	
 	@Id
@@ -51,6 +49,13 @@ public abstract class Property<U extends Comparable<U>> implements DatabasePersi
 
 	public void setValue(U value) {
 		this.value = value;
+	}
+	
+	public int compareTo(ITEM that) {
+		int i = this.getPropertyField().compareTo(that.getPropertyField());
+		if (i != 0) return i;
+		i = this.getValue().compareTo(that.getValue());
+		return i;
 	}
 	
 	@Override

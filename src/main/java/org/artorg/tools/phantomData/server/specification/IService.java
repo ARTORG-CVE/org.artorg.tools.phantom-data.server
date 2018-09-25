@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IService<T extends DatabasePersistent> {
+public interface IService<T extends DbPersistent> {
 	
 	CrudRepository<T, UUID> getRepository();
 	

@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.model.property;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,11 +9,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
-
 @MappedSuperclass
-public abstract class PropertyContainer implements Serializable, DatabasePersistent {
-	private static final long serialVersionUID = 942516631142205930L;
+public abstract class PropertyContainer {
 
 	@ManyToMany
 	@JoinTable(name = "PROPERTY_CONTAINER_BOOLEAN_PROPERTIES",
@@ -48,12 +44,12 @@ public abstract class PropertyContainer implements Serializable, DatabasePersist
 	
 	public PropertyContainer() {}
 
-	public <T extends Property<U>, U extends Comparable<U>> void addProperties(Collection<T> properties) {
+	public <T extends Property<T,U>, U extends Comparable<U>> void addProperties(Collection<T> properties) {
 		for (T property: properties)
 			addProperty(property);
 	}
 	
-	public <T extends Property<U>, U extends Comparable<U>> boolean addProperty(T property) {
+	public <T extends Property<T,U>, U extends Comparable<U>> boolean addProperty(T property) {
 		if (property instanceof BooleanProperty)
 			return getBooleanProperties().add(((BooleanProperty)property));
 		if (property instanceof DateProperty)

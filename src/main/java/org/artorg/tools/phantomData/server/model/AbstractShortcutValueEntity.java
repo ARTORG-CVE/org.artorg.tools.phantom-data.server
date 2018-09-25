@@ -1,16 +1,15 @@
 package org.artorg.tools.phantomData.server.model;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<U extends Comparable<U>,V extends Comparable<V>>  implements DatabasePersistent, Serializable {
+public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>>  implements DbPersistent<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
 	
 	@Id

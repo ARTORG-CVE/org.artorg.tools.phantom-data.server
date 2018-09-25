@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
-public class DateProperty extends Property<Date> implements ComparableProperty<DateProperty, Date> {
+public class DateProperty extends Property<DateProperty, Date> {
 	private static final long serialVersionUID = -6242701549246630297L;
 
 	public DateProperty() {}

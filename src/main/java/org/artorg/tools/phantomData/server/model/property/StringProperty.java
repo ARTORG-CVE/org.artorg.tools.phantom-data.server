@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "STRING_PROPERTIES")
-public class StringProperty extends Property<String> implements ComparableProperty<StringProperty,String> {
+public class StringProperty extends Property<StringProperty,String> {
 	private static final long serialVersionUID = 79674080687314415L;
 
 	public StringProperty() {}

@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.model;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -8,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "FILE_TYPES")
-public class FileType implements Comparable<FileType>, Serializable, 
-	DatabasePersistent {
+public class FileType implements DbPersistent<FileType> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "FABRICATION_TYPES")
-public class FabricationType extends AbstractShortcutValueEntity<String, String>
+public class FabricationType extends AbstractShortcutValueEntity<FabricationType, String, String>
 		implements ComparableShortcutValueEntity<FabricationType, String, String> {
 	private static final long serialVersionUID = -6058458914083152436L;
 
