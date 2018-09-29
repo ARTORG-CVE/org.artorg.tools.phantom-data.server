@@ -6,10 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>>  implements DbPersistentUUID<ITEM> {
+public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>>  implements DbPersistent<ITEM,UUID> {
 	private static final long serialVersionUID = -628994366624557217L;
 	
 	@Id

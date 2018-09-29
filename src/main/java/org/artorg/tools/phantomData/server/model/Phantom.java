@@ -2,7 +2,6 @@ package org.artorg.tools.phantomData.server.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -17,13 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
-import org.artorg.tools.phantomData.server.model.property.PropertyDistinguishable;
-import org.artorg.tools.phantomData.server.specification.DatabasePersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom extends PropertyContainer implements PropertyDistinguishable, Comparable<Phantom>, Serializable,
-		DatabasePersistent {
+public class Phantom extends PropertyContainer implements Comparable<Phantom>, Serializable,
+		DbPersistent<Phantom,UUID> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -190,6 +188,11 @@ public class Phantom extends PropertyContainer implements PropertyDistinguishabl
 
 	public void setFiles(List<PhantomFile> files) {
 		this.files = files;
+	}
+
+	@Override
+	public Class<Phantom> getItemClass() {
+		return Phantom.class;
 	}
 
 }

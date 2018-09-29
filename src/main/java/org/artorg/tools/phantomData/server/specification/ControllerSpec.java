@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public abstract class ControllerSpec<MODEL_TYPE extends DbPersistentUUID, I_SERVICE_TYPE extends IService<MODEL_TYPE>> {
+public abstract class ControllerSpec<T extends DbPersistent<T,?>, I_SERVICE_TYPE extends IService<T>> {
 	
 	protected abstract String getModelAnnoString();
 	
 	@Autowired
 	protected I_SERVICE_TYPE service;
 	
-	protected ResponseEntity<MODEL_TYPE> getById(@PathVariable("ID") UUID id) {
-		MODEL_TYPE m = service.getById(id);
-		return new ResponseEntity<MODEL_TYPE>(m, HttpStatus.OK);
+	protected ResponseEntity<T> getById(@PathVariable("ID") UUID id) {
+		T m = service.getById(id);
+		return new ResponseEntity<T>(m, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<List<MODEL_TYPE>> getAll() {
-		List<MODEL_TYPE> list = service.getAll();
-		return new ResponseEntity<List<MODEL_TYPE>>(list, HttpStatus.OK);
+	protected ResponseEntity<List<T>> getAll() {
+		List<T> list = service.getAll();
+		return new ResponseEntity<List<T>>(list, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<Void> create(@RequestBody MODEL_TYPE model, UriComponentsBuilder builder) {
+	protected ResponseEntity<Void> create(@RequestBody T model, UriComponentsBuilder builder) {
         boolean flag = service.add(model);
         if (flag == false) {
 	   return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -38,9 +38,9 @@ public abstract class ControllerSpec<MODEL_TYPE extends DbPersistentUUID, I_SERV
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
-	protected ResponseEntity<MODEL_TYPE> update(@RequestBody MODEL_TYPE model) {
+	protected ResponseEntity<T> update(@RequestBody T model) {
 		service.update(model);
-		return new ResponseEntity<MODEL_TYPE>(model, HttpStatus.OK);
+		return new ResponseEntity<T>(model, HttpStatus.OK);
 	}
 	
 	protected ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
