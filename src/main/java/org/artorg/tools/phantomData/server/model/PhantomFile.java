@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "FILES")
-public class PhantomFile implements	DbPersistentUUID<PhantomFile> {
+public class PhantomFile implements	DbPersistent<PhantomFile,UUID> {
 	private static final long serialVersionUID = 1L;
 	private static String filesPath;
 	

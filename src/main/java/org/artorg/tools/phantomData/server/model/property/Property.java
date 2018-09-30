@@ -7,10 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @MappedSuperclass
-public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparable<U>> implements DbPersistentUUID<ITEM> {
+public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparable<U>> implements DbPersistent<ITEM,UUID> {
 	private static final long serialVersionUID = -6436598935465710135L;
 	
 	@Id

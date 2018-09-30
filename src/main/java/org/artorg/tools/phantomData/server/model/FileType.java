@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.specification.DbPersistent;
 
 @Entity
 @Table(name = "FILE_TYPES")
-public class FileType implements DbPersistentUUID<FileType> {
+public class FileType implements DbPersistent<FileType,UUID> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
