@@ -16,12 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
-import org.artorg.tools.phantomData.server.specification.DbPersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
 public class Phantom extends PropertyContainer implements Comparable<Phantom>, Serializable,
-		DbPersistent<Phantom,UUID> {
+		DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -8,11 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.PropertyContainer;
-import org.artorg.tools.phantomData.server.specification.DbPersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "SPECIALS")
-public class Special extends PropertyContainer implements DbPersistent<Special,UUID> {
+public class Special extends PropertyContainer implements DbPersistentUUID<Special> {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Id

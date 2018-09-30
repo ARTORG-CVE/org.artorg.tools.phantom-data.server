@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.specification.DbPersistent;
+import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
-public class PropertyField implements DbPersistent<PropertyField,UUID> {
+public class PropertyField implements DbPersistentUUID<PropertyField> {
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -6,4 +6,8 @@ public interface DbPersistent<ITEM, ID> extends Identifiable<ID>, Comparable<ITE
 	
 	Class<ITEM> getItemClass();
 
+	void setId(String value);
+	
+	String getStringId();
+
 }
