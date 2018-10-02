@@ -16,15 +16,14 @@ import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 
-public abstract class ServerBooter extends LaunchConfigurationServer {
+public abstract class ServerBooter extends PropertiesBooter {
+	private boolean serverStartedEmbedded;
+
+	{
+		serverStartedEmbedded = false;
+	}
 	
-	public abstract void boot(String[] args);
-	
-	public abstract void setStartupFrameVisible(boolean b);
-	
-	public abstract void setConsoleFrameVisible(boolean b);
-	
-	protected boolean handleException(Exception e) {
+	public boolean handleException(Exception e) {
 		if (e instanceof org.springframework.boot.web.embedded.tomcat.ConnectorStartFailedException) {
 			JFrame frame = new JFrame();
 			JOptionPane.showMessageDialog(frame, "Couldn't configured to listen on port " +getPort());
@@ -56,7 +55,7 @@ public abstract class ServerBooter extends LaunchConfigurationServer {
 	
 	public void startSpringServer(String[] args) {
 		if (!this.isInitialized()) 
-			throw new RuntimeException("LaunchConfigurationServer not initialized!");
+			throw new RuntimeException("Not initialized!");
 		if (!isConnected()) 
 			SpringApplication.run(getBootApplicationClass(), args);
 		if (!isConnected()) 
@@ -102,6 +101,15 @@ public abstract class ServerBooter extends LaunchConfigurationServer {
 			e1.printStackTrace();
 		}
 		throw new RuntimeException();
+	}
+	
+	
+	public boolean isServerStartedEmbedded() {
+		return serverStartedEmbedded;
+	}
+
+	public void setServerStartedEmbedded(boolean serverStartedEmbedded) {
+		this.serverStartedEmbedded = serverStartedEmbedded;
 	}
 
 }

@@ -1,59 +1,22 @@
 package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import huma.io.IOutil;
 import huma.io.PropertiesFile;
 import huma.io.PropertyPut;
 
-public abstract class LaunchConfigurationServer {
+public abstract class PropertiesBooter extends Booter {
 	private String parentDirectory;
 	private String configPath;
 	private PropertiesFile applicationFile;
 	private PropertiesFile configFile;
-	private Class<?> bootApplicationClass;
-	public void setBootApplicationClass(Class<?> bootApplicationClass) {
-		this.bootApplicationClass = bootApplicationClass;
-	}
-
 	private boolean externalConfigOverridable;
-	public boolean isExternalConfigOverridable() {
-		return externalConfigOverridable;
-	}
-
-	private boolean serverStartedEmbedded;
 	private boolean initialized;
 	
-	public boolean isInitialized() {
-		return initialized;
-	}
-
-	protected void setInitialized(boolean initialized) {
-		this.initialized = initialized;
-	}
-
 	{
-		serverStartedEmbedded = false;
 		initialized = false;
 	}
-	
-	public boolean isServerStartedEmbedded() {
-		return serverStartedEmbedded;
-	}
-
-	public void setServerStartedEmbedded(boolean serverStartedEmbedded) {
-		this.serverStartedEmbedded = serverStartedEmbedded;
-	}
-
-	public LaunchConfigurationServer(Class<?> bootApplicationClass, boolean externalConfigOverridable) {
-		this.bootApplicationClass = bootApplicationClass;
-		this.externalConfigOverridable = externalConfigOverridable;
-	}
-	
-	public LaunchConfigurationServer() {}
 	
 	public void init() {
 		if (!initialized) {
@@ -114,116 +77,87 @@ public abstract class LaunchConfigurationServer {
 		}
 	}
 	
-	public boolean isRunnableJarExecution() {
-		String uriPath = null;
-		try {
-			uriPath = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
-		if (uriPath.contains(".jar")) {
-			Pattern pattern = Pattern.compile("jar:file:/(.*)[\\u002e]jar");
-			Matcher m = pattern.matcher(uriPath);
-			return m.find();
-		}
-		return false;
-	}
-	
-	public File getRunnableJarExecutionDirectory() {
-		String path = null;
-		
-		try {
-			path = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
-		} catch (URISyntaxException e2) {
-			e2.printStackTrace();
-		}
-		
-		Pattern pattern = Pattern.compile("jar:file:/(.*)");
-		Matcher m = pattern.matcher(path);
-		File file;
-		if(m.find())
-			file = new File(m.group(1));
-		else 
-			throw new IllegalArgumentException();
-		
-		while (file.getPath().contains(".jar"))
-			file = file.getParentFile();
-
-		return file;
-	}
-	
-	// Getters
-	public String getParentDirectory() {
-		return parentDirectory;
-	}
-	
-	public String getConfigPath() {
-		return configPath;
-	}
-	
-	public Class<?> getBootApplicationClass() {
-		return bootApplicationClass;
-	}
 	
 	public void setExternalConfigOverridable(boolean b) {
 		this.externalConfigOverridable = b;
 	}
 	
+	public boolean isInitialized() {
+		return initialized;
+	}
+
+	protected void setInitialized(boolean initialized) {
+		this.initialized = initialized;
+	}
+	
+	
+	public boolean isExternalConfigOverridable() {
+		return externalConfigOverridable;
+	}
+	
+	
+	public String getParentDirectory() {
+		return parentDirectory;
+	}
+
+	public String getConfigPath() {
+		return configPath;
+	}
+
 	// Getters - properties - config
 	public String getHomePath() {
 		return configFile.getProperty("home.path");
 	}
-	
+
 	public String getDatabasePath() {
 		return configFile.getProperty("database.path");
 	}
-	
+
 	public String getDatabaseFilename() {
 		return configFile.getProperty("database.name.file");
 	}
-	
+
 	public String getDatabaseFileExtension() {
 		return configFile.getProperty("database.name.ext");
 	}
-	
+
 	public String getUrlLocalhost() {
 		return configFile.getProperty("localhost.url");
 	}
-	
+
 	public String getUrlShutdownActuator() {
 		return configFile.getProperty("shutdown.actuator.url");
 	}
-	
+
 	public String getFilesPath() {
 		return configFile.getProperty("files.path");
 	}
-	
+
 	public String getLogsPath() {
 		return configFile.getProperty("logs.path");
 	}
-	
+
 	public boolean isDebugConsoleMode() {
 		return Boolean.valueOf(configFile.getProperty("debug.console.mode"));
 	}
-	
+
 	// Getters - properties - application
 	public String getSpringDatasourceUrl() {
 		return applicationFile.getProperty("spring.datasource.url");
 	}
-	
+
 	public String getDatabaseUsername() {
 		return applicationFile.getProperty("spring.datasource.username");
 	}
-	
+
 	public String getDatabasePassword() {
 		return applicationFile.getProperty("spring.datasource.password");
 	}
-	
+
 	public String getSqlDriver() {
 		return applicationFile.getProperty("sql.driver");
 	}
-	
+
 	public String getPort() {
 		return applicationFile.getProperty("server.port");
 	}

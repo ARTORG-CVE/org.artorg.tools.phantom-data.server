@@ -3,40 +3,45 @@ package org.artorg.tools.phantomData.server;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleStartupServerBooter;
+import org.artorg.tools.phantomData.server.boot.SwingStartupProgressFrame;
 import org.artorg.tools.phantomData.server.model.PhantomFile;
 
+import huma.io.ConsoleDiverter;
+
 public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
-	
-	{
-		setBootApplicationClass(BootApplication.class);
-		setExternalConfigOverridable(false);
-	}
 	
 	public static void main(String[] args) {
 		new DesktopSwingBootServer().boot(args);
 	}
 	
 	public void boot(String[] args) {
+		setBootApplicationClass(BootApplication.class);
+		setExternalConfigOverridable(false);
+		setConsoleDiverter(new ConsoleDiverter());
+		setConsoleFrame(new SwingConsoleFrame());
 		catchedBoot(() -> {
+			setStartupFrame(new SwingStartupProgressFrame());
 			init();
 			prepareFileStructure();
 			PhantomFile.setFilesPath(getFilesPath());
 			
 			if (isDebugConsoleMode())
-				consoleFrame.setVisible(true);
+				getConsoleFrame().setVisible(true);
 			if (!isConnected()) {
-				startupFrame.setVisible(true);
-				startupFrame.setnConsoleLines(191);
-				startupFrame.startProgress();
+				getStartupFrame().setVisible(true);
+				getStartupFrame().setnConsoleLines(191);
+				getStartupFrame().setTitle("Phantom Database");
+				getStartupFrame().setProgressing(true);
 				startSpringServer(args);
-				startupFrame.setVisible(false);
+				getStartupFrame().setVisible(false);
 			} else {
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame, "Server already started!");
 				frame.dispose();
 			}
-			startupFrame.dispose();
+			getStartupFrame().dispose();
 		});
 	}
 

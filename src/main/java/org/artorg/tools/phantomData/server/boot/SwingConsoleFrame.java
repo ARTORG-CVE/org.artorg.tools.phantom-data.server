@@ -21,23 +21,14 @@ import javax.swing.text.StyledDocument;
 
 import huma.io.ConsoleDiverter;
 
-public class SwingConsoleFrame extends JFrame{
-	private static final long serialVersionUID = 3224705735339280900L;
+public class SwingConsoleFrame extends ConsoleFrame {
 	private final JTextPane textArea;
-	private final ConsoleDiverter consoleDiverter;
-	private boolean errorOccured;
+	private JFrame frame;
 	
 	{
+		frame = new JFrame();
 		textArea = new JTextPane();
-	}
-	
-	public SwingConsoleFrame(ConsoleDiverter consoleDiverter) {
-		this.consoleDiverter = consoleDiverter;
-		createConsoleFrame();
-	}
-	
-	private void createConsoleFrame() {
-		setSize(1200, 440);
+		frame.setSize(1200, 440);
 		setTitle("Phantom Database - Console Output");
 		
 		textArea.setEditable(false);
@@ -50,9 +41,8 @@ public class SwingConsoleFrame extends JFrame{
 		noWrapPanel.add(textArea);
 		JScrollPane scrollV = new JScrollPane(noWrapPanel);
 		
-		add(scrollV);
-		alignFrame(this);
-		addConsoleOutputPrintStream();
+		frame.add(scrollV);
+		alignFrame(frame);
 	}
 	
 	private void alignFrame(JFrame frame) {
@@ -60,15 +50,6 @@ public class SwingConsoleFrame extends JFrame{
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void addConsoleOutputPrintStream() {
-		System.setOut(consoleDiverter.addOutPrintStream( 
-				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine)));
-		System.setErr(consoleDiverter.addErrPrintStream( 
-				(consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
-				(consoleLines, newLine) -> errorOccured = true));
 	}
 	
 	private void updateTextArea(BiConsumer<JTextPane, String> textWriter, String newLine) {
@@ -101,9 +82,31 @@ public class SwingConsoleFrame extends JFrame{
 			e.printStackTrace();
 		}
     }
-	
-	public boolean isErrorOccured() {
-		return errorOccured;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
+		super.setConsoleDiverter(consoleDiverter);
+		System.setOut(consoleDiverter.addOutPrintStream( 
+				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine)));
+		System.setErr(consoleDiverter.addErrPrintStream( 
+				(consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
+				(consoleLines, newLine) -> setErrorOccured(true)));
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		frame.setVisible(visible);
+	}
+
+	@Override
+	public void setTitle(String title) {
+		frame.setTitle(title);
+	}
+
+	@Override
+	public JFrame getGraphic() {
+		return frame;
 	}
 
 }

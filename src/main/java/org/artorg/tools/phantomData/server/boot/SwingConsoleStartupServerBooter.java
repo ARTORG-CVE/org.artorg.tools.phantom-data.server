@@ -1,46 +1,23 @@
 package org.artorg.tools.phantomData.server.boot;
 
-import huma.io.ConsoleDiverter;
-
 public abstract class SwingConsoleStartupServerBooter extends ServerBooter {
-	private final ConsoleDiverter consoleDiverter;
-	protected final SwingConsoleFrame consoleFrame;
-	protected final SwingStartupProgressFrame startupFrame;
-	private boolean errorOccured;
-	
-	{
-		consoleDiverter = new ConsoleDiverter();
-		consoleFrame = new SwingConsoleFrame(consoleDiverter);
-		startupFrame = new SwingStartupProgressFrame(consoleDiverter);
-		startupFrame.setnConsoleLines(191);
-	}
 	
 	protected boolean catchedBoot(Runnable rc) {
 		try {
 			rc.run();
 		} catch (Exception e) {
-			consoleFrame.setTitle("Phantom Database - Exception thrown!");
-			errorOccured = true;
+			getConsoleFrame().setTitle("Phantom Database - Exception thrown!");
+			setErrorOccured(true);
 			if (!super.handleException(e))
 				e.printStackTrace();
 		}
-		if (!consoleFrame.isErrorOccured() && !errorOccured && !isDebugConsoleMode())
-			consoleFrame.setVisible(false);
+		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured() && !isDebugConsoleMode())
+			getConsoleFrame().setVisible(false);
 		else if (isRunnableJarExecution()) 
-			consoleFrame.setVisible(true);
-		if (errorOccured)
+			getConsoleFrame().setVisible(true);
+		if (isErrorOccured())
 			return false;
 		return true;
-	}
-
-	@Override
-	public void setStartupFrameVisible(boolean b) {
-		startupFrame.setVisible(b);
-	}
-
-	@Override
-	public void setConsoleFrameVisible(boolean b) {
-		consoleFrame.setVisible(b);
 	}
 	
 }

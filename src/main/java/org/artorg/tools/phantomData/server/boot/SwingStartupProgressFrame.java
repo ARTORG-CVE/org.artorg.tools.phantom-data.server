@@ -26,37 +26,22 @@ import javax.swing.border.EmptyBorder;
 import huma.io.ConsoleDiverter;
 import huma.io.IOutil;
 
-public class SwingStartupProgressFrame extends JFrame {
-	private static final long serialVersionUID = -844471159054024668L;
-	private final ConsoleDiverter consoleDiverter;
+public class SwingStartupProgressFrame extends StartupProgressFrame {
 	private final JProgressBar progressBar;
 	private final JLabel progressLabel;
-	private double progress;
-	private int nConsoleLines;
-	private boolean progressStarted;
+	private JFrame frame;
 	
 	{
+		frame = new JFrame();
 		progressBar = new JProgressBar();
 		progressLabel = new JLabel();
-		progress = 0.0;
-	}
-	
-	public void startProgress() {
-		progressStarted = true;
-	}
-	
-	public SwingStartupProgressFrame(ConsoleDiverter consoleDiverter) {
-		this.consoleDiverter = consoleDiverter;
-		createStartupFrame();
-	}
-	
-	public void createStartupFrame() {
-		setTitle("Phantom Database");
-		setResizable(false);
-		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.setTitle("Phantom Database");
+		frame.setResizable(false);
+		frame.setUndecorated(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Container content = getContentPane();
+		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
 		
 		JLabel closeLabel = new JLabel("x"); 
@@ -104,11 +89,10 @@ public class SwingStartupProgressFrame extends JFrame {
 		progressPanel.add(progressBar, BorderLayout.PAGE_END);
 		content.add(progressPanel, BorderLayout.PAGE_END);
 		
-		pack();
-		alignFrame(this);
-		addProgressPrintStream();
+		frame.pack();
+		alignFrame(frame);
 	}
-	
+
 	private void alignFrame(JFrame frame) {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
@@ -116,16 +100,12 @@ public class SwingStartupProgressFrame extends JFrame {
 		frame.setLocation(x, y);
 	}
 	
-	private void addProgressPrintStream() {
-		System.setOut(consoleDiverter.addOutPrintStream(this::updateStartupProgress));
-	}
-	
 	private void updateStartupProgress(List<String> consoleLines, String newLine) {
-		if (progressStarted) {
+		if (isProgressing()) {
 			Pattern pattern = Pattern.compile("[^:]: (.*)");
 			
-			progress = progress + 100.0 / nConsoleLines;
-			progressBar.setValue((int) progress);
+			setProgress(getProgress() + 100.0 / getnConsoleLines());
+			progressBar.setValue((int) getProgress());
 			
 			if (consoleLines.size() > 0) {
 				if (consoleLines.size() < 9)
@@ -138,12 +118,41 @@ public class SwingStartupProgressFrame extends JFrame {
 		}
 	}
 	
-	public int getnConsoleLines() {
-		return nConsoleLines;
+	@Override
+	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
+		super.setConsoleDiverter(consoleDiverter);
+		System.setOut(consoleDiverter.addOutPrintStream(this::updateStartupProgress));
+		
+	}
+	
+	// Getters & Setters
+	public JProgressBar getProgressBar() {
+		return progressBar;
 	}
 
-	public void setnConsoleLines(int nConsoleLines) {
-		this.nConsoleLines = nConsoleLines;
+	public JLabel getProgressLabel() {
+		return progressLabel;
+	}
+
+	@Override
+	public void setVisible(boolean b) {
+		frame.setVisible(b);
+	}
+
+	@Override
+	public JFrame getGraphic() {
+		return frame;
+	}
+
+	@Override
+	public void dispose() {
+		frame.dispose();
+	}
+
+	@Override
+	public void setTitle(String title) {
+		frame.setTitle(title);
+		
 	}
 
 }
