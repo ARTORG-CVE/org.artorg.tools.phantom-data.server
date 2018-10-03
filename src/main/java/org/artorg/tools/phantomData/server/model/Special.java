@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.model;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,17 +36,9 @@ public class Special extends PropertyContainer implements DbPersistentUUID<Speci
 	
 	@Override
 	public String toString() {
-		return String.format("shortcut: %s, properties: %s", 
+		return String.format("shortcut: %s, properties: [%s]", 
 			getShortcut()
-				,
-				""
-//				propertyContainer.getAllProperties().stream()
-//					.map(p -> p.toString())
-//					.collect(Collectors.joining(", ", "[", "]"))
-//				getBooleanProperties().stream()
-//					.map(a -> a.toString())
-//					.collect(Collectors.joining(", ", "[", "]"))
-					);
+				, getAllProperties().stream().map(p -> p.toString()).collect(Collectors.joining(", ")));
 	}
 	
 	@Override

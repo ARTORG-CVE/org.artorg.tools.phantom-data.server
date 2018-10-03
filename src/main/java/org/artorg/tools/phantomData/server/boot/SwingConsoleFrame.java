@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 import javax.swing.JFrame;
@@ -82,15 +83,14 @@ public class SwingConsoleFrame extends ConsoleFrame {
 			e.printStackTrace();
 		}
     }
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		super.setConsoleDiverter(consoleDiverter);
-		System.setOut(consoleDiverter.addOutLineConsumer( 
-				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine)));
-		System.setErr(consoleDiverter.addErrLineConsumer( 
-				(consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
+		consoleDiverter.addOutLineConsumer( 
+				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine));
+		consoleDiverter.addErrLineConsumer( 
+				Arrays.asList((consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
 				(consoleLines, newLine) -> setErrorOccured(true)));
 	}
 

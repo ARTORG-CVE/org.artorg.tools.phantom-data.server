@@ -109,12 +109,12 @@ public class Phantom extends PropertyContainer implements Comparable<Phantom>, S
 				+ "literature base: %s, special: %s, number: %d", 
 				getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
 				getLiteratureBase().getValue(), getSpecial().toString(), getNumber()));
-		String[] properties = this.getAllPropertiesAsString();
-		for (String property: properties)
-			sb.append(property);
-		if (!files.isEmpty())
-			sb.append(", files: " +getFiles().toString());
-		sb.append("]");
+//		String[] properties = this.getAllPropertiesAsString();
+//		for (String property: properties)
+//			sb.append(property);
+//		if (!files.isEmpty())
+//			sb.append(", files: " +getFiles().toString());
+//		sb.append("]");
 		return sb.toString();
 	}
 	

@@ -44,23 +44,29 @@ public abstract class PropertyContainer {
 	
 	public PropertyContainer() {}
 
-	public <T extends Property<T,U>, U extends Comparable<U>> void addProperties(Collection<T> properties) {
-		for (T property: properties)
-			addProperty(property);
+//	public <T extends Property<T,U>, U extends Comparable<U>> void addProperties(Collection<T> properties) {
+//		for (T property: properties)
+//			addProperty(property);
+//	}
+	
+	public boolean addProperty(BooleanProperty property) {
+		return getBooleanProperties().add(((BooleanProperty)property));
 	}
 	
-	public <T extends Property<T,U>, U extends Comparable<U>> boolean addProperty(T property) {
-		if (property instanceof BooleanProperty)
-			return getBooleanProperties().add(((BooleanProperty)property));
-		if (property instanceof DateProperty)
-			return getDateProperties().add(((DateProperty)property));
-		if (property instanceof StringProperty)
-			return getStringProperties().add(((StringProperty)property));
-		if (property instanceof IntegerProperty)
-			return getIntegerProperties().add(((IntegerProperty)property));
-		if (property instanceof DoubleProperty)
-			return getDoubleProperties().add(((DoubleProperty)property));
-		return false;
+	public boolean addProperty(DateProperty property) {
+		return getDateProperties().add(((DateProperty)property));
+	}
+	
+	public boolean addProperty(StringProperty property) {
+		return getStringProperties().add(((StringProperty)property));
+	}
+	
+	public boolean addProperty(IntegerProperty property) {
+		return getIntegerProperties().add(((IntegerProperty)property));
+	}
+	
+	public boolean addProperty(DoubleProperty property) {
+		return getDoubleProperties().add(((DoubleProperty)property));
 	}
 
 	public <T> boolean removeProperty(T property) {
@@ -77,13 +83,13 @@ public abstract class PropertyContainer {
 		return false;
 	}
 	
-	public String[] getAllPropertiesAsString() {
-		String[] results = new String[5];
-		results[0] = getBooleanProperties().toString();
-		results[1] = getDateProperties().toString();
-		results[2] = getStringProperties().toString();
-		results[3] = getIntegerProperties().toString();
-		results[4] = getDoubleProperties().toString();
+	public List<Property<?,?>> getAllProperties() {
+		List<Property<?,?>> results = new ArrayList<Property<?,?>>();
+		results.addAll(getBooleanProperties());
+		results.addAll(getDateProperties());
+		results.addAll(getStringProperties());
+		results.addAll(getIntegerProperties());
+		results.addAll(getDoubleProperties());
 		
 		return results;
 	}

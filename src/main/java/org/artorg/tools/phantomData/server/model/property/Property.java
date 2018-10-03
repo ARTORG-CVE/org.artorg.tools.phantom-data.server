@@ -60,7 +60,7 @@ public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparab
 	
 	@Override
 	public String toString() {
-		return String.format("[propertyField: %s, value: %s]", getPropertyField().toString(), getValue().toString());
+		return String.format("[propertyField: %s, value: %s, id: %s]", getPropertyField().toString(), getValue().toString(), getId().toString());
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.PrintStream;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -124,9 +123,7 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		super.setConsoleDiverter(consoleDiverter);
-		PrintStream test = consoleDiverter.addOutLineConsumer(this::updateStartupProgress); 
-		System.setOut(test);
-		
+		consoleDiverter.addOutLineConsumer(this::updateStartupProgress);
 	}
 	
 	// Getters & Setters

@@ -28,6 +28,4 @@ public abstract class ConsoleFrame {
 		return consoleDiverter;
 	}
 	
-	
-
 }
