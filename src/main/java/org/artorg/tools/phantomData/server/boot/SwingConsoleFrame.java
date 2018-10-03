@@ -87,9 +87,9 @@ public class SwingConsoleFrame extends ConsoleFrame {
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		super.setConsoleDiverter(consoleDiverter);
-		System.setOut(consoleDiverter.addOutPrintStream( 
+		System.setOut(consoleDiverter.addOutLineConsumer( 
 				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine)));
-		System.setErr(consoleDiverter.addErrPrintStream( 
+		System.setErr(consoleDiverter.addErrLineConsumer( 
 				(consoleLines, newLine) -> updateTextArea(this::appendToPaneErr, newLine),
 				(consoleLines, newLine) -> setErrorOccured(true)));
 	}
