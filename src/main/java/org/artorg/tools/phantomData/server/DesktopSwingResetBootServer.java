@@ -24,19 +24,17 @@ public class DesktopSwingResetBootServer extends SwingConsoleStartupServerBooter
 			prepareFileStructure();
 			PhantomFile.setFilesPath(getFilesPath());
 			
-//			consoleFrame.setVisible(true);
 			shutdownSpringServer();
 			deleteFileStructure();
 			
 			init();
 			prepareFileStructure();
-			// logInfos();
 			
 			if (!isConnected()) {
 				getStartupFrame().setnConsoleLines(191);
 				getStartupFrame().setTitle("Phantom Database");
-				getStartupFrame().setProgressing(true);
 				getStartupFrame().setVisible(true);
+				getStartupFrame().setProgressing(true);
 			}
 			startSpringServer(args);
 

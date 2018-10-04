@@ -30,9 +30,10 @@ public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 			if (isDebugConsoleMode())
 				getConsoleFrame().setVisible(true);
 			if (!isConnected()) {
-				getStartupFrame().setVisible(true);
+				
 				getStartupFrame().setnConsoleLines(191);
 				getStartupFrame().setTitle("Phantom Database");
+				getStartupFrame().setVisible(true);
 				getStartupFrame().setProgressing(true);
 				startSpringServer(args);
 				getStartupFrame().setVisible(false);
