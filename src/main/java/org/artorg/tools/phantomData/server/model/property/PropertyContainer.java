@@ -1,7 +1,7 @@
 package org.artorg.tools.phantomData.server.model.property;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.JoinColumn;
@@ -9,8 +9,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @MappedSuperclass
-public abstract class PropertyContainer {
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
+public abstract class PropertyContainer implements Serializable {
+	private static final long serialVersionUID = -7904409478126499598L;
 
 	@ManyToMany
 	@JoinTable(name = "PROPERTY_CONTAINER_BOOLEAN_PROPERTIES",

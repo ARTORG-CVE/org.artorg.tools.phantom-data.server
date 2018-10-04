@@ -1,5 +1,6 @@
 package org.artorg.tools.phantomData.server.model.property;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
-public class PropertyField implements DbPersistentUUID<PropertyField> {
+public class PropertyField implements DbPersistentUUID<PropertyField>, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
