@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,6 +21,7 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
+@DiscriminatorColumn(name = "TYPE")
 public class Phantom extends PropertyContainer implements Comparable<Phantom>, Serializable,
 		DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = 1L;
