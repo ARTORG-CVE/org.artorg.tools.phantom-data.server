@@ -25,11 +25,28 @@ public class PropertyField implements DbPersistentUUID<PropertyField>, Serializa
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
 	
+	@Column(name = "PARENT_ITEM_CLASS", nullable = false)
+	private String parentItemClass;
+	
+	public Class<?> getParentItemClass() {
+		try {
+			return Class.forName(parentItemClass);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		throw new RuntimeException();
+	}
+
+	public void setParentItemClass(Class<?> parentItemClass) {
+		this.parentItemClass = parentItemClass.getName();
+	}
+
 	public PropertyField() {}
 	
-	public PropertyField(String name, String description) {
+	public PropertyField(String name, String description, Class<?> parentItemClass) {
 		this.name = name; 
 		this.description = description;
+		this.parentItemClass = parentItemClass.getName();
 	}
 	
 	@Override
