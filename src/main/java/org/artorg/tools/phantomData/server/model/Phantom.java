@@ -7,11 +7,8 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,9 +25,7 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
-//@Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "TYPE")
-public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer {
+public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer<Phantom> {
 	
 	private static final long serialVersionUID = -8429092809434766392L;
 

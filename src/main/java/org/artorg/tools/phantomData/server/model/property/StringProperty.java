@@ -31,9 +31,10 @@ public class StringProperty extends Property<StringProperty,String> implements S
 		return s;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<StringProperty> getItemClass() {
-		return StringProperty.class;
+		return (Class<StringProperty>) this.getClass();
 	}
 	
 }

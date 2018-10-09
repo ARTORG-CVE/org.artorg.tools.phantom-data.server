@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.model.property;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IPropertyContainer {
+public interface IPropertyContainer<ITEM> {
 	
 	List<BooleanProperty> getBooleanProperties();
 

@@ -32,9 +32,10 @@ public class DateProperty extends Property<DateProperty, Date> implements Serial
 		throw new UnsupportedOperationException();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<DateProperty> getItemClass() {
-		return DateProperty.class;
+		return (Class<DateProperty>) this.getClass();
 	}
 
 }

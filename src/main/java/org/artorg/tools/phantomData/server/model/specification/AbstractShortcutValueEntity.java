@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.model;
+package org.artorg.tools.phantomData.server.model.specification;
 
 import java.util.UUID;
 
@@ -27,6 +27,12 @@ public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,
 	public AbstractShortcutValueEntity(U shortcut, V value) {
 		this.shortcut = shortcut;
 		this.value = value;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public  int compareTo(ITEM that) {
+		return ((AbstractShortcutValueEntity<ITEM,U,V>)this).getShortcut().compareTo(
+				((AbstractShortcutValueEntity<ITEM,U,V>)that).getShortcut());
 	}
 
 	public U getShortcut() {

@@ -31,9 +31,10 @@ public class IntegerProperty extends Property<IntegerProperty, Integer> implemen
 		return Integer.valueOf(s);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<IntegerProperty> getItemClass() {
-		return IntegerProperty.class;
+		return (Class<IntegerProperty>) this.getClass();
 	}
 	
 }

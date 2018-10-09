@@ -24,9 +24,7 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "SPECIALS")
-//@Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "TYPE")
-public class Special implements DbPersistentUUID<Special>, Serializable, IPropertyContainer {
+public class Special implements DbPersistentUUID<Special>, Serializable, IPropertyContainer<Special> {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Id

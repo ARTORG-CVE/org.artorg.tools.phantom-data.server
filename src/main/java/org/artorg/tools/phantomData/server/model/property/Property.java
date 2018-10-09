@@ -9,14 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @MappedSuperclass
 @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 @DiscriminatorColumn(name = "TYPE")
-public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparable<U>> implements DbPersistentUUID<ITEM>, Serializable {
+public abstract class Property<PROPERTY extends Property<PROPERTY,VALUE>, VALUE extends Comparable<VALUE>> extends AbstractBaseEntity<PROPERTY> implements Serializable {
 	private static final long serialVersionUID = -6436598935465710135L;
 	
 	@Id
@@ -27,17 +27,22 @@ public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparab
 	private PropertyField propertyField;
 	
 	@Column(name = "VALUE", nullable = false)
-	private U value;
+	private VALUE value;
 	
-	public abstract String toString(U value);
+	public abstract String toString(VALUE value);
 	
-	public abstract U fromStringToValue(String s);
+	public abstract VALUE fromStringToValue(String s);
 	
 	public Property() {}
 	
-	public Property(PropertyField propertyField, U value) {
+	public Property(PropertyField propertyField, VALUE value) {
 		this.propertyField = propertyField;
 		this.value = value;
+	}
+	
+	@Override
+	protected String createName() {
+		return propertyField.getName() +": " +toString(value);
 	}
 	
 	public PropertyField getPropertyField() {
@@ -48,15 +53,15 @@ public abstract class Property<ITEM extends Property<ITEM,U>, U extends Comparab
 		this.propertyField = propertyField;
 	}
 	
-	public U getValue() {
+	public VALUE getValue() {
 		return value;
 	}
 
-	public void setValue(U value) {
+	public void setValue(VALUE value) {
 		this.value = value;
 	}
 	
-	public int compareTo(ITEM that) {
+	public int compareTo(PROPERTY that) {
 		int i = this.getPropertyField().compareTo(that.getPropertyField());
 		if (i != 0) return i;
 		i = this.getValue().compareTo(that.getValue());

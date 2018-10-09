@@ -31,9 +31,10 @@ public class DoubleProperty extends Property<DoubleProperty, Double> implements 
 		return Double.valueOf(s);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<DoubleProperty> getItemClass() {
-		return DoubleProperty.class;
+		return (Class<DoubleProperty>) this.getClass();
 	}
 	
 }

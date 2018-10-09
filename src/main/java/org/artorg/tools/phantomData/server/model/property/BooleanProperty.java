@@ -31,9 +31,10 @@ public class BooleanProperty extends Property<BooleanProperty, Boolean> implemen
 		return Boolean.valueOf(s);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<BooleanProperty> getItemClass() {
-		return BooleanProperty.class;
+		return (Class<BooleanProperty>) this.getClass();
 	}
 	
 }
