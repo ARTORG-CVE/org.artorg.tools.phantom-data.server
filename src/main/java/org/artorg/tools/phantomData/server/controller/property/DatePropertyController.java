@@ -30,29 +30,40 @@ ControllerSpec<DateProperty, IdatePropertyService<DateProperty>> {
 		return new ResponseEntity<DateProperty>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("DATE_PROPERTY/{ID}")
 	public ResponseEntity<DateProperty> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("DATE_PROPERTIES")
 	public ResponseEntity<List<DateProperty>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("DATE_PROPERTY")
 	public ResponseEntity<Void> create(@RequestBody DateProperty property, UriComponentsBuilder builder) {
-		return super.create(property, builder);
+		return super.createHelper(property, builder);
 	}
 	
+	@Override
 	@PutMapping("DATE_PROPERTY")
 	public ResponseEntity<DateProperty> update(@RequestBody DateProperty property) {
-		return super.update(property);
+		return super.updateHelper(property);
 	}
 	
+	@Override
 	@DeleteMapping("DATE_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("DATE_PROPERTY/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

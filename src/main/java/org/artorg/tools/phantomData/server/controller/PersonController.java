@@ -21,29 +21,40 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("user")
 public class PersonController extends ControllerSpec<Person, IService<Person>> {
 	
+	@Override
 	@GetMapping("PERSON/{ID}")
 	public ResponseEntity<Person> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("PERSONS")
 	public ResponseEntity<List<Person>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("PERSON")
 	public ResponseEntity<Void> create(@RequestBody Person person, UriComponentsBuilder builder) {
-		return super.create(person, builder);
+		return super.createHelper(person, builder);
 	}
 	
+	@Override
 	@PutMapping("PERSON")
 	public ResponseEntity<Person> update(@RequestBody Person person) {
-		return super.update(person);
+		return super.updateHelper(person);
 	}
 	
+	@Override
 	@DeleteMapping("PERSON/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("PERSON/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

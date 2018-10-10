@@ -28,29 +28,40 @@ public class FileController extends ControllerSpec<PhantomFile, IfileService<Pha
 		return new ResponseEntity<PhantomFile>(f, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("FILE/{ID}")
 	public ResponseEntity<PhantomFile> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("FILES")
 	public ResponseEntity<List<PhantomFile>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("FILE")
 	public ResponseEntity<Void> create(@RequestBody PhantomFile file, UriComponentsBuilder builder) {
-		return super.create(file, builder);
+		return super.createHelper(file, builder);
 	}
 	
+	@Override
 	@PutMapping("FILE")
 	public ResponseEntity<PhantomFile> update(@RequestBody PhantomFile file) {
-		return super.update(file);
+		return super.updateHelper(file);
 	}
 	
+	@Override
 	@DeleteMapping("FILE/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("FILE/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

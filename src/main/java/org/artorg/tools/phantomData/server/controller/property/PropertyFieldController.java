@@ -29,29 +29,40 @@ public class PropertyFieldController extends ControllerSpec<PropertyField,
 		return new ResponseEntity<PropertyField>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("PROPERTY_FIELD/{ID}")
 	public ResponseEntity<PropertyField> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("PROPERTY_FIELDS")
 	public ResponseEntity<List<PropertyField>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("PROPERTY_FIELD")
 	public ResponseEntity<Void> create(@RequestBody PropertyField propertyField, UriComponentsBuilder builder) {
-		return super.create(propertyField, builder);
+		return super.createHelper(propertyField, builder);
 	}
 	
+	@Override
 	@PutMapping("PROPERTY_FIELD")
 	public ResponseEntity<PropertyField> update(@RequestBody PropertyField propertyField) {
-		return super.update(propertyField);
+		return super.updateHelper(propertyField);
 	}
 	
+	@Override
 	@DeleteMapping("PROPERTY_FIELD/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("PROPERTY_FIELD/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

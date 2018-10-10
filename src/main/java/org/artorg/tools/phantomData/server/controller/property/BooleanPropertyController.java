@@ -30,29 +30,40 @@ public class BooleanPropertyController extends ControllerSpec<BooleanProperty,
 		return new ResponseEntity<BooleanProperty>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("BOOLEAN_PROPERTY/{ID}")
 	public ResponseEntity<BooleanProperty> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("BOOLEAN_PROPERTIES")
 	public ResponseEntity<List<BooleanProperty>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("BOOLEAN_PROPERTY")
 	public ResponseEntity<Void> create(@RequestBody BooleanProperty property, UriComponentsBuilder builder) {
-		return super.create(property, builder);
+		return super.createHelper(property, builder);
 	}
 	
+	@Override
 	@PutMapping("BOOLEAN_PROPERTY")
 	public ResponseEntity<BooleanProperty> update(@RequestBody BooleanProperty property) {
-		return super.update(property);
+		return super.updateHelper(property);
 	}
 	
+	@Override
 	@DeleteMapping("BOOLEAN_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("BOOLEAN_PROPERTY/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

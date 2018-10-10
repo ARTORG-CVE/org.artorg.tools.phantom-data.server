@@ -42,5 +42,9 @@ public interface IService<T extends DbPersistent<T,?>> {
 //        	annulusDiameterRepository.save(annulusDiameter);
 //        return true;
 	}
+	
+	default Boolean existById(UUID id) {
+		return getRepository().existsById(id);
+	}
 
 }

@@ -28,29 +28,40 @@ public class SpecialController extends ControllerSpec<Special, IspecialService<S
 		return new ResponseEntity<Special>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("SPECIAL/{ID}")
 	public ResponseEntity<Special> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("SPECIALS")
 	public ResponseEntity<List<Special>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("SPECIAL")
 	public ResponseEntity<Void> create(@RequestBody Special special, UriComponentsBuilder builder) {
-		return super.create(special, builder);
+		return super.createHelper(special, builder);
 	}
 	
+	@Override
 	@PutMapping("SPECIAL")
 	public ResponseEntity<Special> update(@RequestBody Special special) {
-		return super.update(special);
+		return super.updateHelper(special);
 	}
 	
+	@Override
 	@DeleteMapping("SPECIAL/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("SPECIAL/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

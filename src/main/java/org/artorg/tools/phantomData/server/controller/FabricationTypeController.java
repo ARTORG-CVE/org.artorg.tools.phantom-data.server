@@ -29,29 +29,40 @@ public class FabricationTypeController extends ControllerSpec<FabricationType,
 		return new ResponseEntity<FabricationType>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("FABRICATION_TYPE/{ID}")
 	public ResponseEntity<FabricationType> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("FABRICATION_TYPES")
 	public ResponseEntity<List<FabricationType>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("FABRICATION_TYPE")
 	public ResponseEntity<Void> create(@RequestBody FabricationType fabricationType, UriComponentsBuilder builder) {
-		return super.create(fabricationType, builder);
+		return super.createHelper(fabricationType, builder);
 	}
 	
+	@Override
 	@PutMapping("FABRICATION_TYPE")
 	public ResponseEntity<FabricationType> update(@RequestBody FabricationType fabricationType) {
-		return super.update(fabricationType);
+		return super.updateHelper(fabricationType);
 	}
 	
+	@Override
 	@DeleteMapping("FABRICATION_TYPE/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("FABRICATION_TYPE/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

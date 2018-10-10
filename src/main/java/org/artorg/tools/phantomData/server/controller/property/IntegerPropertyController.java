@@ -29,29 +29,40 @@ public class IntegerPropertyController extends ControllerSpec<IntegerProperty, I
 		return new ResponseEntity<IntegerProperty>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("INTEGER_PROPERTY/{ID}")
 	public ResponseEntity<IntegerProperty> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("INTEGER_PROPERTIES")
 	public ResponseEntity<List<IntegerProperty>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("INTEGER_PROPERTY")
 	public ResponseEntity<Void> create(@RequestBody IntegerProperty property, UriComponentsBuilder builder) {
-		return super.create(property, builder);
+		return super.createHelper(property, builder);
 	}
 	
+	@Override
 	@PutMapping("INTEGER_PROPERTY")
 	public ResponseEntity<IntegerProperty> update(@RequestBody IntegerProperty property) {
-		return super.update(property);
+		return super.updateHelper(property);
 	}
 	
+	@Override
 	@DeleteMapping("INTEGER_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("INTEGER_PROPERTY/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

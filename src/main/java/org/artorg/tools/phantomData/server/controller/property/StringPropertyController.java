@@ -30,29 +30,40 @@ public class StringPropertyController extends ControllerSpec<StringProperty,
 		return new ResponseEntity<StringProperty>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("STRING_PROPERTY/{ID}")
 	public ResponseEntity<StringProperty> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("STRING_PROPERTIES")
 	public ResponseEntity<List<StringProperty>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("STRING_PROPERTY")
 	public ResponseEntity<Void> create(@RequestBody StringProperty property, UriComponentsBuilder builder) {
-		return super.create(property, builder);
+		return super.createHelper(property, builder);
 	}
 	
+	@Override
 	@PutMapping("STRING_PROPERTY")
 	public ResponseEntity<StringProperty> update(@RequestBody StringProperty property) {
-		return super.update(property);
+		return super.updateHelper(property);
 	}
 	
+	@Override
 	@DeleteMapping("STRING_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("STRING_PROPERTY/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 
 	@Override

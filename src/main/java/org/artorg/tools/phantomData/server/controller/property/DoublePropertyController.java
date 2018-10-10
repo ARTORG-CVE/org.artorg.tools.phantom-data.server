@@ -29,29 +29,40 @@ public class DoublePropertyController extends ControllerSpec<DoubleProperty, Ido
 	return new ResponseEntity<DoubleProperty>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("DOUBLE_PROPERTY/{ID}")
 	public ResponseEntity<DoubleProperty> getById(@PathVariable("ID") UUID id) {
-	return super.getById(id);
+	return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("DOUBLE_PROPERTIES")
 	public ResponseEntity<List<DoubleProperty>> getAll() {
-	return super.getAll();
+	return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("DOUBLE_PROPERTY")
 	public ResponseEntity<Void> create(@RequestBody DoubleProperty property, UriComponentsBuilder builder) {
-	return super.create(property, builder);
+	return super.createHelper(property, builder);
 	}
 	
+	@Override
 	@PutMapping("DOUBLE_PROPERTY")
 	public ResponseEntity<DoubleProperty> update(@RequestBody DoubleProperty property) {
-	return super.update(property);
+	return super.updateHelper(property);
 	}
 	
+	@Override
 	@DeleteMapping("DOUBLE_PROPERTY/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-	return super.delete(id);
+	return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("DOUBLE_PROPERTY/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override

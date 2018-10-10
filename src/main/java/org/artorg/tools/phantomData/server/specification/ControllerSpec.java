@@ -18,17 +18,29 @@ public abstract class ControllerSpec<T extends DbPersistent<T,?>, I_SERVICE_TYPE
 	@Autowired
 	protected I_SERVICE_TYPE service;
 	
-	protected ResponseEntity<T> getById(@PathVariable("ID") UUID id) {
+	public abstract ResponseEntity<T> getById(@PathVariable("ID") UUID id);
+	
+	public abstract ResponseEntity<List<T>> getAll();
+	
+	public abstract ResponseEntity<Void> create(@RequestBody T model, UriComponentsBuilder builder);
+	
+	public abstract ResponseEntity<T> update(@RequestBody T model);
+	
+	public abstract ResponseEntity<Void> delete(@PathVariable("ID") UUID id);
+	
+	public abstract ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id);
+	
+	protected ResponseEntity<T> getByIdHelper(@PathVariable("ID") UUID id) {
 		T m = service.getById(id);
 		return new ResponseEntity<T>(m, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<List<T>> getAll() {
+	protected ResponseEntity<List<T>> getAllHelper() {
 		List<T> list = service.getAll();
 		return new ResponseEntity<List<T>>(list, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<Void> create(@RequestBody T model, UriComponentsBuilder builder) {
+	protected ResponseEntity<Void> createHelper(@RequestBody T model, UriComponentsBuilder builder) {
         boolean flag = service.add(model);
         if (flag == false) {
 	   return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -38,14 +50,19 @@ public abstract class ControllerSpec<T extends DbPersistent<T,?>, I_SERVICE_TYPE
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
-	protected ResponseEntity<T> update(@RequestBody T model) {
+	protected ResponseEntity<T> updateHelper(@RequestBody T model) {
 		service.update(model);
 		return new ResponseEntity<T>(model, HttpStatus.OK);
 	}
 	
-	protected ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
+	protected ResponseEntity<Void> deleteHelper(@PathVariable("ID") UUID id) {
 		service.delete(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	protected ResponseEntity<Boolean> existByIdHelper(@PathVariable("ID") UUID id) {
+		Boolean b = service.existById(id);
+		return new ResponseEntity<Boolean>(b, HttpStatus.OK);
 	}
 	
 }

@@ -28,29 +28,40 @@ public class AnnulusDiameterController extends ControllerSpec<AnnulusDiameter, I
 		return new ResponseEntity<AnnulusDiameter>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("ANNULUS_DIAMETER/{ID}")
 	public ResponseEntity<AnnulusDiameter> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("ANNULUS_DIAMETERS")
 	public ResponseEntity<List<AnnulusDiameter>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("ANNULUS_DIAMETER")
 	public ResponseEntity<Void> create(@RequestBody AnnulusDiameter annulusDiameter, UriComponentsBuilder builder) {
-		return super.create(annulusDiameter, builder);
+		return super.createHelper(annulusDiameter, builder);
 	}
 	
+	@Override
 	@PutMapping("ANNULUS_DIAMETER")
 	public ResponseEntity<AnnulusDiameter> update(@RequestBody AnnulusDiameter annulusDiameter) {
-		return super.update(annulusDiameter);
+		return super.updateHelper(annulusDiameter);
 	}
 	
+	@Override
 	@DeleteMapping("ANNULUS_DIAMETER/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("ANNULUS_DIAMETER/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 
 	@Override

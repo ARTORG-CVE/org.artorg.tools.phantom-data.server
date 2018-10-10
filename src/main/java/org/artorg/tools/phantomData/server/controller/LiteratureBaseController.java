@@ -28,29 +28,40 @@ public class LiteratureBaseController extends ControllerSpec<LiteratureBase, Ili
 		return new ResponseEntity<LiteratureBase>(m, HttpStatus.OK);
 	}
 	
+	@Override
 	@GetMapping("LITERATURE_BASE/{ID}")
 	public ResponseEntity<LiteratureBase> getById(@PathVariable("ID") UUID id) {
-		return super.getById(id);
+		return super.getByIdHelper(id);
 	}
 	
+	@Override
 	@GetMapping("LITERATURE_BASES")
 	public ResponseEntity<List<LiteratureBase>> getAll() {
-		return super.getAll();
+		return super.getAllHelper();
 	}
 	
+	@Override
 	@PostMapping("LITERATURE_BASE")
 	public ResponseEntity<Void> create(@RequestBody LiteratureBase literatureBase, UriComponentsBuilder builder) {
-		return super.create(literatureBase, builder);
+		return super.createHelper(literatureBase, builder);
 	}
 	
+	@Override
 	@PutMapping("LITERATURE_BASE")
 	public ResponseEntity<LiteratureBase> update(@RequestBody LiteratureBase literatureBase) {
-		return super.update(literatureBase);
+		return super.updateHelper(literatureBase);
 	}
 	
+	@Override
 	@DeleteMapping("LITERATURE_BASE/{ID}")
 	public ResponseEntity<Void> delete(@PathVariable("ID") UUID id) {
-		return super.delete(id);
+		return super.deleteHelper(id);
+	}
+	
+	@Override
+	@GetMapping("LITERATURE_BASE/EXIST_BY_ID/{ID}")
+	public ResponseEntity<Boolean> existById(@PathVariable("ID") UUID id) {
+		return super.existByIdHelper(id);
 	}
 	
 	@Override
