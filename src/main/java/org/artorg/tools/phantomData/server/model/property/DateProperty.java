@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DATE_PROPERTIES")
-@DiscriminatorValue(value = "DATE")
+@DiscriminatorValue(value = "2")
 public class DateProperty extends Property<DateProperty, Date> implements Serializable {
 	private static final long serialVersionUID = -6242701549246630297L;
 

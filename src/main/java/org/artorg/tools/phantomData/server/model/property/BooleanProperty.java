@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
-@DiscriminatorValue(value = "BOOLEAN")
+@DiscriminatorValue(value = "1")
 public class BooleanProperty extends Property<BooleanProperty, Boolean> implements Serializable {
 	private static final long serialVersionUID = 4690035196217371829L;
 	

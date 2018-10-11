@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "STRING_PROPERTIES")
-@DiscriminatorValue(value = "STRING")
+@DiscriminatorValue(value = "5")
 public class StringProperty extends Property<StringProperty,String> implements Serializable {
 	private static final long serialVersionUID = 79674080687314415L;
 

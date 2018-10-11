@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "INTEGER_PROPERTIES")
-@DiscriminatorValue(value = "INTEGER")
+@DiscriminatorValue(value = "4")
 public class IntegerProperty extends Property<IntegerProperty, Integer> implements Serializable {
 	private static final long serialVersionUID = -2138623619328236280L;
 

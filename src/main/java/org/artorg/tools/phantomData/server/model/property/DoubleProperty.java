@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DOUBLE_PROPERTIES")
-@DiscriminatorValue(value = "DOUBLE")
+@DiscriminatorValue(value = "3")
 public class DoubleProperty extends Property<DoubleProperty, Double> implements Serializable {
 	private static final long serialVersionUID = -4538457475852600572L;
 
