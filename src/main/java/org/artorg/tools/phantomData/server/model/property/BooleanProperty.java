@@ -3,6 +3,7 @@ package org.artorg.tools.phantomData.server.model.property;
 import java.io.Serializable;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -10,8 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE")
+@DiscriminatorValue(value = "BOOLEAN")
 public class BooleanProperty extends Property<BooleanProperty, Boolean> implements Serializable {
 	private static final long serialVersionUID = 4690035196217371829L;
 	

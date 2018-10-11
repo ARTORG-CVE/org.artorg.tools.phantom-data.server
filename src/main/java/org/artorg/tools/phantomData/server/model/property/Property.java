@@ -5,17 +5,18 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 @MappedSuperclass
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
-@DiscriminatorColumn(name = "TYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "CLASS_TYPE", discriminatorType = DiscriminatorType.STRING)
 public abstract class Property<PROPERTY extends Property<PROPERTY,VALUE>, VALUE extends Comparable<VALUE>> extends AbstractBaseEntity<PROPERTY> implements Serializable {
 	private static final long serialVersionUID = -6436598935465710135L;
 	

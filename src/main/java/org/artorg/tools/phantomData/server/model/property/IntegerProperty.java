@@ -3,6 +3,7 @@ package org.artorg.tools.phantomData.server.model.property;
 import java.io.Serializable;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -10,8 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "INTEGER_PROPERTIES")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE")
+@DiscriminatorValue(value = "INTEGER")
 public class IntegerProperty extends Property<IntegerProperty, Integer> implements Serializable {
 	private static final long serialVersionUID = -2138623619328236280L;
 

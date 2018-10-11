@@ -16,8 +16,6 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "CLASS_TYPE", discriminatorType = DiscriminatorType.STRING)
 public class PropertyField implements DbPersistentUUID<PropertyField>, Serializable {
 	private static final long serialVersionUID = -1078447486967118366L;
 
