@@ -59,7 +59,7 @@ public abstract class ServerBooter extends PropertiesBooter {
 		if (!isConnected()) 
 			SpringApplication.run(getBootApplicationClass(), args);
 		if (!isConnected()) 
-			throw new IllegalArgumentException("url Localhost: " +getUrlLocalhost());
+			throw new IllegalArgumentException("server couldn't load configuration: url Localhost: " +getUrlLocalhost());
 	}
 	
 	public void shutdownSpringServer() {
