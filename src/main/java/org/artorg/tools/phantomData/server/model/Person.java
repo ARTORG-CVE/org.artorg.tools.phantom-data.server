@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.model.specification.Gender;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
@@ -51,6 +53,7 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 		else 
 			this.genderString = "Female";
 	}
+	
 	
 	public String getAcademicName() {
 		return academicTitle.getPrefix() +" " +getName();

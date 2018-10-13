@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
@@ -97,6 +99,7 @@ public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentU
 		this.number = number;
 		updateProductId();
 	}
+
 	
 	private void updateProductId() {
 		setProductId(String.format("%s-%s-%s-%s-%s", 

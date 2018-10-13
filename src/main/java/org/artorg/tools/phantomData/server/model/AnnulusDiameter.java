@@ -3,6 +3,8 @@ package org.artorg.tools.phantomData.server.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.model.specification.AbstractShortcutValueEntity;
 
 @Entity
@@ -15,7 +17,7 @@ public class AnnulusDiameter extends AbstractShortcutValueEntity<AnnulusDiameter
 	public AnnulusDiameter(Integer shortcut, Double value) {
 		super(shortcut, value);
 	}
-
+	
 	@Override
 	public Class<AnnulusDiameter> getItemClass() {
 		return AnnulusDiameter.class;

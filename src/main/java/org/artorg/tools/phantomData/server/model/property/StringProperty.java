@@ -2,13 +2,11 @@ package org.artorg.tools.phantomData.server.model.property;
 
 import java.io.Serializable;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "STRING_PROPERTIES")
-@DiscriminatorValue(value = "5")
 public class StringProperty extends Property<StringProperty,String> implements Serializable {
 	private static final long serialVersionUID = 79674080687314415L;
 

@@ -1,32 +1,32 @@
 package org.artorg.tools.phantomData.server.model.specification;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Enumeration;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import org.artorg.tools.phantomData.server.model.Person;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "itemClass")
 public abstract class AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM>, Serializable {
 	private static final long serialVersionUID = -2814334933013431607L;
-//	private List<Field> persistentPropertyFields;
-//	private List<Object> subEntities;
-//	private List<Object> inheritedEntities;
-//	
-//	{
-//		persistentPropertyFields = new ArrayList<Field>();
-//		subEntities = new ArrayList<Object>();
-//		inheritedEntities = new ArrayList<Object>();
-//	}
 	
 	@Id
 	@Column(name = "ID", nullable = false)
@@ -35,23 +35,23 @@ public abstract class AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM>
 	@Column(name = "NAME", nullable = false)
 	private String name;
 	
-	@Column(name = "DATE_ADDED", nullable = false)
-	private Date dateAdded;
-	
-	@Column(name = "DATE_FORMAT_ADDED", nullable = false)
-	private String dateFormatAdded;
-	
-	@Column(name = "DATE_LAST_MODIFIED", nullable = false)
-	private Date dateLastModified;
-	
-	@Column(name = "DATE_FORMAT_LAST_MODIFIED", nullable = false)
-	private String dateFormatLastModified;
-	
 	@Column(name = "USER_CREATOR")
 	private Person creator;
 	
 	@Column(name = "USER_CHANGER")
 	private Person changer;
+	
+	@Column(name = "DATE_ADDED", nullable = false)
+	private Date dateAdded;
+	
+	@Column(name = "DATE_LAST_MODIFIED", nullable = false)
+	private Date dateLastModified;
+	
+	@Column(name = "DATE_FORMAT_ADDED", nullable = false)
+	private String dateFormatAdded;
+	
+	@Column(name = "DATE_FORMAT_LAST_MODIFIED", nullable = false)
+	private String dateFormatLastModified;
 	
 	public AbstractBaseEntity() {
 		this("", null);
@@ -69,25 +69,21 @@ public abstract class AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM>
 	
 	protected abstract String createName();
 	
-	
-//	public List<Field> getPersistentPropertyFields() {
-//		return persistentPropertyFields; 
-//	}
-//	
-//	public List<Object> getSubEntities() {
-//		return subEntities;
-//	}
-//	
-//	public List<Object> getInheritedEntities() {
-//		return inheritedEntities;
-//	}
-//	
-//	public List<Object> getEntities() {
-//		List<Object> entities = new ArrayList<Object>();
-//		entities.addAll(getSubEntities());
-//		entities.addAll(getInheritedEntities());
-//		return entities;
-//	}
+	public static <T> Stream<T> enumerationAsStream(Enumeration<T> e) {
+	    return StreamSupport.stream(
+	        new Spliterators.AbstractSpliterator<T>(Long.MAX_VALUE, Spliterator.ORDERED) {
+	            public boolean tryAdvance(Consumer<? super T> action) {
+	                if(e.hasMoreElements()) {
+	                    action.accept(e.nextElement());
+	                    return true;
+	                }
+	                return false;
+	            }
+	            public void forEachRemaining(Consumer<? super T> action) {
+	                while(e.hasMoreElements()) action.accept(e.nextElement());
+	            }
+	    }, false);
+	}
 	
 	public void updateName() {
 		changed(createName(), null);

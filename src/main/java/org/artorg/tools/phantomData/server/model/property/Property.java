@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -15,20 +13,12 @@ import javax.persistence.OneToOne;
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "CLASS_TYPE", columnDefinition = "TINYINT(1)")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "itemClass")
-@JsonSubTypes({ @Type(value = BooleanProperty.class, name = "boolean"),
-		@Type(value = DateProperty.class, name = "date"), @Type(value = DoubleProperty.class, name = "double"),
-		@Type(value = IntegerProperty.class, name = "integer"), @Type(value = StringProperty.class, name = "string") })
-
-//@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
-public abstract class Property<PROPERTY extends Property<PROPERTY, VALUE>, VALUE extends Comparable<VALUE>>
+public abstract class Property<PROPERTY extends Property<PROPERTY, VALUE>, VALUE extends Comparable<VALUE>> extends AbstractBaseEntity<PROPERTY>
 		implements DbPersistentUUID<PROPERTY>, Serializable {
 	private static final long serialVersionUID = -6436598935465710135L;
 
@@ -54,10 +44,10 @@ public abstract class Property<PROPERTY extends Property<PROPERTY, VALUE>, VALUE
 		this.value = value;
 	}
 
-//	@Override
-//	protected String createName() {
-//		return propertyField.getName() +": " +toString(value);
-//	}
+	@Override
+	protected String createName() {
+		return propertyField.getName() +": " +toString(value);
+	}
 
 	public PropertyField getPropertyField() {
 		return propertyField;

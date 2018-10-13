@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
