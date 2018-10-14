@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "ACADEMIC_TITLE")
-public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
+public class AcademicTitle extends AbstractBaseEntity<AcademicTitle> implements DbPersistentUUID<AcademicTitle> {
 	private static final long serialVersionUID = -8901917059076169353L;
 	
 	@Id
@@ -31,6 +30,11 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 	public AcademicTitle(String prefix, String description) {
 		this.prefix = prefix;
 		this.description = description;
+	}
+	
+	@Override
+	protected String createName() {
+		return prefix;
 	}
 	
 	@Override
@@ -100,5 +104,7 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	
 
 }

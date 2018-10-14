@@ -14,19 +14,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
 import org.artorg.tools.phantomData.server.model.property.IPropertyContainer;
 import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
 import org.artorg.tools.phantomData.server.model.property.StringProperty;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "SPECIALS")
-public class Special implements DbPersistentUUID<Special>, Serializable, IPropertyContainer<Special> {
+public class Special extends AbstractBaseEntity<Special> implements DbPersistentUUID<Special>, Serializable, IPropertyContainer<Special> {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Id
@@ -70,6 +69,11 @@ public class Special implements DbPersistentUUID<Special>, Serializable, IProper
 	
 	public Special(String shortcut) {
 		this.shortcut = shortcut;
+	}
+	
+	@Override
+	protected String createName() {
+		return shortcut;
 	}
 	
 	@Override
@@ -156,5 +160,7 @@ public class Special implements DbPersistentUUID<Special>, Serializable, IProper
 	public void setDoubleProperties(List<DoubleProperty> properties) {
 		 this.doubleProperties = properties;
 	}
+
+	
 	
 }

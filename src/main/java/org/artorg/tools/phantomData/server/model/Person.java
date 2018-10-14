@@ -11,14 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.model.specification.Gender;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "USERS")
-public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
+public class Person extends AbstractBaseEntity<Person> implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
 	private static final long serialVersionUID = 8153106662017090155L;
 	
 	@Id
@@ -54,6 +53,10 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 			this.genderString = "Female";
 	}
 	
+	@Override
+	protected String createName() {
+		return getAcademicName();
+	}
 	
 	public String getAcademicName() {
 		return academicTitle.getPrefix() +" " +getName();
@@ -209,5 +212,7 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	public void setGenderString(String gender) {
 		this.genderString = gender;
 	}
+
+	
 
 }

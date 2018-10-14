@@ -6,12 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>>  implements DbPersistentUUID<ITEM> {
+public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>> extends AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
 	
 	@Id
@@ -29,6 +27,15 @@ public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,
 	public AbstractShortcutValueEntity(U shortcut, V value) {
 		this.shortcut = shortcut;
 		this.value = value;
+	}
+	
+	public abstract String toString(V value);
+
+	public abstract V fromStringToValue(String s);
+	
+	@Override
+	protected String createName() {
+		return shortcut +": " +toString(value);
 	}
 	
 	@SuppressWarnings("unchecked")

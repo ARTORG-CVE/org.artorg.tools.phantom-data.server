@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "FILE_TYPES")
-public class FileType implements DbPersistentUUID<FileType> {
+public class FileType extends AbstractBaseEntity<FileType> implements DbPersistentUUID<FileType> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -27,6 +26,11 @@ public class FileType implements DbPersistentUUID<FileType> {
 	
 	public FileType(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	protected String createName() {
+		return name;
 	}
 	
 	public UUID getId() {
@@ -61,5 +65,7 @@ public class FileType implements DbPersistentUUID<FileType> {
 	public Class<FileType> getItemClass() {
 		return FileType.class;
 	}
+
+	
 
 }

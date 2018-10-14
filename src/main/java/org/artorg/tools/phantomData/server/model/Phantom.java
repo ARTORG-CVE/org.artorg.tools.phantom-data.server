@@ -15,19 +15,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
 import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
 import org.artorg.tools.phantomData.server.model.property.IPropertyContainer;
 import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
 import org.artorg.tools.phantomData.server.model.property.StringProperty;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer<Phantom> {
+public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer<Phantom> {
 	
 	private static final long serialVersionUID = -8429092809434766392L;
 
@@ -99,7 +98,11 @@ public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentU
 		this.number = number;
 		updateProductId();
 	}
-
+	
+	@Override
+	protected String createName() {
+		return getProductId();
+	}
 	
 	private void updateProductId() {
 		setProductId(String.format("%s-%s-%s-%s-%s", 
@@ -282,5 +285,7 @@ public class Phantom implements Comparable<Phantom>, Serializable, DbPersistentU
 	public void setDoubleProperties(List<DoubleProperty> properties) {
 		 this.doubleProperties = properties;
 	}
+
+	
 
 }

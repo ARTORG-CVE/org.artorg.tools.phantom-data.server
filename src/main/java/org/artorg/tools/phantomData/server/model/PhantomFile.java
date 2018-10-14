@@ -10,13 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.beans.BeanMap;
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "FILES")
-public class PhantomFile implements	DbPersistentUUID<PhantomFile> {
+public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPersistentUUID<PhantomFile> {
 	private static final long serialVersionUID = 1L;
 	private static String filesPath;
 	
@@ -52,6 +51,11 @@ public class PhantomFile implements	DbPersistentUUID<PhantomFile> {
 		this.name = name;
 		this.extension = extension;
 		this.fileType = fileType;
+	}
+	
+	@Override
+	protected String createName() {
+		return name;
 	}
 	
 	public void create(String absolutOriginalPath) {
@@ -129,5 +133,7 @@ public class PhantomFile implements	DbPersistentUUID<PhantomFile> {
 	public Class<PhantomFile> getItemClass() {
 		return PhantomFile.class;
 	}
+
+	
 
 }

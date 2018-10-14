@@ -4,6 +4,8 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ public class EntityBeanInfo {
 	private final Class<?> entityClass;
 	private final Set<PropertyDescriptor> propertyDescriptors;
 	private final Function<Object, List<Object>> entityGetters;
+	private final Function<Object, List<Object>> propertiesGetters;
 	private final Map<Class<?>, Map<String, Function<Object, Object>>> getterFunctionsMap;
 	private final Map<Class<?>, Map<String, BiConsumer<Object, Object>>> setterFunctionsMap;
 
@@ -37,12 +40,17 @@ public class EntityBeanInfo {
 
 		entityGetters = bean -> propertyDescriptors.stream()
 				.filter(d -> d.getPropertyType().isAnnotationPresent(Entity.class))
-				.map(d -> d.createPropertyEditor(bean).getValue())
+				.map(d -> getValue(d, bean))
+				.collect(Collectors.toList());
+		
+		propertiesGetters = bean -> propertyDescriptors.stream()
+				.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
+				.map(d -> getValue(d, bean))
 				.collect(Collectors.toList());
 
 		getterFunctionsMap = propertyDescriptors.stream().collect(Collectors
 				.groupingBy((PropertyDescriptor d) -> d.getPropertyType(), Collectors.toMap(d -> d.getName(), d -> {
-					return bean -> d.createPropertyEditor(bean).getValue();
+					return bean -> getValue(d, bean);
 				})));
 		
 		setterFunctionsMap = propertyDescriptors.stream().collect(Collectors
@@ -50,9 +58,24 @@ public class EntityBeanInfo {
 					return (bean,value) -> d.createPropertyEditor(bean).setValue(value);
 				})));
 	}
+	
+	private Object getValue(PropertyDescriptor descriptor, Object bean) {
+		try {
+			return descriptor.getReadMethod().invoke(bean);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		throw new IllegalArgumentException();
+	}
 
 	public List<Object> getEntities(Object bean) {
+		if (bean == null) return new ArrayList<Object>();
 		return entityGetters.apply(bean);
+	}
+	
+	public List<Object> getProperties(Object bean) {
+		if (bean == null) return new ArrayList<Object>();
+		return propertiesGetters.apply(bean);
 	}
 
 	public Class<?> getEntityClass() {

@@ -20,5 +20,15 @@ public class LiteratureBase extends AbstractShortcutValueEntity<LiteratureBase, 
 	public Class<LiteratureBase> getItemClass() {
 		return LiteratureBase.class;
 	}
+
+	@Override
+	public String toString(String value) {
+		return value;
+	}
+
+	@Override
+	public String fromStringToValue(String s) {
+		return s;
+	}
 	
 }

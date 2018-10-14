@@ -20,5 +20,15 @@ public class FabricationType extends AbstractShortcutValueEntity<FabricationType
 	public Class<FabricationType> getItemClass() {
 		return FabricationType.class;
 	}
+
+	@Override
+	public String toString(String value) {
+		return value;
+	}
+
+	@Override
+	public String fromStringToValue(String s) {
+		return s;
+	}
 	
 }
