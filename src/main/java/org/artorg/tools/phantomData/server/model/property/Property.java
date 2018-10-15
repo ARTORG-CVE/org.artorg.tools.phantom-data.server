@@ -45,7 +45,7 @@ public abstract class Property<PROPERTY extends Property<PROPERTY, VALUE>, VALUE
 	}
 
 	@Override
-	protected String createName() {
+	public String createName() {
 		return propertyField.getName() +": " +toString(value);
 	}
 

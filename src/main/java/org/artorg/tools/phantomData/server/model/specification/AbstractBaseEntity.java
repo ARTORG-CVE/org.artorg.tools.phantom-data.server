@@ -67,7 +67,7 @@ public abstract class AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM>
 		this.changer = creator;
 	}
 	
-	protected abstract String createName();
+	public abstract String createName();
 	
 	public static <T> Stream<T> enumerationAsStream(Enumeration<T> e) {
 	    return StreamSupport.stream(

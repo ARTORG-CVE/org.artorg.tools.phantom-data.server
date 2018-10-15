@@ -41,6 +41,7 @@ public class EntityBeanInfo {
 		entityGetters = bean -> propertyDescriptors.stream()
 				.filter(d -> d.getPropertyType().isAnnotationPresent(Entity.class))
 				.map(d -> getValue(d, bean))
+				.filter(entity -> entity != null)
 				.collect(Collectors.toList());
 		
 		propertiesGetters = bean -> propertyDescriptors.stream()

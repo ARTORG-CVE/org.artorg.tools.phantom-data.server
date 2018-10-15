@@ -34,7 +34,7 @@ public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,
 	public abstract V fromStringToValue(String s);
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return shortcut +": " +toString(value);
 	}
 	

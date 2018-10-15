@@ -33,7 +33,7 @@ public class AcademicTitle extends AbstractBaseEntity<AcademicTitle> implements 
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return prefix;
 	}
 	

@@ -54,7 +54,7 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return name;
 	}
 	

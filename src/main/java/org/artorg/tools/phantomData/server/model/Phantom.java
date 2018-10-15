@@ -100,7 +100,7 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return getProductId();
 	}
 	

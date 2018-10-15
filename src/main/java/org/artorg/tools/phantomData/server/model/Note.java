@@ -15,7 +15,7 @@ public class Note extends AbstractBaseEntity<Note> {
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return super.getName(); 
 	}
 	

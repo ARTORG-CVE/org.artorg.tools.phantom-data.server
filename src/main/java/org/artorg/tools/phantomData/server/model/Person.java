@@ -54,7 +54,7 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return getAcademicName();
 	}
 	

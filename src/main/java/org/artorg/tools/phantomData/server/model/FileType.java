@@ -29,7 +29,7 @@ public class FileType extends AbstractBaseEntity<FileType> implements DbPersiste
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return name;
 	}
 	

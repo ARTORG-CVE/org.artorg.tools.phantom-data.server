@@ -72,7 +72,7 @@ public class Special extends AbstractBaseEntity<Special> implements DbPersistent
 	}
 	
 	@Override
-	protected String createName() {
+	public String createName() {
 		return shortcut;
 	}
 	
