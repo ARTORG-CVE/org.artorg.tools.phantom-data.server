@@ -7,6 +7,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class EntityBeanInfo {
 	private final Set<PropertyDescriptor> propertyDescriptors;
 	private final Function<Object, List<Object>> entityGetters;
 	private final Function<Object, List<Object>> propertiesGetters;
+	private final Function<Object, List<Collection<Object>>> entityCollectionGetters;
 	private final Map<Class<?>, Map<String, Function<Object, Object>>> getterFunctionsMap;
 	private final Map<Class<?>, Map<String, BiConsumer<Object, Object>>> setterFunctionsMap;
 
@@ -44,6 +46,14 @@ public class EntityBeanInfo {
 				.filter(entity -> entity != null)
 				.collect(Collectors.toList());
 		
+		entityCollectionGetters = bean -> propertyDescriptors.stream()
+				.filter(d -> Collection.class.isAssignableFrom(d.getPropertyType())
+//				.flatMap(d ->)
+				.filter(d -> d.getPropertyType().isAnnotationPresent(Entity.class))
+				.map(d -> getValue(d, bean))
+				.filter(entity -> entity != null)
+				.collect(Collectors.toList());
+		
 		propertiesGetters = bean -> propertyDescriptors.stream()
 				.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
 				.map(d -> getValue(d, bean))
@@ -58,6 +68,8 @@ public class EntityBeanInfo {
 				.groupingBy((PropertyDescriptor d) -> d.getPropertyType(), Collectors.toMap(d -> d.getName(), d -> {
 					return (bean,value) -> d.createPropertyEditor(bean).setValue(value);
 				})));
+		
+		
 	}
 	
 	private Object getValue(PropertyDescriptor descriptor, Object bean) {

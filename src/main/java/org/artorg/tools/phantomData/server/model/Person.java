@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
-import org.artorg.tools.phantomData.server.model.specification.Gender;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
@@ -34,23 +33,16 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 	private String lastname;
 	
 	@Column(name = "GENDER", nullable = false)
-	private String genderString;
+	private Gender gender;
 	
 	
-	public Person() {
-		firstname = "";
-		lastname = "";
-		genderString = "";
-	}
+	public Person() {}
 	
 	public Person(AcademicTitle academicTitle, String firstname, String lastname, Gender gender) {
 		this.academicTitle = academicTitle;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		if (gender == Gender.MALE)
-			this.genderString = "Male";
-		else 
-			this.genderString = "Female";
+		this.gender = gender;
 	}
 	
 	@Override
@@ -118,7 +110,7 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 		result = prime * result + ((academicTitle == null) ? 0 : academicTitle.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + ((genderString == null) ? 0 : genderString.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		return result;
 	}
 
@@ -146,10 +138,10 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 				return false;
 		} else if (!lastname.equals(other.lastname))
 			return false;
-		if (genderString == null) {
-			if (other.genderString != null)
+		if (gender == null) {
+			if (other.gender != null)
 				return false;
-		} else if (!genderString.equals(other.genderString))
+		} else if (!gender.equals(other.gender))
 			return false;
 		return true;
 	}
@@ -160,15 +152,11 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 	}
 	
 	public Gender getGender() {
-		if (this.genderString.equals(Gender.MALE))
-			return Gender.MALE;
-		else if (this.genderString.equals(Gender.FEMALE))
-			return Gender.FEMALE;
-		return null;
+		return gender;
 	}
 	
 	public void setGender(Gender gender) {
-		this.genderString = gender.toString();
+		this.gender = gender;
 	}
 	
 	@Override
@@ -205,14 +193,4 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 		this.academicTitle = academicTitle;
 	}
 	
-	public String getGenderString() {
-		return genderString;
-	}
-
-	public void setGenderString(String gender) {
-		this.genderString = gender;
-	}
-
-	
-
 }

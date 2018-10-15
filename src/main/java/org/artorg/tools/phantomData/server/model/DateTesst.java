@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.artorg.tools.phantomData.server.model.specification.Gender;
-
 public class DateTesst {
 	
 	
@@ -33,10 +31,10 @@ public class DateTesst {
 		
 
 		
-		AcademicTitle title = new AcademicTitle("Dr. med.", "Doctor medicine");
-		Person person = new Person(title, "Marc", "Hutzli", Gender.MALE);
-		
-		System.out.println(person.getAcademicName());
+//		AcademicTitle title = new AcademicTitle("Dr. med.", "Doctor medicine");
+////		Person person = new Person(title, "Marc", "Hutzli", Gender.MALE);
+//		
+//		System.out.println(person.getAcademicName());
 		
 		
 	}

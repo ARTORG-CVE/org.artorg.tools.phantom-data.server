@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.beans;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +32,17 @@ public class EntityBeanInfos {
 		if (beanInfoMap.containsKey(bean.getClass()))
 			return getEntities(bean.getClass(), bean);
 		throw new IllegalArgumentException();
+	}
+	
+	public List<Collection<Object>> getEntityCollections(Object bean) {
+		if (bean == null) return new ArrayList<Collection<Object>>();
+		if (beanInfoMap.containsKey(bean.getClass()))
+			return getEntityCollection(bean.getClass(), bean);
+		throw new IllegalArgumentException();
+	}
+	
+	public List<Collection<Object>> getEntityCollection(Class<?> entityClass, Object bean) {
+		return beanInfoMap.get(entityClass).getEntities(bean);
 	}
 	
 	public List<Object> getEntities(Class<?> entityClass, Object bean) {
