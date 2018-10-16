@@ -16,100 +16,107 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "USERS")
-public class Person extends AbstractBaseEntity<Person> implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
+public class Person extends AbstractBaseEntity<Person>
+		implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
 	private static final long serialVersionUID = 8153106662017090155L;
-	
+
 	@Id
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
-	
+
 	@Column(name = "ACADEMIC_TITLE", nullable = false)
 	private AcademicTitle academicTitle;
-	
+
 	@Column(name = "FIRSTNAME", nullable = false)
 	private String firstname;
-	
+
 	@Column(name = "LASTNAME", nullable = false)
 	private String lastname;
-	
+
 	@Column(name = "GENDER", nullable = false)
 	private Gender gender;
-	
-	
-	public Person() {}
-	
-	public Person(AcademicTitle academicTitle, String firstname, String lastname, Gender gender) {
+
+	public Person() {
+	}
+
+	public Person(AcademicTitle academicTitle, String firstname,
+			String lastname, Gender gender) {
 		this.academicTitle = academicTitle;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.gender = gender;
 	}
-	
+
 	@Override
 	public String createName() {
 		return getAcademicName();
 	}
-	
+
 	public String getAcademicName() {
-		return academicTitle.getPrefix() +" " +getName();
+		return academicTitle.getPrefix() + " " + getName();
 	}
-	
+
 	public String getSimpleAcademicName() {
-		return academicTitle.getPrefix() +" " +getSimpleName();
+		return academicTitle.getPrefix() + " " + getSimpleName();
 	}
-	
+
 	public String getName() {
-		return firstname +" " +lastname;
+		return firstname + " " + lastname;
 	}
-	
+
 	public String getSimpleName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-				.map(c -> String.valueOf(c) +". ").collect(Collectors.joining());
-		return firstnameAbreviation +lastname;
+				.map(c -> String.valueOf(c) + ". ")
+				.collect(Collectors.joining());
+		return firstnameAbreviation + lastname;
 	}
-	
+
 	public String getInitialsName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-				.map(c -> String.valueOf(c) +". ").collect(Collectors.joining());
+				.map(c -> String.valueOf(c) + ". ")
+				.collect(Collectors.joining());
 		String lastnameAbreviation = getLastnameInitials().stream()
 				.map(c -> String.valueOf(c)).collect(Collectors.joining(". "));
-		return firstnameAbreviation +lastnameAbreviation +".";
+		return firstnameAbreviation + lastnameAbreviation + ".";
 	}
-	
+
 	public List<Character> getInitials() {
 		List<Character> initials = getFirstnameInitials();
 		initials.addAll(getLastnameInitials());
 		return initials;
 	}
-	
+
 	public List<Character> getFirstnameInitials() {
 		return getInitials(firstname);
 	}
-	
+
 	public List<Character> getLastnameInitials() {
 		return getInitials(lastname);
 	}
-	
+
 	public List<Character> getInitials(String name) {
 		return Arrays.asList(name.split(" ")).stream()
-				.filter(s -> s.length()!=0)
+				.filter(s -> s.length() != 0)
 				.map(s -> s.trim())
 				.map(s -> s.charAt(0))
 				.collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public int compareTo(Person o) {
 		return Integer.compare(this.hashCode(), o.hashCode());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((academicTitle == null) ? 0 : academicTitle.hashCode());
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result
+				+ ((academicTitle == null) ? 0 : academicTitle.hashCode());
+		result = prime * result
+				+ ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result
+				+ ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		return result;
 	}
@@ -150,20 +157,20 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 	public Class<Person> getItemClass() {
 		return Person.class;
 	}
-	
+
 	public Gender getGender() {
 		return gender;
 	}
-	
+
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
+
 	@Override
 	public UUID getId() {
 		return id;
 	}
-	
+
 	@Override
 	public void setId(UUID id) {
 		this.id = id;
@@ -192,5 +199,5 @@ public class Person extends AbstractBaseEntity<Person> implements Comparable<Per
 	public void setAcademicTitle(AcademicTitle academicTitle) {
 		this.academicTitle = academicTitle;
 	}
-	
+
 }
