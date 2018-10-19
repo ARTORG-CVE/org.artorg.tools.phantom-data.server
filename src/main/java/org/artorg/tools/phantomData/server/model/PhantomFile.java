@@ -32,9 +32,6 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
 	
-	@Column(name = "PATH", nullable = false)
-	private String path;
-	
 	@Column(name = "NAME", nullable = false)
 	private String name;
 	
@@ -46,52 +43,65 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 
 	public PhantomFile() {}
 	
-	public PhantomFile(String path, String name, String extension, FileType fileType) {
-		this.path = path;
+	public PhantomFile(File srcFile, String name, String extension, FileType fileType) {
 		this.name = name;
+		extension = extension.toLowerCase();
 		this.extension = extension;
 		this.fileType = fileType;
+		
+		File destFile = new File(filesPath +"\\" +getId() +"." +extension);
+		try {
+			FileUtils.copyFile(srcFile, destFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
+	
+	public File getFile() {
+		return new File(filesPath +"\\" +getId() +"." +extension);
+	}
+	
 	
 	@Override
 	public String createName() {
 		return name;
 	}
 	
-	public void create(String absolutOriginalPath) {
-		File srcFile = new File(absolutOriginalPath);
-		File destFile = new File(filesPath 
-				+"\\" +path +"\\" +name +"." +extension);
-		try {
-			FileUtils.copyFile(srcFile, destFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		updateNativeFileName();
-		
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((extension == null) ? 0 : extension.hashCode());
+		result = prime * result + ((fileType == null) ? 0 : fileType.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
-	
-	public void updateNativeFileName() {
-		File nativeFile = new File(filesPath 
-				+"/" +path +"/" +name +"." +extension);
-		nativeFile.renameTo(new File(filesPath
-				+"/" +path +"/" +getId() +"_" +name +"." +extension));
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof PhantomFile)) return false;
+		PhantomFile other = (PhantomFile) obj;
+		if (extension == null) {
+			if (other.extension != null) return false;
+		} else if (!extension.equals(other.extension)) return false;
+		if (fileType == null) {
+			if (other.fileType != null) return false;
+		} else if (!fileType.equals(other.fileType)) return false;
+		if (name == null) {
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		return true;
 	}
-	
+
 	public UUID getId() {
 		return id;
 	}
 	
 	public void setId(UUID id) {
 		this.id = id;
-	}
-	
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public String getName() {
@@ -120,13 +130,13 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	
 	@Override
 	public int compareTo(PhantomFile that) {
-		return getPath().compareTo(that.getPath());
+		return Integer.compare(this.hashCode(), that.hashCode());
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("path: %s, type: %s", 
-				getPath(), getFileType().toString());
+		return String.format("name: %s, type: %s, path: ", 
+				getName() +"." +getExtension(), getFileType().toString(), filesPath +"\\" +getId() +"." +extension);
 	}
 
 	@Override

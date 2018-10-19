@@ -201,8 +201,8 @@ public class Reflect {
 				.filter(m -> m.getGenericParameterTypes().length == 1));
 	}
 	
-	public static boolean containsCollectionSetter(Object item, Class<?> genericCollectionType) {
-		return getMethods(item.getClass(), stream -> stream
+	public static boolean containsCollectionSetter(Class<?> itemClass, Class<?> genericCollectionType) {
+		return getMethods(itemClass, stream -> stream
 				.filter(m -> m.getReturnType() == Void.TYPE)
 				.filter(m -> m.getParameterTypes().length == 1)
 				.filter(m -> Collection.class.isAssignableFrom(m.getParameterTypes()[0]))
@@ -247,8 +247,8 @@ public class Reflect {
 				}));
 	}
 
-	public static Method getMethodByGenericReturnType(Object item, Class<?> genericReturnType) {
-		return getMethod(item.getClass(), stream -> stream
+	public static Method getMethodByGenericReturnType(Class<?> itemClass, Class<?> genericReturnType) {
+		return getMethod(itemClass, stream -> stream
 				.filter(m -> m.getParameterTypes().length == 0)
 				.filter(m -> Collection.class.isAssignableFrom(m.getReturnType()))
 				.filter(m -> Reflect.getGenericReturnTypeClass(m) == genericReturnType));
