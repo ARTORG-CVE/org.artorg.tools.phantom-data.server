@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 import org.artorg.tools.phantomData.server.model.Person;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
@@ -34,10 +35,10 @@ public abstract class AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM>
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
 	
-	@Column(name = "USER_CREATOR")
+	@OneToOne
 	private Person creator;
 	
-	@Column(name = "USER_CHANGER")
+	@OneToOne
 	private Person changer;
 	
 	@Column(name = "DATE_ADDED", nullable = false)

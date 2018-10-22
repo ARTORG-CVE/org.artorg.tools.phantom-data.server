@@ -27,7 +27,6 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 @Entity
 @Table(name = "PHANTOMS")
 public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer<Phantom> {
-	
 	private static final long serialVersionUID = -8429092809434766392L;
 
 	@Id
@@ -38,17 +37,8 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	private String productId;
 	
 	@OneToOne
-	private AnnulusDiameter annulusDiameter;
-	
-	@OneToOne
-	private FabricationType fabricationType;
-	
-	@OneToOne
-	private LiteratureBase literatureBase;
-	
-	@OneToOne
-	private Special special;
-	
+	private Phantomina phantomina;
+
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
 
@@ -90,11 +80,8 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	
 	public Phantom() {}
 	
-	public Phantom(AnnulusDiameter annulusDiameter, FabricationType fType, LiteratureBase litBase, Special special, int number) {
-		this.annulusDiameter = annulusDiameter;
-		this.fabricationType = fType;
-		this.literatureBase = litBase;
-		this.special = special;
+	public Phantom(Phantomina phantomina, int number) {
+		this.phantomina = phantomina;
 		this.number = number;
 		updateProductId();
 	}
@@ -104,13 +91,11 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		return getProductId();
 	}
 	
-	private void updateProductId() {
-		setProductId(String.format("%s-%s-%s-%s-%s", 
-				helper(() -> annulusDiameter.getShortcut().toString(), "??"),
-				helper(() -> fabricationType.getShortcut(), "?"),
-				helper(() -> literatureBase.getShortcut(), "?"),
-				helper(() -> special.getShortcut(), "?"),
-				helper(() -> ((Integer)number).toString(), "?")));
+	public void updateProductId() {
+		getPhantomina().updateProductId();
+		setProductId(String.format("%s-%s", 
+			getPhantomina().getProductId(),
+			helper(() -> ((Integer)number).toString(), "?")));
 	}
 	
 	private String helper(Supplier<String> supplier, String orElse) {
@@ -122,41 +107,15 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Phantom)
-			if (this.id.equals(((Phantom)o).id))
-					return true;
-		return false;
-	}
-	
-	@Override
-	public int compareTo(Phantom p) {
-		int i;
-		i = getAnnulusDiameter().compareTo(p.getAnnulusDiameter());
-		if (i != 0) return i;
-		i = getFabricationType().getId().compareTo(p.getFabricationType().getId());
-		if (i != 0) return i;
-		i = getLiteratureBase().getId().compareTo(p.getLiteratureBase().getId());
-		if (i != 0) return i;
-		i = getSpecial().getId().compareTo(p.getSpecial().getId());
-		if (i != 0) return i;
-		return ((Integer)getNumber()).compareTo(p.getNumber());
-	}
-	
-	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("[annulus diameter: %f, fabrication type: %s, "
-				+ "literature base: %s, special: %s, number: %d", 
-				getAnnulusDiameter().getValue(), getFabricationType().getValue(), 
-				getLiteratureBase().getValue(), getSpecial().toString(), getNumber()));
+		return "";
 //		String[] properties = this.getAllPropertiesAsString();
 //		for (String property: properties)
 //			sb.append(property);
 //		if (!files.isEmpty())
 //			sb.append(", files: " +getFiles().toString());
 //		sb.append("]");
-		return sb.toString();
+
 	}
 	
 	
@@ -178,40 +137,12 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		this.productId = productId;
 	}
 
-	public AnnulusDiameter getAnnulusDiameter() {
-		return annulusDiameter;
+	public Phantomina getPhantomina() {
+		return phantomina;
 	}
 
-	public void setAnnulusDiameter(AnnulusDiameter annulusDiameter) {
-		this.annulusDiameter = annulusDiameter;
-		updateProductId();
-	}
-	
-	public FabricationType getFabricationType() {
-		return fabricationType;
-	}
-
-	public void setFabricationType(FabricationType fabricationType) {
-		this.fabricationType = fabricationType;
-		updateProductId();
-	}
-
-	public LiteratureBase getLiteratureBase() {
-		return literatureBase;
-	}
-
-	public void setLiteratureBase(LiteratureBase literatureBase) {
-		this.literatureBase = literatureBase;
-		updateProductId();
-	}
-
-	public Special getSpecial() {
-		return special;
-	}
-
-	public void setSpecial(Special special) {
-		this.special = special;
-		updateProductId();
+	public void setPhantomina(Phantomina phantomina) {
+		this.phantomina = phantomina;
 	}
 
 	public int getNumber() {
@@ -285,7 +216,5 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	public void setDoubleProperties(List<DoubleProperty> properties) {
 		 this.doubleProperties = properties;
 	}
-
-	
 
 }
