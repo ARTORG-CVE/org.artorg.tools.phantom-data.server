@@ -76,4 +76,8 @@ public class EntityBeanInfos {
 		return beanInfoMap.get(entityClass).getSetterAsFunction(type, name);
 	}
 
+	public Set<Class<?>> getEntityClasses() {
+		return entityClasses;
+	}
+
 }
