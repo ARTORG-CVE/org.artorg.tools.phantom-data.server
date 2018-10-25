@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,V extends Comparable<V>> extends AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM> {
+public abstract class AbstractShortcutValueEntity<ITEM extends AbstractShortcutValueEntity<ITEM,U,V>, U extends Comparable<U>,V extends Comparable<V>> extends AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
 	
 	@Id
@@ -35,13 +35,18 @@ public abstract class AbstractShortcutValueEntity<ITEM, U extends Comparable<U>,
 	
 	@Override
 	public String createName() {
-		return shortcut +": " +toString(value);
+		return "shortcut:" +shortcut +", value:" +toString(value);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public  int compareTo(ITEM that) {
-		return ((AbstractShortcutValueEntity<ITEM,U,V>)this).getShortcut().compareTo(
-				((AbstractShortcutValueEntity<ITEM,U,V>)that).getShortcut());
+		int result;
+		result = getShortcut().compareTo(that.getShortcut());
+		if (result != 0) return result;
+		result = getValue().compareTo(that.getValue());
+		if (result != 0) return result;	
+		result = super.compareTo(that);
+		
+		return result;
 	}
 
 	public U getShortcut() {

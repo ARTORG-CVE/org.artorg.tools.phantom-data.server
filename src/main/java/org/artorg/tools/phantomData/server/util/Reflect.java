@@ -53,13 +53,19 @@ public class Reflect {
 	
 	public static <T> Class<?> getClassByGenericAndSuperClass(Class<T> superClass, Class<?> classOfInterest, Class<?> genericClass, int parameterIndex, Reflections reflections) {
 		List<Class<?>> superClasses = Reflect.getSubclasses(superClass, reflections);
-		Class<?> cls = superClasses.stream().filter(c -> {
+		 List<Class<?>> classes = superClasses.stream().filter(c -> !Modifier.isAbstract(c.getModifiers())).filter(c -> {
 			try {
-				return Reflect.findSubClassParameterType(c.newInstance(), classOfInterest, parameterIndex) == genericClass;
+				Class<?> temp = Reflect.findSubClassParameterType(c.newInstance(), classOfInterest, parameterIndex); 
+				return temp == genericClass;
 			} catch (Exception e2) {
+//				e2.printStackTrace();
+				
+				
 			}
 			return false;
-		}).findFirst().orElseThrow(() -> new IllegalArgumentException());
+			
+		}).collect(Collectors.toList());
+		 Class<?> cls = classes.stream().findFirst().orElseThrow(() -> new IllegalArgumentException());
 		if (cls == null)
 			throw new NullPointerException();
 		return cls;

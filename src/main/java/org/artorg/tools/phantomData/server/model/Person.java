@@ -103,6 +103,11 @@ public class Person extends AbstractBaseEntity<Person>
 	}
 
 	@Override
+	public String toString() {
+		return getAcademicName();
+	}
+	
+	@Override
 	public int compareTo(Person o) {
 		return Integer.compare(this.hashCode(), o.hashCode());
 	}

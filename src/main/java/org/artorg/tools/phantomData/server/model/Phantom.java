@@ -15,18 +15,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
-import org.artorg.tools.phantomData.server.model.property.DateProperty;
-import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
-import org.artorg.tools.phantomData.server.model.property.IPropertyContainer;
-import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
-import org.artorg.tools.phantomData.server.model.property.StringProperty;
+import org.artorg.tools.phantomData.server.model.property.IProperties;
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IPropertyContainer<Phantom> {
+public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IProperties {
 	private static final long serialVersionUID = -8429092809434766392L;
 
 	@Id
@@ -41,42 +36,17 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
+	
+	@Column(name = "PROPERTIES")
+	private Properties properties;
+
+	
 
 	@ManyToMany
 	@JoinTable(name = "PHANTOM_FILES",
 			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
 			inverseJoinColumns=@JoinColumn(name="FILE_ID"))
 	private List<PhantomFile> files = new ArrayList<PhantomFile>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOMS_BOOLEAN_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="BOOLEAN_PROPERTY_ID"))
-	private List<BooleanProperty> booleanProperties = new ArrayList<BooleanProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOMS_DATE_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="DATE_PROPERTY_ID"))
-	private List<DateProperty> dateProperties = new ArrayList<DateProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOMS_STRING_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="STRING_PROPERTY_ID"))
-	private List<StringProperty> stringProperties = new ArrayList<StringProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOMS_INTEGER_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="INTEGER_PROPERTY_ID"))
-	private List<IntegerProperty> integerProperties = new ArrayList<IntegerProperty>();
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOMS_DOUBLE_PROPERTIES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="DOUBLE_PROPERTY_ID"))
-	private List<DoubleProperty> doubleProperties = new ArrayList<DoubleProperty>();
 	
 	public Phantom() {}
 	
@@ -118,8 +88,13 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 
 	}
 	
+	@Override
+	public Class<Phantom> getItemClass() {
+		return Phantom.class;
+	}
 	
 	// Getters & Setters
+	@Override
 	public UUID getId() {
 		return id;
 	}
@@ -154,67 +129,20 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		updateProductId();
 	}
 	
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+	
 	public List<PhantomFile> getFiles() {
 		return files;
 	}
 
 	public void setFiles(List<PhantomFile> files) {
 		this.files = files;
-	}
-
-	@Override
-	public Class<Phantom> getItemClass() {
-		return Phantom.class;
-	}
-
-	@Override
-	public List<BooleanProperty> getBooleanProperties() {
-		return booleanProperties;
-	}
-
-	@Override
-	public List<DateProperty> getDateProperties() {
-		return dateProperties;
-	}
-
-	@Override
-	public List<StringProperty> getStringProperties() {
-		return stringProperties;
-	}
-
-	@Override
-	public List<IntegerProperty> getIntegerProperties() {
-		return integerProperties;
-	}
-
-	@Override
-	public List<DoubleProperty> getDoubleProperties() {
-		return doubleProperties;
-	}
-
-	@Override
-	public void setBooleanProperties(List<BooleanProperty> properties) {
-		this.booleanProperties = properties;
-	}
-
-	@Override
-	public void setDateProperties(List<DateProperty> properties) {
-		this.dateProperties = properties;
-	}
-
-	@Override
-	public void setStringProperties(List<StringProperty> properties) {
-		this.stringProperties = properties;
-	}
-
-	@Override
-	public void setIntegerProperties(List<IntegerProperty> properties) {
-		this.integerProperties = properties;
-	}
-
-	@Override
-	public void setDoubleProperties(List<DoubleProperty> properties) {
-		 this.doubleProperties = properties;
-	}
-
+	}	
+	
 }
