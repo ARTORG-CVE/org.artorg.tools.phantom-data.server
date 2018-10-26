@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.service.iService;
 
-import org.artorg.tools.phantomData.server.model.LiteratureBase;
+import org.artorg.tools.phantomData.server.model.phantom.LiteratureBase;
 import org.artorg.tools.phantomData.server.specification.DbPersistent;
 import org.artorg.tools.phantomData.server.specification.IService;
 

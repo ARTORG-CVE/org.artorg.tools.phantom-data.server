@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
+import org.artorg.tools.phantomData.server.model.phantom.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.service.iService.IannulusDiameterService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.Gender;
+import org.artorg.tools.phantomData.server.model.person.Gender;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.artorg.tools.phantomData.server.specification.IService;
 import org.springframework.stereotype.Controller;

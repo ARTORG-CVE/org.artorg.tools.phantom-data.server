@@ -2,13 +2,7 @@ package org.artorg.tools.phantomData.server.model.specification;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -17,7 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
-import org.artorg.tools.phantomData.server.model.Person;
+import org.artorg.tools.phantomData.server.model.person.Person;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -57,29 +51,7 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 		this.changer = null;
 	}
 
-	public abstract String createName();
-
-	public static <T> Stream<T> enumerationAsStream(Enumeration<T> e) {
-		return StreamSupport.stream(
-			new Spliterators.AbstractSpliterator<T>(Long.MAX_VALUE, Spliterator.ORDERED) {
-				public boolean tryAdvance(Consumer<? super T> action) {
-					if (e.hasMoreElements()) {
-						action.accept(e.nextElement());
-						return true;
-					}
-					return false;
-				}
-
-				public void forEachRemaining(Consumer<? super T> action) {
-					while (e.hasMoreElements())
-						action.accept(e.nextElement());
-				}
-			}, false);
-	}
-
-	public void updateName() {
-		changed(null);
-	}
+	public abstract String toName();
 
 	public void changed(Person changer) {
 		this.dateLastModified = new Date();
@@ -87,32 +59,36 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 	}
 
 	@Override
-	public String toString() {		
-		return String.format("created %s, %s, changed %s, %s", 
-			dateAdded.toString(), creator.toString(), dateLastModified.toString(), changer.toString());
+	public String toString() {
+		return String.format(
+			"dateLastModified=%s, creator=%s, dateAdded=%s, changer=%s, id=%s",
+			dateLastModified, creator, dateAdded, changer, id);
 	}
-	
+
 	@Override
-	public int compareTo(ITEM o) {
-		int result = 0;
-		result = createName().compareTo(o.createName());
+	public int compareTo(ITEM that) {
+		if (that == null) return -1;
+		int result;
+		result = getDateLastModified().compareTo(that.getDateLastModified());
 		if (result != 0) return result;
-		result = getDateAdded().compareTo(o.getDateAdded());
+		result = getChanger().compareTo(that.getChanger());
 		if (result != 0) return result;
-		result = getCreator().compareTo(o.getCreator());
+		result = getDateAdded().compareTo(that.getDateAdded());
 		if (result != 0) return result;
-		result = getDateLastModified().compareTo(o.getDateAdded());
+		result = getCreator().compareTo(that.getCreator());
 		if (result != 0) return result;
-		result = getChanger().compareTo(o.getChanger());
-		if (result != 0) return result;
-		
-		return result;
+		return getId().compareTo(that.getId());
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((changer == null) ? 0 : changer.hashCode());
+		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
+		result = prime * result + ((dateAdded == null) ? 0 : dateAdded.hashCode());
+		result = prime * result
+			+ ((dateLastModified == null) ? 0 : dateLastModified.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -123,6 +99,18 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 		if (obj == null) return false;
 		if (!(obj instanceof AbstractBaseEntity)) return false;
 		AbstractBaseEntity<?> other = (AbstractBaseEntity<?>) obj;
+		if (changer == null) {
+			if (other.changer != null) return false;
+		} else if (!changer.equals(other.changer)) return false;
+		if (creator == null) {
+			if (other.creator != null) return false;
+		} else if (!creator.equals(other.creator)) return false;
+		if (dateAdded == null) {
+			if (other.dateAdded != null) return false;
+		} else if (!dateAdded.equals(other.dateAdded)) return false;
+		if (dateLastModified == null) {
+			if (other.dateLastModified != null) return false;
+		} else if (!dateLastModified.equals(other.dateLastModified)) return false;
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;

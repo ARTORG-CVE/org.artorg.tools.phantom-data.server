@@ -1,54 +1,81 @@
 package org.artorg.tools.phantomData.server.model.specification;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @MappedSuperclass
-public abstract class AbstractShortcutValueEntity<ITEM extends AbstractShortcutValueEntity<ITEM,U,V>, U extends Comparable<U>,V extends Comparable<V>> extends AbstractBaseEntity<ITEM> implements DbPersistentUUID<ITEM> {
+public abstract class AbstractShortcutValueEntity<
+	ITEM extends AbstractShortcutValueEntity<ITEM, U, V>, U extends Comparable<U>,
+	V extends Comparable<V>> extends AbstractBaseEntity<ITEM>
+	implements DbPersistentUUID<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
-	
-	@Id
-	@Column(name = "ID", nullable = false)
-	private UUID id = UUID.randomUUID();
-	
-	@Column(name = "SHORTCUT", unique=true, nullable = false)
+
+	@Column(name = "SHORTCUT", unique = true, nullable = false)
 	private U shortcut;
 
 	@Column(name = "VALUE", nullable = false)
 	private V value;
-	
+
 	public AbstractShortcutValueEntity() {}
-	
+
 	public AbstractShortcutValueEntity(U shortcut, V value) {
 		this.shortcut = shortcut;
 		this.value = value;
 	}
-	
+
 	public abstract String toString(V value);
 
 	public abstract V fromStringToValue(String s);
-	
+
 	@Override
-	public String createName() {
-		return "shortcut:" +shortcut +", value:" +toString(value);
+	public String toName() {
+		return String.format("shortcut: %s, value: %s", shortcut, toString(value));
 	}
 	
-	public  int compareTo(ITEM that) {
+	@Override
+	public String toString() {
+		return String.format("%s [shortcut=%s, value=%s, %s]", getItemClass().getSimpleName(),
+			shortcut, value, super.toString());
+	}
+
+	@Override
+	public int compareTo(ITEM that) {
+		if (that == null) return -1;
 		int result;
 		result = getShortcut().compareTo(that.getShortcut());
 		if (result != 0) return result;
 		result = getValue().compareTo(that.getValue());
-		if (result != 0) return result;	
-		result = super.compareTo(that);
-		
+		if (result != 0) return result;
+		return super.compareTo(that);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((shortcut == null) ? 0 : shortcut.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof AbstractShortcutValueEntity)) return false;
+		AbstractShortcutValueEntity<?,?,?> other = (AbstractShortcutValueEntity<?,?,?>) obj;
+		if (shortcut == null) {
+			if (other.shortcut != null) return false;
+		} else if (!shortcut.equals(other.shortcut)) return false;
+		if (value == null) {
+			if (other.value != null) return false;
+		} else if (!value.equals(other.value)) return false;
+		return true;
+	}
+
+	// Getters & Setters
 	public U getShortcut() {
 		return shortcut;
 	}
@@ -56,7 +83,7 @@ public abstract class AbstractShortcutValueEntity<ITEM extends AbstractShortcutV
 	public void setShortcut(U shortcut) {
 		this.shortcut = shortcut;
 	}
-	
+
 	public V getValue() {
 		return value;
 	}
@@ -64,20 +91,5 @@ public abstract class AbstractShortcutValueEntity<ITEM extends AbstractShortcutV
 	public void setValue(V value) {
 		this.value = value;
 	}
-	
-	@Override
-	public String toString() {
-		return String.format("shortcut: %s, fabricationType: %s", getShortcut(), getValue());
-	}
 
-	@Override
-	public UUID getId() {
-		return id;
-	}
-	
-	@Override
-	public void setId(UUID id) {
-		this.id = id;
-	}
-	
 }

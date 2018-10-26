@@ -2,7 +2,7 @@ package org.artorg.tools.phantomData.server.service;
 
 import java.util.UUID;
 
-import org.artorg.tools.phantomData.server.model.Phantom;
+import org.artorg.tools.phantomData.server.model.phantom.Phantom;
 import org.artorg.tools.phantomData.server.repository.PhantomRepository;
 import org.artorg.tools.phantomData.server.specification.IService;
 import org.springframework.beans.factory.annotation.Autowired;

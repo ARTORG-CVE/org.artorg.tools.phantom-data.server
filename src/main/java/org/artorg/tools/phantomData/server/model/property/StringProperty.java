@@ -5,9 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.AbstractProperty;
+
 @Entity
 @Table(name = "STRING_PROPERTIES")
-public class StringProperty extends Property<StringProperty,String> implements Serializable {
+public class StringProperty extends AbstractProperty<StringProperty,String> implements Serializable {
 	private static final long serialVersionUID = 79674080687314415L;
 
 	public StringProperty() {}
@@ -25,11 +27,10 @@ public class StringProperty extends Property<StringProperty,String> implements S
 	public String fromStringToValue(String s) {
 		return s;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public Class<StringProperty> getItemClass() {
-		return (Class<StringProperty>) this.getClass();
+		return StringProperty.class;
 	}
 	
 }

@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.FabricationType;
+import org.artorg.tools.phantomData.server.model.phantom.FabricationType;
 import org.artorg.tools.phantomData.server.service.iService.IfabricationTypeService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.model;
+package org.artorg.tools.phantomData.server.model.person;
 
 import java.util.UUID;
 
@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "ACADEMIC_TITLE")
-public class AcademicTitle extends AbstractBaseEntity<AcademicTitle> implements DbPersistentUUID<AcademicTitle> {
+public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 	private static final long serialVersionUID = -8901917059076169353L;
 	
 	@Id
@@ -33,58 +32,54 @@ public class AcademicTitle extends AbstractBaseEntity<AcademicTitle> implements 
 	}
 	
 	@Override
-	public String createName() {
-		return prefix;
+	public String toString() {
+		return String.format("AcademicTitle [prefix=%s, description=%s, %s]", prefix,
+			description, super.toString());
 	}
-	
+
 	@Override
 	public int compareTo(AcademicTitle that) {
-		return Integer.compare(this.hashCode(), that.hashCode());
+		if (that == null) return -1;
+		int result;
+		result = getPrefix().compareTo(that.getPrefix());
+		if (result != 0) return result;
+		return getDescription().compareTo(that.getDescription());
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((prefix == null) ? 0 : prefix.hashCode());
+		int result = super.hashCode();
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((prefix == null) ? 0 : prefix.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof AcademicTitle)) return false;
 		AcademicTitle other = (AcademicTitle) obj;
-		if (prefix == null) {
-			if (other.prefix != null)
-				return false;
-		} else if (!prefix.equals(other.prefix))
-			return false;
 		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
+		if (prefix == null) {
+			if (other.prefix != null) return false;
+		} else if (!prefix.equals(other.prefix)) return false;
 		return true;
 	}
-	
+
 	@Override
 	public Class<AcademicTitle> getItemClass() {
 		return AcademicTitle.class;
 	}
 	
 	// Getters & Setters
-	@Override
 	public UUID getId() {
 		return id;
 	}
-	
-	@Override
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
@@ -104,7 +99,5 @@ public class AcademicTitle extends AbstractBaseEntity<AcademicTitle> implements 
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 
 }

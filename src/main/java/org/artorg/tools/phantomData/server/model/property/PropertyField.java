@@ -1,75 +1,101 @@
 package org.artorg.tools.phantomData.server.model.property;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PROPERTY_FIELD")
-public class PropertyField implements DbPersistentUUID<PropertyField>, Serializable {
+public class PropertyField extends AbstractBaseEntity<PropertyField>
+	implements DbPersistentUUID<PropertyField>, Serializable {
 	private static final long serialVersionUID = -1078447486967118366L;
 
-	@Id
-	@Column(name = "ID", nullable = false)
-	private UUID id = UUID.randomUUID();
-	
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	
+
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
-	
-	@Column(name = "PARENT_ITEM_CLASS", nullable = false)
-	private String parentItemClass;
-	
-	
-	
-//	@SuppressWarnings("unchecked")
-//	public Class<ITEM> getParentItemClass() {
-//		try {
-//			return (Class<ITEM>) Class.forName(parentItemClass);
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		throw new RuntimeException();
-//	}
-//	
-//	public void setParentItemClass(Class<ITEM> parentItemClass) {
-//		this.parentItemClass = parentItemClass.getName();
-//	}
 
-	public String getParentItemClass() {
-		return parentItemClass;
-	}
-
-	public void setParentItemClass(String parentItemClass) {
-		this.parentItemClass = parentItemClass;
-	}
+	@Column(name = "TYPE", nullable = false)
+	private String type;
 
 	public PropertyField() {}
-	
-	public PropertyField(String name, String description, Class<?> parentItemClass) {
-		this.name = name; 
+
+	public PropertyField(String name, String description, Class<?> type) {
+		this.name = name;
 		this.description = description;
-		this.parentItemClass = parentItemClass.getName();
+		this.type = type.getName();
+	}
+
+	@Override
+	public String toName() {
+		return toString();
 	}
 	
 	@Override
-	public UUID getId() {
-		return id;
+	public Class<PropertyField> getItemClass() {
+		return PropertyField.class;
 	}
 	
 	@Override
-	public void setId(UUID id) {
-		this.id = id;
+	public String toString() {
+		String type = this.type;
+		try {
+			type = Class.forName(type).getSimpleName();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return String.format("PropertyField [type=%s, name=%s, description=%s, %s]", type,
+			name, description, super.toString());
 	}
 	
+	@Override
+	public int compareTo(PropertyField that) {
+		if (that == null) return -1;
+		int result;
+		result = getType().compareTo(that.getType());
+		if (result != 0) return result;
+		result = getName().compareTo(that.getName());
+		if (result != 0) return result;
+		result = getDescription().compareTo(that.getDescription());
+		if (result != 0) return result;
+		return super.compareTo(that);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof PropertyField)) return false;
+		PropertyField other = (PropertyField) obj;
+		if (description == null) {
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
+		if (name == null) {
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		if (type == null) {
+			if (other.type != null) return false;
+		} else if (!type.equals(other.type)) return false;
+		return true;
+	}
+
+	// Getters & Setters
 	public String getName() {
 		return name;
 	}
@@ -85,24 +111,13 @@ public class PropertyField implements DbPersistentUUID<PropertyField>, Serializa
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@Override
-	public int compareTo(PropertyField that) {
-		return getName().compareTo(that.getName());
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("[name: %s, descrption: %s]", 
-				getName(), getDescription());
+
+	public String getType() {
+		return type;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<PropertyField> getItemClass() {
-		return (Class<PropertyField>) this.getClass();
+	public void setType(String type) {
+		this.type = type;
 	}
-	
 
-	
 }

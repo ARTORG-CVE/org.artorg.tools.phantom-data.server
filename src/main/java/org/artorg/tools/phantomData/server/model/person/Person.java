@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.model;
+package org.artorg.tools.phantomData.server.model.person;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -11,19 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "USERS")
-public class Person extends AbstractBaseEntity<Person>
-		implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
+public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
 	private static final long serialVersionUID = 8153106662017090155L;
 
 	@Id
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
-
+	
 	@Column(name = "ACADEMIC_TITLE", nullable = false)
 	private AcademicTitle academicTitle;
 
@@ -36,20 +34,14 @@ public class Person extends AbstractBaseEntity<Person>
 	@Column(name = "GENDER", nullable = false)
 	private Gender gender;
 
-	public Person() {
-	}
+	public Person() {}
 
-	public Person(AcademicTitle academicTitle, String firstname,
-			String lastname, Gender gender) {
+	public Person(AcademicTitle academicTitle, String firstname, String lastname,
+		Gender gender) {
 		this.academicTitle = academicTitle;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.gender = gender;
-	}
-
-	@Override
-	public String createName() {
-		return getAcademicName();
 	}
 
 	public String getAcademicName() {
@@ -66,17 +58,15 @@ public class Person extends AbstractBaseEntity<Person>
 
 	public String getSimpleName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-				.map(c -> String.valueOf(c) + ". ")
-				.collect(Collectors.joining());
+			.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
 		return firstnameAbreviation + lastname;
 	}
 
 	public String getInitialsName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-				.map(c -> String.valueOf(c) + ". ")
-				.collect(Collectors.joining());
+			.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
 		String lastnameAbreviation = getLastnameInitials().stream()
-				.map(c -> String.valueOf(c)).collect(Collectors.joining(". "));
+			.map(c -> String.valueOf(c)).collect(Collectors.joining(". "));
 		return firstnameAbreviation + lastnameAbreviation + ".";
 	}
 
@@ -95,67 +85,8 @@ public class Person extends AbstractBaseEntity<Person>
 	}
 
 	public List<Character> getInitials(String name) {
-		return Arrays.asList(name.split(" ")).stream()
-				.filter(s -> s.length() != 0)
-				.map(s -> s.trim())
-				.map(s -> s.charAt(0))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public String toString() {
-		return getAcademicName();
-	}
-	
-	@Override
-	public int compareTo(Person o) {
-		return Integer.compare(this.hashCode(), o.hashCode());
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((academicTitle == null) ? 0 : academicTitle.hashCode());
-		result = prime * result
-				+ ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result
-				+ ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Person other = (Person) obj;
-		if (academicTitle == null) {
-			if (other.academicTitle != null)
-				return false;
-		} else if (!academicTitle.equals(other.academicTitle))
-			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
-				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
-				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		if (gender == null) {
-			if (other.gender != null)
-				return false;
-		} else if (!gender.equals(other.gender))
-			return false;
-		return true;
+		return Arrays.asList(name.split(" ")).stream().filter(s -> s.length() != 0)
+			.map(s -> s.trim()).map(s -> s.charAt(0)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -163,22 +94,74 @@ public class Person extends AbstractBaseEntity<Person>
 		return Person.class;
 	}
 
+	@Override
+	public String toString() {
+		return String.format(
+			"Person [academicTitle=%s, firstname=%s, lastname=%s, gender=%s]",
+			academicTitle, firstname, lastname, gender);
+	}
+
+	@Override
+	public int compareTo(Person that) {
+		if (that == null) return -1;
+		int result;
+		result = getLastname().compareTo(that.getLastname());
+		if (result != 0) return result;
+		result = getFirstname().compareTo(that.getFirstname());
+		if (result != 0) return result;
+		result = getAcademicTitle().compareTo(that.getAcademicTitle());
+		if (result != 0) return result;
+		return getGender().compareTo(that.getGender());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result =
+			prime * result + ((academicTitle == null) ? 0 : academicTitle.hashCode());
+		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof Person)) return false;
+		Person other = (Person) obj;
+		if (academicTitle == null) {
+			if (other.academicTitle != null) return false;
+		} else if (!academicTitle.equals(other.academicTitle)) return false;
+		if (firstname == null) {
+			if (other.firstname != null) return false;
+		} else if (!firstname.equals(other.firstname)) return false;
+		if (gender == null) {
+			if (other.gender != null) return false;
+		} else if (!gender.equals(other.gender)) return false;
+		if (lastname == null) {
+			if (other.lastname != null) return false;
+		} else if (!lastname.equals(other.lastname)) return false;
+		return true;
+	}
+
+	// Getters & Setters
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+	
 	public Gender getGender() {
 		return gender;
 	}
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
-	}
-
-	@Override
-	public UUID getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(UUID id) {
-		this.id = id;
 	}
 
 	public String getFirstname() {

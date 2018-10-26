@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.Phantom;
+import org.artorg.tools.phantomData.server.model.phantom.Phantom;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.artorg.tools.phantomData.server.specification.IService;
 import org.springframework.stereotype.Controller;

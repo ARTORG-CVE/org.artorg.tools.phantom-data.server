@@ -5,9 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.AbstractProperty;
+
 @Entity
 @Table(name = "BOOLEAN_PROPERTIES")
-public class BooleanProperty extends Property<BooleanProperty, Boolean> implements Serializable {
+public class BooleanProperty extends AbstractProperty<BooleanProperty, Boolean> implements Serializable {
 	private static final long serialVersionUID = 4690035196217371829L;
 	
 	public BooleanProperty() {}
@@ -15,7 +17,7 @@ public class BooleanProperty extends Property<BooleanProperty, Boolean> implemen
 	public BooleanProperty(PropertyField propertyField, Boolean value) {
 		super(propertyField, value);
 	}
-
+	
 	@Override
 	public String toString(Boolean value) {
 		return Boolean.toString(value);
@@ -26,10 +28,9 @@ public class BooleanProperty extends Property<BooleanProperty, Boolean> implemen
 		return Boolean.valueOf(s);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Class<BooleanProperty> getItemClass() {
-		return (Class<BooleanProperty>) this.getClass();
+		return BooleanProperty.class;
 	}
 	
 }

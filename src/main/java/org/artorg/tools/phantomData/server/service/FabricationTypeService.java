@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.artorg.tools.phantomData.server.model.FabricationType;
+import org.artorg.tools.phantomData.server.model.phantom.FabricationType;
 import org.artorg.tools.phantomData.server.repository.FabricationTypeRepository;
 import org.artorg.tools.phantomData.server.service.iService.IfabricationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,7 +21,7 @@ public class Note extends AbstractBaseEntity<Note> {
 	}
 	
 	@Override
-	public String createName() {
+	public String toName() {
 		return getName(); 
 	}
 	
@@ -31,10 +31,40 @@ public class Note extends AbstractBaseEntity<Note> {
 	}
 	
 	@Override
-	public int compareTo(Note o) {
-		return super.compareTo(o);
+	public String toString() {
+		return String.format("Note [name=%s, %s]", name, super.toString());
 	}
 	
+	@Override
+	public int compareTo(Note that) {
+		if (that == null) return -1;
+		int result;
+		result = getName().compareTo(that.getName());
+		if (result != 0) return result;
+		return super.compareTo(that);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (!(obj instanceof Note)) return false;
+		Note other = (Note) obj;
+		if (name == null) {
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		return true;
+	}
+
+	// Getters & Setters
 	public String getName() {
 		return name;
 	}

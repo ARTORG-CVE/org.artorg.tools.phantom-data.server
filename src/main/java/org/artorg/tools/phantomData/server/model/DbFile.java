@@ -2,11 +2,9 @@ package org.artorg.tools.phantomData.server.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
@@ -15,22 +13,18 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "FILES")
-public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPersistentUUID<PhantomFile> {
-	private static final long serialVersionUID = 1L;
+public class DbFile extends AbstractBaseEntity<DbFile> implements DbPersistentUUID<DbFile> {
+	private static final long serialVersionUID = 1575607671219807521L;
+
 	private static String filesPath;
-	
 	
 	public static String getFilesPath() {
 		return filesPath;
 	}
 
 	public static void setFilesPath(String filesPath) {
-		PhantomFile.filesPath = filesPath;
+		DbFile.filesPath = filesPath;
 	}
-
-	@Id
-	@Column(name = "ID", nullable = false)
-	private UUID id = UUID.randomUUID();
 	
 	@Column(name = "NAME", nullable = false)
 	private String name;
@@ -41,9 +35,9 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	@Column(name = "FILE_TYPE", nullable = false)
 	private FileType fileType;
 
-	public PhantomFile() {}
+	public DbFile() {}
 	
-	public PhantomFile(File srcFile, String name, String extension, FileType fileType) {
+	public DbFile(File srcFile, String name, String extension, FileType fileType) {
 		this.name = name;
 		extension = extension.toLowerCase();
 		this.extension = extension;
@@ -55,19 +49,41 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public File getFile() {
 		return new File(filesPath +"\\" +getId() +"." +extension);
 	}
 	
-	
 	@Override
-	public String createName() {
+	public String toName() {
 		return name;
 	}
 	
+	@Override
+	public Class<DbFile> getItemClass() {
+		return DbFile.class;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("DbFile [name=%s, extension=%s, fileType=%s, %s]", name,
+			extension, fileType, super.toString());
+	}
+
+	@Override
+	public int compareTo(DbFile that) {
+		if (that == null) return -1;
+		int result;
+		result = getName().compareTo(that.getName());
+		if (result != 0) return result;
+		result = getExtension().compareTo(that.getExtension());
+		if (result != 0) return result;
+		result = getFileType().compareTo(that.getFileType());
+		if (result != 0) return result;
+		return super.compareTo(that);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,8 +98,8 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;
-		if (!(obj instanceof PhantomFile)) return false;
-		PhantomFile other = (PhantomFile) obj;
+		if (!(obj instanceof DbFile)) return false;
+		DbFile other = (DbFile) obj;
 		if (extension == null) {
 			if (other.extension != null) return false;
 		} else if (!extension.equals(other.extension)) return false;
@@ -96,14 +112,7 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 		return true;
 	}
 
-	public UUID getId() {
-		return id;
-	}
-	
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
+	// Getters & Setters
 	public String getName() {
 		return name;
 	}
@@ -127,23 +136,5 @@ public class PhantomFile extends AbstractBaseEntity<PhantomFile> implements DbPe
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	
-	@Override
-	public int compareTo(PhantomFile that) {
-		return Integer.compare(this.hashCode(), that.hashCode());
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("name: %s, type: %s, path: ", 
-				getName() +"." +getExtension(), getFileType().toString(), filesPath +"\\" +getId() +"." +extension);
-	}
-
-	@Override
-	public Class<PhantomFile> getItemClass() {
-		return PhantomFile.class;
-	}
-
-	
 
 }

@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.Special;
+import org.artorg.tools.phantomData.server.model.phantom.Special;
 import org.artorg.tools.phantomData.server.service.iService.IspecialService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.springframework.http.HttpStatus;

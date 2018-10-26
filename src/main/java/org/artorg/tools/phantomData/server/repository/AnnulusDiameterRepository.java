@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.repository;
 import java.util.List;
 import java.util.UUID;
 
-import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
+import org.artorg.tools.phantomData.server.model.phantom.AnnulusDiameter;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

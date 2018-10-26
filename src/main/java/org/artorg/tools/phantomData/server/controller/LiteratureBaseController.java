@@ -1,6 +1,6 @@
 package org.artorg.tools.phantomData.server.controller;
 
-import org.artorg.tools.phantomData.server.model.LiteratureBase;
+import org.artorg.tools.phantomData.server.model.phantom.LiteratureBase;
 import org.artorg.tools.phantomData.server.service.iService.IliteratureBaseService;
 import org.artorg.tools.phantomData.server.specification.ControllerSpec;
 import org.springframework.http.HttpStatus;

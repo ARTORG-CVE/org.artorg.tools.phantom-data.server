@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.model;
+package org.artorg.tools.phantomData.server.model.phantom;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

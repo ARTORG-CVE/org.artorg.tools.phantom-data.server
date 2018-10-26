@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.artorg.tools.phantomData.server.model.AnnulusDiameter;
+import org.artorg.tools.phantomData.server.model.phantom.AnnulusDiameter;
 import org.artorg.tools.phantomData.server.repository.AnnulusDiameterRepository;
 import org.artorg.tools.phantomData.server.service.iService.IannulusDiameterService;
 import org.springframework.beans.factory.annotation.Autowired;

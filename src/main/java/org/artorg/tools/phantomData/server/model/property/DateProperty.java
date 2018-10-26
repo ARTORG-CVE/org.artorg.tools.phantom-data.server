@@ -6,9 +6,11 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.AbstractProperty;
+
 @Entity
 @Table(name = "DATE_PROPERTIES")
-public class DateProperty extends Property<DateProperty, Date> implements Serializable {
+public class DateProperty extends AbstractProperty<DateProperty, Date> implements Serializable {
 	private static final long serialVersionUID = -6242701549246630297L;
 
 	public DateProperty() {}
@@ -26,11 +28,10 @@ public class DateProperty extends Property<DateProperty, Date> implements Serial
 	public Date fromStringToValue(String s) {
 		throw new UnsupportedOperationException();
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public Class<DateProperty> getItemClass() {
-		return (Class<DateProperty>) this.getClass();
+		return DateProperty.class;
 	}
 
 }

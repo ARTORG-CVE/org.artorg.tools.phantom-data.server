@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleStartupServerBooter;
 import org.artorg.tools.phantomData.server.boot.SwingStartupProgressFrame;
-import org.artorg.tools.phantomData.server.model.PhantomFile;
+import org.artorg.tools.phantomData.server.model.DbFile;
 
 import huma.io.ConsoleDiverter;
 
@@ -22,7 +22,7 @@ public class DesktopSwingResetBootServer extends SwingConsoleStartupServerBooter
 			setStartupFrame(new SwingStartupProgressFrame());
 			init();
 			prepareFileStructure();
-			PhantomFile.setFilesPath(getFilesPath());
+			DbFile.setFilesPath(getFilesPath());
 			
 			shutdownSpringServer();
 			deleteFileStructure();
