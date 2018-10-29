@@ -92,32 +92,32 @@ public class EntityBeanInfo {
 
 	}
 
-	public List<DbProperty> getNamedEntityValues(Object bean) {
+	public List<DbNode> getNamedEntityValues(Object bean) {
 		return entityDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
 //			return new DbProperty(d, bean, value, true, false);
-			return new DbProperty(value, d.getName());
+			return new DbNode(value, d.getName());
 			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
 	
-	public List<DbProperty> getNamedCollectionValues(Object bean) {
+	public List<DbNode> getNamedCollectionValues(Object bean) {
 		return collectionDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
 //			return new DbProperty(d, bean, value, false, true);
-			return new DbProperty(value, d.getName());
+			return new DbNode(value, d.getName());
 			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
 
-	public List<DbProperty> getNamedPropertiesValues(Object bean) {
+	public List<DbNode> getNamedPropertiesValues(Object bean) {
 		return propertiesDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
 //			return new DbProperty(d, bean, value, false, false);
-			return new DbProperty(value, d.getName());
+			return new DbNode(value, d.getName());
 			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
