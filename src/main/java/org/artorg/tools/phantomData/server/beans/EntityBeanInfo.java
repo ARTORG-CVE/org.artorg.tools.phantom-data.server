@@ -27,9 +27,6 @@ public class EntityBeanInfo {
 	private final Function<Object, List<PropertyDescriptor>> collectionDescriptors;
 	private final Function<Object, List<PropertyDescriptor>> propertiesDescriptors;
 
-	private final Function<Object, List<Object>> entityGetters;
-	private final Function<Object, List<Object>> propertiesGetters;
-	private final Function<Object, List<Collection<Object>>> entityCollectionGetters;
 	private final Map<Class<?>, Map<String, Function<Object, Object>>> getterFunctionsMap;
 	private final Map<Class<?>,
 		Map<String, BiConsumer<Object, Object>>> setterFunctionsMap;
@@ -68,9 +65,6 @@ public class EntityBeanInfo {
 			.filter(d -> d.getPropertyType().isAnnotationPresent(Entity.class))
 			.filter(d -> getValue(d, bean) != null).collect(Collectors.toList());
 
-		entityGetters = bean -> entityDescriptors.apply(bean).stream()
-			.map(d -> getValue(d, bean)).collect(Collectors.toList());
-
 		collectionDescriptors = bean -> notBasePropertyDescriptors.stream()
 			.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
 			.filter(d -> Collection.class.isAssignableFrom(d.getPropertyType()))
@@ -79,26 +73,11 @@ public class EntityBeanInfo {
 				.get().getClass().isAnnotationPresent(Entity.class))
 			.filter(d -> getValue(d, bean) != null).collect(Collectors.toList());
 
-		entityCollectionGetters = bean -> collectionDescriptors.apply(bean).stream()
-			.map(d -> ((Collection<Object>) getValue(d, bean)))
-			.collect(Collectors.toList());
-		
-		
 		propertiesDescriptors = bean -> notBasePropertyDescriptors.stream()
 			.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
 			.filter(d -> !Collection.class.isAssignableFrom(d.getPropertyType()))
 			.filter(d -> getValue(d, bean) != null).collect(Collectors.toList());
 	
-		propertiesGetters = bean -> propertiesDescriptors.apply(bean).stream()
-			.map(d -> getValue(d, bean))
-			.collect(Collectors.toList());
-		
-
-//		propertiesGetters = bean -> notBasePropertyDescriptors.stream()
-//			.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
-//			.filter(d -> !Collection.class.isAssignableFrom(d.getPropertyType()))
-//			.map(d -> getValue(d, bean)).collect(Collectors.toList());
-
 		getterFunctionsMap = notBasePropertyDescriptors.stream()
 			.collect(Collectors.groupingBy((PropertyDescriptor d) -> d.getPropertyType(),
 				Collectors.toMap(d -> d.getName(), d -> {
@@ -114,21 +93,39 @@ public class EntityBeanInfo {
 	}
 
 	public List<DbProperty> getNamedEntityValues(Object bean) {
-		return entityDescriptors.apply(bean).stream().map(d -> new DbProperty(d, bean, true, false))
+		return entityDescriptors.apply(bean).stream().map(d -> {
+			Object value = EntityBeanInfo.getValue(d, bean);
+			if (value == null) return null;
+//			return new DbProperty(d, bean, value, true, false);
+			return new DbProperty(value, d.getName());
+			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
 	
 	public List<DbProperty> getNamedCollectionValues(Object bean) {
-		return collectionDescriptors.apply(bean).stream().map(d -> new DbProperty(d, bean, false, true))
+		return collectionDescriptors.apply(bean).stream().map(d -> {
+			Object value = EntityBeanInfo.getValue(d, bean);
+			if (value == null) return null;
+//			return new DbProperty(d, bean, value, false, true);
+			return new DbProperty(value, d.getName());
+			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
 
 	public List<DbProperty> getNamedPropertiesValues(Object bean) {
-		return propertiesDescriptors.apply(bean).stream().map(d -> new DbProperty(d, bean, false, false))
+		return propertiesDescriptors.apply(bean).stream().map(d -> {
+			Object value = EntityBeanInfo.getValue(d, bean);
+			if (value == null) return null;
+//			return new DbProperty(d, bean, value, false, false);
+			return new DbProperty(value, d.getName());
+			}).filter(property -> property != null)
 			.collect(Collectors.toList());
 	}
 	
-
+	public static boolean isEntity(Object o) {
+		return !o.getClass().isAnnotationPresent(Entity.class);
+	}
+	
 	public static List<Object> getBaseValues(Object bean) {
 		return baseEntityBeanInfo.allPropertyDescriptors.stream()
 			.map(d -> getValue(d, bean)).collect(Collectors.toList());
@@ -162,17 +159,23 @@ public class EntityBeanInfo {
 
 	public List<Object> getEntities(Object bean) {
 		if (bean == null) return new ArrayList<Object>();
-		return entityGetters.apply(bean);
+		return entityDescriptors.apply(bean).stream()
+			.map(d -> getValue(d, bean)).collect(Collectors.toList());
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Collection<Object>> getEntityCollections(Object bean) {
 		if (bean == null) return new ArrayList<Collection<Object>>();
-		return entityCollectionGetters.apply(bean);
+		return collectionDescriptors.apply(bean).stream()
+			.map(d -> ((Collection<Object>) getValue(d, bean)))
+			.collect(Collectors.toList());
 	}
 
 	public List<Object> getProperties(Object bean) {
 		if (bean == null) return new ArrayList<Object>();
-		return propertiesGetters.apply(bean);
+		return propertiesDescriptors.apply(bean).stream()
+			.map(d -> getValue(d, bean))
+			.collect(Collectors.toList());
 	}
 
 	public Class<?> getEntityClass() {
