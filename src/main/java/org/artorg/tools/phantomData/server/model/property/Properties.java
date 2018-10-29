@@ -57,7 +57,6 @@ public class Properties extends AbstractBaseEntity<Properties>
 	@Override
 	public String toName() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("properties{");
 		int nLists = 0;
 		if (getBooleanProperties().size()>0) {
 			sb.append("bools:" +getBooleanProperties().size());
@@ -85,7 +84,6 @@ public class Properties extends AbstractBaseEntity<Properties>
 		}
 		if (nLists == 0)
 			return "";
-		sb.append("}");
 		return sb.toString();
 	}
 

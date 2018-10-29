@@ -34,14 +34,20 @@ public class PropertyField extends AbstractBaseEntity<PropertyField>
 
 	@Override
 	public String toName() {
-		return toString();
+		String type = this.type;
+		try {
+			type = Class.forName(type).getSimpleName();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return String.format("type=%s, name=%s", type, name);
 	}
-	
+
 	@Override
 	public Class<PropertyField> getItemClass() {
 		return PropertyField.class;
 	}
-	
+
 	@Override
 	public String toString() {
 		String type = this.type;
@@ -53,7 +59,7 @@ public class PropertyField extends AbstractBaseEntity<PropertyField>
 		return String.format("PropertyField [type=%s, name=%s, description=%s, %s]", type,
 			name, description, super.toString());
 	}
-	
+
 	@Override
 	public int compareTo(PropertyField that) {
 		if (that == null) return -1;

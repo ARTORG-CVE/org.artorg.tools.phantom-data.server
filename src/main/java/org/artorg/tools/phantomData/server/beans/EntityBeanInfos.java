@@ -26,6 +26,13 @@ public class EntityBeanInfos {
 		beanInfoMap = entityClasses.stream()
 				.collect(Collectors.toMap(c -> c, c -> new EntityBeanInfo(c)));
 	}
+	
+	
+	
+	
+	public EntityBeanInfo getEntityBeanInfo(Class<?> entityClass) {
+		return beanInfoMap.get(entityClass);
+	}
 
 	public List<Object> getEntities(Object bean) {
 		if (bean == null)
