@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 
@@ -77,7 +78,7 @@ public class EntityBeanInfo {
 			.filter(d -> !d.getPropertyType().isAnnotationPresent(Entity.class))
 			.filter(d -> !Collection.class.isAssignableFrom(d.getPropertyType()))
 			.filter(d -> getValue(d, bean) != null).collect(Collectors.toList());
-	
+
 		getterFunctionsMap = notBasePropertyDescriptors.stream()
 			.collect(Collectors.groupingBy((PropertyDescriptor d) -> d.getPropertyType(),
 				Collectors.toMap(d -> d.getName(), d -> {
@@ -89,64 +90,40 @@ public class EntityBeanInfo {
 				Collectors.toMap(d -> d.getName(), d -> {
 					return (bean, value) -> d.createPropertyEditor(bean).setValue(value);
 				})));
-
 	}
 
-	public List<DbNode> getNamedEntityValues(Object bean) {
+	public Stream<DbNode> getNamedEntityValuesAsStream(Object bean) {
 		return entityDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
-//			return new DbProperty(d, bean, value, true, false);
 			return new DbNode(value, d.getName());
-			}).filter(property -> property != null)
-			.collect(Collectors.toList());
+		}).filter(property -> property != null);
 	}
-	
-	public List<DbNode> getNamedCollectionValues(Object bean) {
+
+	public Stream<DbNode> getNamedCollectionValuesAsStream(Object bean) {
 		return collectionDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
-//			return new DbProperty(d, bean, value, false, true);
 			return new DbNode(value, d.getName());
-			}).filter(property -> property != null)
-			.collect(Collectors.toList());
+		}).filter(property -> property != null);
 	}
 
-	public List<DbNode> getNamedPropertiesValues(Object bean) {
+	public Stream<DbNode> getNamedPropertiesValueAsStream(Object bean) {
 		return propertiesDescriptors.apply(bean).stream().map(d -> {
 			Object value = EntityBeanInfo.getValue(d, bean);
 			if (value == null) return null;
-//			return new DbProperty(d, bean, value, false, false);
 			return new DbNode(value, d.getName());
-			}).filter(property -> property != null)
-			.collect(Collectors.toList());
+		}).filter(property -> property != null);
 	}
-	
+
 	public static boolean isEntity(Object o) {
 		return !o.getClass().isAnnotationPresent(Entity.class);
 	}
-	
-	public static List<Object> getBaseValues(Object bean) {
-		return baseEntityBeanInfo.allPropertyDescriptors.stream()
-			.map(d -> getValue(d, bean)).collect(Collectors.toList());
+
+	public static EntityBeanInfo getBaseEntityBeanInfo() {
+		return baseEntityBeanInfo;
 	}
 
-	public static List<Object> getBaseEntities(Object bean) {
-		return baseEntityBeanInfo.getEntities(bean);
-	}
-
-	public static List<Object> getBaseProperties(Object bean) {
-		return baseEntityBeanInfo.getProperties(bean);
-	}
-
-	public static List<Collection<Object>> getBaseEntityCollections(Object bean) {
-		return baseEntityBeanInfo.getEntityCollections(bean);
-	}
-
-	public static Class<?> getBaseEntityClass() {
-		return baseEntityBeanInfo.getEntityClass();
-	}
-	
 	public static Object getValue(PropertyDescriptor descriptor, Object bean) {
 		try {
 			return descriptor.getReadMethod().invoke(bean);
@@ -157,25 +134,21 @@ public class EntityBeanInfo {
 		throw new IllegalArgumentException();
 	}
 
-	public List<Object> getEntities(Object bean) {
-		if (bean == null) return new ArrayList<Object>();
-		return entityDescriptors.apply(bean).stream()
-			.map(d -> getValue(d, bean)).collect(Collectors.toList());
+	public Stream<Object> getEntitiesAsStream(Object bean) {
+		if (bean == null) return Stream.<Object>empty();
+		return entityDescriptors.apply(bean).stream().map(d -> getValue(d, bean));
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Collection<Object>> getEntityCollections(Object bean) {
-		if (bean == null) return new ArrayList<Collection<Object>>();
+	public Stream<Collection<Object>> getEntityCollectionsAsStream(Object bean) {
+		if (bean == null) return Stream.<Collection<Object>>empty();
 		return collectionDescriptors.apply(bean).stream()
-			.map(d -> ((Collection<Object>) getValue(d, bean)))
-			.collect(Collectors.toList());
+			.map(d -> ((Collection<Object>) getValue(d, bean)));
 	}
 
-	public List<Object> getProperties(Object bean) {
-		if (bean == null) return new ArrayList<Object>();
-		return propertiesDescriptors.apply(bean).stream()
-			.map(d -> getValue(d, bean))
-			.collect(Collectors.toList());
+	public Stream<Object> getPropertiesAsStream(Object bean) {
+		if (bean == null) return Stream.<Object>empty();
+		return propertiesDescriptors.apply(bean).stream().map(d -> getValue(d, bean));
 	}
 
 	public Class<?> getEntityClass() {

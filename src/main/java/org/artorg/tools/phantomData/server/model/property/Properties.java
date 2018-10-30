@@ -59,27 +59,27 @@ public class Properties extends AbstractBaseEntity<Properties>
 		StringBuilder sb = new StringBuilder();
 		int nLists = 0;
 		if (getBooleanProperties().size()>0) {
-			sb.append("bools:" +getBooleanProperties().size());
+			sb.append("bools: " +getBooleanProperties().size());
 			nLists++;
 		}
 		if (getIntegerProperties().size()>0) {
 			if (nLists > 0) sb.append(", ");
-			sb.append("ints:" +getIntegerProperties().size());
+			sb.append("ints: " +getIntegerProperties().size());
 			nLists++;
 		}
 		if (getDoubleProperties().size()>0) {
 			if (nLists > 0) sb.append(", ");
-			sb.append("doubles:" +getDoubleProperties().size());
+			sb.append("doubles: " +getDoubleProperties().size());
 			nLists++;
 		}
 		if (getStringProperties().size()>0) {
 			if (nLists > 0) sb.append(", ");
-			sb.append("strings:" +getStringProperties().size());
+			sb.append("strings: " +getStringProperties().size());
 			nLists++;
 		}
 		if (getDateProperties().size()>0) {
 			if (nLists > 0) sb.append(", ");
-			sb.append("dates:" +getDateProperties().size());
+			sb.append("dates: " +getDateProperties().size());
 			nLists++;
 		}
 		if (nLists == 0)

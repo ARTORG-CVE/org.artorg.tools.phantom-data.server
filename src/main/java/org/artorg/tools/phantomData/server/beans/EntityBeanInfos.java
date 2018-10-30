@@ -1,13 +1,12 @@
 package org.artorg.tools.phantomData.server.beans;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 
@@ -27,50 +26,47 @@ public class EntityBeanInfos {
 				.collect(Collectors.toMap(c -> c, c -> new EntityBeanInfo(c)));
 	}
 	
-	
-	
-	
 	public EntityBeanInfo getEntityBeanInfo(Class<?> entityClass) {
 		return beanInfoMap.get(entityClass);
 	}
 
-	public List<Object> getEntities(Object bean) {
+	public Stream<Object> getEntitiesAsStream(Object bean) {
 		if (bean == null)
-			return new ArrayList<Object>();
+			return Stream.<Object>empty();
 		if (beanInfoMap.containsKey(bean.getClass()))
-			return getEntities(bean.getClass(), bean);
+			return getEntitiesAsStream(bean.getClass(), bean);
 		throw new IllegalArgumentException();
 	}
 
-	public List<Collection<Object>> getEntityCollections(Object bean) {
+	public Stream<Collection<Object>> getEntityCollectionsAsStream(Object bean) {
 		if (bean == null)
-			return new ArrayList<Collection<Object>>();
+			return Stream.<Collection<Object>>empty();
 		if (beanInfoMap.containsKey(bean.getClass()))
-			return getEntityCollections(bean.getClass(), bean);
+			return getEntityCollectionsAsStream(bean.getClass(), bean);
 		throw new IllegalArgumentException();
 	}
 
-	public List<Collection<Object>> getEntityCollections(Class<?> entityClass,
+	public Stream<Collection<Object>> getEntityCollectionsAsStream(Class<?> entityClass,
 			Object bean) {
-		return beanInfoMap.get(entityClass).getEntityCollections(bean);
+		return beanInfoMap.get(entityClass).getEntityCollectionsAsStream(bean);
 	}
 
-	public List<Object> getEntities(Class<?> entityClass, Object bean) {
-		return beanInfoMap.get(entityClass).getEntities(bean);
+	public Stream<Object> getEntitiesAsStream(Class<?> entityClass, Object bean) {
+		return beanInfoMap.get(entityClass).getEntitiesAsStream(bean);
 	}
 
-	public List<Object> getProperties(Object bean) {
+	public Stream<Object> getPropertiesAsStream(Object bean) {
 		if (bean == null)
-			return new ArrayList<Object>();
+			return Stream.<Object>empty();
 		if (beanInfoMap.containsKey(bean.getClass()))
-			return getProperties(bean.getClass(), bean);
+			return getPropertiesAsStream(bean.getClass(), bean);
 		throw new IllegalArgumentException();
 	}
 
-	public List<Object> getProperties(Class<?> entityClass, Object bean) {
+	public Stream<Object> getPropertiesAsStream(Class<?> entityClass, Object bean) {
 		if (bean == null)
-			return new ArrayList<Object>();
-		return beanInfoMap.get(entityClass).getProperties(bean);
+			return Stream.<Object>empty();
+		return beanInfoMap.get(entityClass).getPropertiesAsStream(bean);
 	}
 
 	public Function<Object, Object> getGetterAsFunction(Class<?> entityClass,
