@@ -86,24 +86,13 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	public int compareTo(Phantom that) {
 		if (that == null) return -1;
 		int result;
-		result = comparePid(getProductId(), that.getProductId());
+		result = Phantomina.comparePid(getProductId(), that.getProductId());
+		if (result != 0) return result;
+		result = Integer.compare(getNumber(), that.getNumber());
 		if (result != 0) return result;
 		result = getProperties().compareTo(that.getProperties());
 		if (result != 0) return result;
 		return super.compareTo(that);
-	}
-	
-	public int comparePid(String pid1, String pid2) {
-		String[] splits1 = pid1.split("-");
-		String[] splits2 = pid2.split("-");
-		int n = Math.min(splits1.length, splits2.length);
-		int result;
-		for (int i = 0; i < n - 1; i++) {
-			result = splits1[i].compareTo(splits2[i]);
-			if (result != 0)
-				return result;
-		}
-		return 0;
 	}
 
 	@Override

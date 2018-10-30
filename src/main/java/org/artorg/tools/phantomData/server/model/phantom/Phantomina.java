@@ -2,6 +2,7 @@ package org.artorg.tools.phantomData.server.model.phantom;
 
 import java.io.Serializable;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -88,13 +89,17 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 		return super.compareTo(that);
 	}
 	
-	public int comparePid(String pid1, String pid2) {
+	public static int comparePid(String pid1, String pid2) {
 		String[] splits1 = pid1.split("-");
 		String[] splits2 = pid2.split("-");
 		int n = Math.min(splits1.length, splits2.length);
 		int result;
-		for (int i = 0; i < n - 1; i++) {
-			result = splits1[i].compareTo(splits2[i]);
+		for (int i = 0; i < n; i++) {
+			final Pattern pattern = Pattern.compile("\\d+");
+			if (pattern.matcher(splits1[i]).matches())
+				result = Integer.valueOf(splits1[i]).compareTo(Integer.valueOf(splits2[i]));
+			else
+				result = splits1[i].compareTo(splits2[i]);
 			if (result != 0)
 				return result;
 		}
