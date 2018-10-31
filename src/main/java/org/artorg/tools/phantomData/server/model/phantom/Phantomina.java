@@ -24,7 +24,7 @@ import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 public class Phantomina extends AbstractBaseEntity<Phantomina>
 	implements Comparable<Phantomina>, Serializable, DbPersistentUUID<Phantomina> {
 	private static final long serialVersionUID = 8708084186934082241L;
-	
+
 	@Column(name = "PRODUCT_ID", nullable = false)
 	private String productId;
 
@@ -42,13 +42,13 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 
 	@OneToOne
 	private Properties properties;
-	
+
 	@ManyToMany
 	@JoinTable(name = "PHANTOMINAS_FILES",
-			joinColumns=@JoinColumn(name = "PHANTOMINA_ID"),
-			inverseJoinColumns=@JoinColumn(name="FILE_ID"))
+		joinColumns = @JoinColumn(name = "PHANTOMINA_ID"),
+		inverseJoinColumns = @JoinColumn(name = "FILE_ID"))
 	private List<DbFile> files = new ArrayList<DbFile>();
-	
+
 	public Phantomina() {}
 
 	public Phantomina(AnnulusDiameter annulusDiameter, FabricationType fType,
@@ -66,33 +66,40 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 	}
 
 	public void updateProductId() {
-		setProductId(String.format("%s-%s-%s-%s",
+		setProductId(
+			createProductId(annulusDiameter, fabricationType, literatureBase, special));
+	}
+
+	public static String createProductId(AnnulusDiameter annulusDiameter,
+		FabricationType fabricationType, LiteratureBase literatureBase, Special special) {
+		return String.format("%s-%s-%s-%s",
 			helper(() -> annulusDiameter.getShortcut().toString(), "??"),
 			helper(() -> fabricationType.getShortcut(), "?"),
 			helper(() -> literatureBase.getShortcut(), "?"),
-			helper(() -> special.getShortcut(), "?")));
+			helper(() -> special.getShortcut(), "?"));
 	}
 
-	private String helper(Supplier<String> supplier, String orElse) {
+	private static String helper(Supplier<String> supplier, String orElse) {
 		try {
 			return supplier.get();
 		} catch (Exception e) {
 			return orElse;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format(
 			"Phantomina [productId=%s, annulusDiameter=%s, fabricationType=%s, literatureBase=%s, special=%s, %s]",
-			productId, annulusDiameter, fabricationType, literatureBase, special, super.toString());
+			productId, annulusDiameter, fabricationType, literatureBase, special,
+			super.toString());
 	}
 
 	@Override
 	public int compareTo(Phantomina that) {
 		if (that == null) return -1;
 		int result;
-		result = comparePid(getProductId(),that.getProductId());
+		result = comparePid(getProductId(), that.getProductId());
 		if (result != 0) return result;
 		result = getAnnulusDiameter().compareTo(that.getAnnulusDiameter());
 		if (result != 0) return result;
@@ -104,7 +111,7 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 		if (result != 0) return result;
 		return super.compareTo(that);
 	}
-	
+
 	public static int comparePid(String pid1, String pid2) {
 		String[] splits1 = pid1.split("-");
 		String[] splits2 = pid2.split("-");
@@ -112,12 +119,10 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 		int result;
 		for (int i = 0; i < n; i++) {
 			final Pattern pattern = Pattern.compile("\\d+");
-			if (pattern.matcher(splits1[i]).matches())
-				result = Integer.valueOf(splits1[i]).compareTo(Integer.valueOf(splits2[i]));
-			else
-				result = splits1[i].compareTo(splits2[i]);
-			if (result != 0)
-				return result;
+			if (pattern.matcher(splits1[i]).matches()) result =
+				Integer.valueOf(splits1[i]).compareTo(Integer.valueOf(splits2[i]));
+			else result = splits1[i].compareTo(splits2[i]);
+			if (result != 0) return result;
 		}
 		return 0;
 	}
@@ -210,7 +215,7 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 		this.special = special;
 		updateProductId();
 	}
-	
+
 	public Properties getProperties() {
 		return properties;
 	}
@@ -218,13 +223,13 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 	}
-	
+
 	public List<DbFile> getFiles() {
 		return files;
 	}
 
 	public void setFiles(List<DbFile> files) {
 		this.files = files;
-	}	
+	}
 
 }

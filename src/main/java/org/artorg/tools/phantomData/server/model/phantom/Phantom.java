@@ -57,12 +57,16 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	
 	public void updateProductId() {
 		getPhantomina().updateProductId();
-		setProductId(String.format("%s-%s", 
-			getPhantomina().getProductId(),
-			helper(() -> ((Integer)number).toString(), "?")));
+		setProductId(createProductId(getPhantomina(), getNumber()));
 	}
 	
-	private String helper(Supplier<String> supplier, String orElse) {
+	public static String createProductId(Phantomina phantomina, int number) {
+		return String.format("%s-%s", 
+			phantomina.getProductId(),
+			helper(() -> ((Integer)number).toString(), "?"));
+	}
+	
+	private static String helper(Supplier<String> supplier, String orElse) {
 		try {
 			return supplier.get();
 		} catch(Exception e) {
