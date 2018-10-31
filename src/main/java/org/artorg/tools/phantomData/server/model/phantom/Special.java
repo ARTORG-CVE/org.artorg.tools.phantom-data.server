@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.property.Properties;
@@ -19,7 +20,7 @@ public class Special extends AbstractBaseEntity<Special> implements DbPersistent
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
 	
-	@Column(name = "PROPERTIES")
+	@OneToOne
 	private Properties properties;
 	
 	public Special() {}

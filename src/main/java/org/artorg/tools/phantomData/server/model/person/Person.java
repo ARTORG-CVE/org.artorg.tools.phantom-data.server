@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
@@ -22,7 +23,7 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
 	
-	@Column(name = "ACADEMIC_TITLE", nullable = false)
+	@OneToOne
 	private AcademicTitle academicTitle;
 
 	@Column(name = "FIRSTNAME", nullable = false)
@@ -31,7 +32,7 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	@Column(name = "LASTNAME", nullable = false)
 	private String lastname;
 
-	@Column(name = "GENDER", nullable = false)
+	@OneToOne
 	private Gender gender;
 
 	public Person() {}

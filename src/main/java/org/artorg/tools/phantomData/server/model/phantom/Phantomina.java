@@ -1,14 +1,21 @@
 package org.artorg.tools.phantomData.server.model.phantom;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.DbFile;
+import org.artorg.tools.phantomData.server.model.property.Properties;
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
@@ -33,6 +40,15 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 	@OneToOne
 	private Special special;
 
+	@OneToOne
+	private Properties properties;
+	
+	@ManyToMany
+	@JoinTable(name = "PHANTOMINAS_FILES",
+			joinColumns=@JoinColumn(name = "PHANTOMINA_ID"),
+			inverseJoinColumns=@JoinColumn(name="FILE_ID"))
+	private List<DbFile> files = new ArrayList<DbFile>();
+	
 	public Phantomina() {}
 
 	public Phantomina(AnnulusDiameter annulusDiameter, FabricationType fType,
@@ -194,5 +210,21 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 		this.special = special;
 		updateProductId();
 	}
+	
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+	
+	public List<DbFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<DbFile> files) {
+		this.files = files;
+	}	
 
 }

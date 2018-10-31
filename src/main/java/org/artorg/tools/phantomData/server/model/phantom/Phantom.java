@@ -33,7 +33,7 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
 	
-	@Column(name = "PROPERTIES")
+	@OneToOne
 	private Properties properties;
 	
 	@ManyToMany
