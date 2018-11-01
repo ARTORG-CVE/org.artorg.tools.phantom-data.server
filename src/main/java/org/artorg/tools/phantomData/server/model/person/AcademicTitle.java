@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.NameGeneratable;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "ACADEMIC_TITLE")
-public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
+public class AcademicTitle implements DbPersistentUUID<AcademicTitle>, NameGeneratable {
 	private static final long serialVersionUID = -8901917059076169353L;
 	
 	@Id
@@ -32,6 +33,11 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 	}
 	
 	@Override
+	public String toName() {
+		return prefix;
+	}
+	
+	@Override
 	public String toString() {
 		return String.format("AcademicTitle [prefix=%s, description=%s, %s]", prefix,
 			description, super.toString());
@@ -44,15 +50,6 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 		result = getPrefix().compareTo(that.getPrefix());
 		if (result != 0) return result;
 		return getDescription().compareTo(that.getDescription());
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((prefix == null) ? 0 : prefix.hashCode());
-		return result;
 	}
 
 	@Override
@@ -99,5 +96,7 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	
 
 }

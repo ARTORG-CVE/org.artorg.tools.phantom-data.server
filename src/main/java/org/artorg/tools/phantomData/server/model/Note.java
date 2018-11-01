@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
+import org.artorg.tools.phantomData.server.model.specification.AbstractPersonifiedEntity;
 
 @Entity
 @Table(name = "NOTES")
-public class Note extends AbstractBaseEntity<Note> {
+public class Note extends AbstractPersonifiedEntity<Note> {
 	private static final long serialVersionUID = -7908541159889447936L;
 
 	@Column(name = "NAME")
@@ -42,14 +42,6 @@ public class Note extends AbstractBaseEntity<Note> {
 		result = getName().compareTo(that.getName());
 		if (result != 0) return result;
 		return super.compareTo(that);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
 	}
 
 	@Override

@@ -9,12 +9,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
-import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
+import org.artorg.tools.phantomData.server.model.specification.AbstractPersonifiedEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "FILES")
-public class DbFile extends AbstractBaseEntity<DbFile> implements DbPersistentUUID<DbFile> {
+public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersistentUUID<DbFile> {
 	private static final long serialVersionUID = 1575607671219807521L;
 
 	private static String filesPath;
@@ -83,16 +83,6 @@ public class DbFile extends AbstractBaseEntity<DbFile> implements DbPersistentUU
 		result = getFileType().compareTo(that.getFileType());
 		if (result != 0) return result;
 		return super.compareTo(that);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((extension == null) ? 0 : extension.hashCode());
-		result = prime * result + ((fileType == null) ? 0 : fileType.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
 	}
 
 	@Override

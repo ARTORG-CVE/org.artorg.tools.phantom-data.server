@@ -52,15 +52,6 @@ public abstract class AbstractShortcutValueEntity<
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((shortcut == null) ? 0 : shortcut.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;

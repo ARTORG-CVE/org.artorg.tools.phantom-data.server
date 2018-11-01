@@ -12,11 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.NameGeneratable;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "USERS")
-public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person> {
+public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person>, NameGeneratable {
 	private static final long serialVersionUID = 8153106662017090155L;
 
 	@Id
@@ -91,6 +92,11 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	}
 
 	@Override
+	public String toName() {
+		return getSimpleAcademicName();
+	}
+	
+	@Override
 	public Class<Person> getItemClass() {
 		return Person.class;
 	}
@@ -116,21 +122,8 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result =
-			prime * result + ((academicTitle == null) ? 0 : academicTitle.hashCode());
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!super.equals(obj)) return false;
 		if (!(obj instanceof Person)) return false;
 		Person other = (Person) obj;
 		if (academicTitle == null) {

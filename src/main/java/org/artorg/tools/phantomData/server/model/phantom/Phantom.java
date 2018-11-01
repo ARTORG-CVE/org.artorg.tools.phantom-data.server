@@ -1,27 +1,18 @@
 package org.artorg.tools.phantomData.server.model.phantom;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.artorg.tools.phantomData.server.model.DbFile;
-import org.artorg.tools.phantomData.server.model.property.Properties;
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
-import org.artorg.tools.phantomData.server.model.specification.IProperties;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "PHANTOMS")
-public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom>, IProperties {
+public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
 	
 	@Column(name = "PRODUCT_ID", nullable = false)
@@ -32,15 +23,6 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
-	
-	@OneToOne
-	private Properties properties;
-	
-	@ManyToMany
-	@JoinTable(name = "PHANTOM_FILES",
-			joinColumns=@JoinColumn(name = "PHANTOM_ID"),
-			inverseJoinColumns=@JoinColumn(name="FILE_ID"))
-	private List<DbFile> files = new ArrayList<DbFile>();
 	
 	public Phantom() {}
 	
@@ -62,16 +44,7 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	
 	public static String createProductId(Phantomina phantomina, int number) {
 		return String.format("%s-%s", 
-			phantomina.getProductId(),
-			helper(() -> ((Integer)number).toString(), "?"));
-	}
-	
-	private static String helper(Supplier<String> supplier, String orElse) {
-		try {
-			return supplier.get();
-		} catch(Exception e) {
-			return orElse;
-		}
+			phantomina.getProductId(), number);
 	}
 	
 	@Override
@@ -83,7 +56,7 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 	public String toString() {
 		return String.format(
 			"Phantom [productId=%s, phantomina=%s, number=%s, files=%s, properties=%s, %s]",
-			productId, phantomina, number, files, properties, super.toString());
+			productId, phantomina, number, super.toString());
 	}
 	
 	@Override
@@ -94,21 +67,7 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		if (result != 0) return result;
 		result = Integer.compare(getNumber(), that.getNumber());
 		if (result != 0) return result;
-		result = getProperties().compareTo(that.getProperties());
-		if (result != 0) return result;
 		return super.compareTo(that);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((files == null) ? 0 : files.hashCode());
-		result = prime * result + number;
-		result = prime * result + ((phantomina == null) ? 0 : phantomina.hashCode());
-		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
-		result = prime * result + ((properties == null) ? 0 : properties.hashCode());
-		return result;
 	}
 
 	@Override
@@ -117,9 +76,6 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		if (!super.equals(obj)) return false;
 		if (!(obj instanceof Phantom)) return false;
 		Phantom other = (Phantom) obj;
-		if (files == null) {
-			if (other.files != null) return false;
-		} else if (!files.equals(other.files)) return false;
 		if (number != other.number) return false;
 		if (phantomina == null) {
 			if (other.phantomina != null) return false;
@@ -127,9 +83,6 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		if (productId == null) {
 			if (other.productId != null) return false;
 		} else if (!productId.equals(other.productId)) return false;
-		if (properties == null) {
-			if (other.properties != null) return false;
-		} else if (!properties.equals(other.properties)) return false;
 		return true;
 	}
 	
@@ -159,21 +112,5 @@ public class Phantom extends AbstractBaseEntity<Phantom> implements Comparable<P
 		this.number = number;
 		updateProductId();
 	}
-	
-	public Properties getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Properties properties) {
-		this.properties = properties;
-	}
-	
-	public List<DbFile> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<DbFile> files) {
-		this.files = files;
-	}	
 	
 }

@@ -8,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.artorg.tools.phantomData.server.model.specification.NameGeneratable;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 
 @Entity
 @Table(name = "GENDERS")
 public class Gender
-	implements Comparable<Gender>, Serializable, DbPersistentUUID<Gender> {
+	implements Comparable<Gender>, Serializable, DbPersistentUUID<Gender>, NameGeneratable {
 	private static final long serialVersionUID = -1258070941810525499L;
 
 	@Id
@@ -30,6 +31,11 @@ public class Gender
 	}
 	
 	@Override
+	public String toName() {
+		return name;
+	}
+	
+	@Override
 	public String toString() {
 		return String.format("Gender [name=%s, id=%s]", name, id);
 	}
@@ -43,15 +49,6 @@ public class Gender
 		result = getId().compareTo(that.getId());
 		if (result != 0) return result;
 		return 0;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
 	}
 
 	@Override
@@ -90,5 +87,7 @@ public class Gender
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 
 }

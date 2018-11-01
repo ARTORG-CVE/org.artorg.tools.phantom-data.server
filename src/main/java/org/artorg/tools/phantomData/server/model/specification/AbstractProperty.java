@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY,
 	property = "itemClass")
 public abstract class AbstractProperty<PROPERTY extends AbstractProperty<PROPERTY, VALUE>,
-	VALUE extends Comparable<VALUE>> extends AbstractBaseEntity<PROPERTY>
+	VALUE extends Comparable<VALUE>> extends AbstractPersonifiedEntity<PROPERTY>
 	implements DbPersistentUUID<PROPERTY>, Serializable {
 	private static final long serialVersionUID = -6436598935465710135L;
 
@@ -60,16 +60,6 @@ public abstract class AbstractProperty<PROPERTY extends AbstractProperty<PROPERT
 		if (result != 0) return result;
 		result = super.compareTo(that);
 		if (result != 0) return result;
-		return result;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		result =
-			prime * result + ((propertyField == null) ? 0 : propertyField.hashCode());
 		return result;
 	}
 

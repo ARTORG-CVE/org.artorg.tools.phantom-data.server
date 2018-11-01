@@ -1,163 +1,163 @@
 package org.artorg.tools.phantomData.server.model.specification;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 
-import org.artorg.tools.phantomData.server.model.person.Person;
+import org.artorg.tools.phantomData.server.model.DbFile;
+import org.artorg.tools.phantomData.server.model.Note;
+import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
+import org.artorg.tools.phantomData.server.model.property.DateProperty;
+import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
+import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
+import org.artorg.tools.phantomData.server.model.property.StringProperty;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY,
-	property = "itemClass")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-	property = "@id")
 public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
-	implements DbPersistentUUID<ITEM>, Serializable {
+	extends AbstractPersonifiedEntity<ITEM>
+	implements DbPersistentUUID<ITEM>, Serializable, NameGeneratable {
 	private static final long serialVersionUID = -2814334933013431607L;
 
-	@Id
-	@Column(name = "ID", nullable = false)
-	private UUID id = UUID.randomUUID();
+	@ManyToMany
+	private List<DbFile> files;
 
-	@OneToOne
-	private Person creator;
+	@ManyToMany
+	private List<Note> notes;
 
-	@OneToOne
-	private Person changer;
+	@ManyToMany
+	private List<BooleanProperty> booleanProperties;
 
-	@Column(name = "DATE_ADDED", nullable = false)
-	private Date dateAdded;
-
-	@Column(name = "DATE_LAST_MODIFIED", nullable = false)
-	private Date dateLastModified;
+	@ManyToMany
+	private List<IntegerProperty> integerProperties;
+	
+	@ManyToMany
+	private List<DoubleProperty> doubleProperties;
+	
+	@ManyToMany
+	private List<StringProperty> stringProperties;
+	
+	@ManyToMany
+	private List<DateProperty> dateProperties;
 
 	public AbstractBaseEntity() {
-		this.dateAdded = new Date();
-		this.dateLastModified = dateAdded;
-		this.creator = null;
-		this.changer = null;
-	}
-
-	public abstract String toName();
-
-	public void changed(Person changer) {
-		this.dateLastModified = new Date();
-		this.changer = changer;
+		files = new ArrayList<DbFile>();
+		notes = new ArrayList<Note>();
+		booleanProperties = new ArrayList<BooleanProperty>();
+		dateProperties = new ArrayList<DateProperty>();
+		stringProperties = new ArrayList<StringProperty>();
+		integerProperties = new ArrayList<IntegerProperty>();
+		doubleProperties = new ArrayList<DoubleProperty>();
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
-			"dateLastModified=%s, creator=%s, dateAdded=%s, changer=%s, id=%s",
-			dateLastModified, creator, dateAdded, changer, id);
+			"booleanProperties=%s, integerProperties=%s, doubleProperties=%s, "
+				+ "stringProperties=%s, dateProperties=%s, files=%s, notes=%s, %s",
+			booleanProperties, integerProperties, doubleProperties, stringProperties,
+			dateProperties, files, notes, super.toString());
 	}
 
 	@Override
-	public int compareTo(ITEM that) {
-		if (that == null) return -1;
+	public int compareTo(ITEM item) {
+		if (item == null) return -1;
+		AbstractBaseEntity<?> that = (AbstractBaseEntity<?>) item;
 		int result;
-		result = getDateLastModified().compareTo(that.getDateLastModified());
+		result = EntityUtils.compare(files, that.files);
 		if (result != 0) return result;
-		result = getChanger().compareTo(that.getChanger());
+		result = EntityUtils.compare(notes, that.notes);
 		if (result != 0) return result;
-		result = getDateAdded().compareTo(that.getDateAdded());
+		result = EntityUtils.compare(booleanProperties, that.booleanProperties);
 		if (result != 0) return result;
-		result = getCreator().compareTo(that.getCreator());
+		result = EntityUtils.compare(integerProperties, that.integerProperties);
 		if (result != 0) return result;
-		return getId().compareTo(that.getId());
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((changer == null) ? 0 : changer.hashCode());
-		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
-		result = prime * result + ((dateAdded == null) ? 0 : dateAdded.hashCode());
-		result = prime * result
-			+ ((dateLastModified == null) ? 0 : dateLastModified.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		result = EntityUtils.compare(doubleProperties, that.doubleProperties);
+		if (result != 0) return result;
+		result = EntityUtils.compare(stringProperties, that.stringProperties);
+		if (result != 0) return result;
+		result = EntityUtils.compare(dateProperties, that.dateProperties);
+		if (result != 0) return result;
+		return super.compareTo(that);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (obj == null) return false;
+		if (!super.equals(obj)) return false;
 		if (!(obj instanceof AbstractBaseEntity)) return false;
 		AbstractBaseEntity<?> other = (AbstractBaseEntity<?>) obj;
-		if (changer == null) {
-			if (other.changer != null) return false;
-		} else if (!changer.equals(other.changer)) return false;
-		if (creator == null) {
-			if (other.creator != null) return false;
-		} else if (!creator.equals(other.creator)) return false;
-		if (dateAdded == null) {
-			if (other.dateAdded != null) return false;
-		} else if (!dateAdded.equals(other.dateAdded)) return false;
-		if (dateLastModified == null) {
-			if (other.dateLastModified != null) return false;
-		} else if (!dateLastModified.equals(other.dateLastModified)) return false;
-		if (id == null) {
-			if (other.id != null) return false;
-		} else if (!id.equals(other.id)) return false;
-		return true;
+		if (!EntityUtils.equals(files, other.files)) return false;
+		if (!EntityUtils.equals(notes, other.notes)) return false;
+		if (!EntityUtils.equals(booleanProperties, other.booleanProperties)) return false;
+		if (!EntityUtils.equals(integerProperties, other.integerProperties)) return false;
+		if (!EntityUtils.equals(doubleProperties, other.doubleProperties)) return false;
+		if (!EntityUtils.equals(stringProperties, other.stringProperties)) return false;
+		return EntityUtils.equals(dateProperties, other.dateProperties);
 	}
 
 	// Getters & Setters
-	@Override
-	public UUID getId() {
-		return id;
+	public List<DbFile> getFiles() {
+		return files;
 	}
 
-	@Override
-	public void setId(UUID id) {
-		this.id = id;
+	public void setFiles(List<DbFile> files) {
+		this.files = files;
 	}
 
-	public Date getDateAdded() {
-		return dateAdded;
+	public List<Note> getNotes() {
+		return notes;
 	}
 
-	public void setDateAdded(Date dateAdded) {
-		this.dateAdded = dateAdded;
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
-	public Date getDateLastModified() {
-		return dateLastModified;
+	public List<BooleanProperty> getBooleanProperties() {
+		return booleanProperties;
 	}
 
-	public void setDateLastModified(Date dateLastModified) {
-		this.dateLastModified = dateLastModified;
+	public List<DateProperty> getDateProperties() {
+		return dateProperties;
 	}
 
-	public Person getCreator() {
-		return creator;
+	public List<StringProperty> getStringProperties() {
+		return stringProperties;
 	}
 
-	public void setCreator(Person creator) {
-		this.creator = creator;
+	public List<IntegerProperty> getIntegerProperties() {
+		return integerProperties;
 	}
 
-	public Person getChanger() {
-		return changer;
+	public List<DoubleProperty> getDoubleProperties() {
+		return doubleProperties;
 	}
 
-	public void setChanger(Person changer) {
-		this.changer = changer;
+	public void setBooleanProperties(List<BooleanProperty> properties) {
+		this.booleanProperties = properties;
+	}
+
+	public void setDateProperties(List<DateProperty> properties) {
+		this.dateProperties = properties;
+	}
+
+	public void setStringProperties(List<StringProperty> properties) {
+		this.stringProperties = properties;
+	}
+
+	public void setIntegerProperties(List<IntegerProperty> properties) {
+		this.integerProperties = properties;
+	}
+
+	public void setDoubleProperties(List<DoubleProperty> properties) {
+		this.doubleProperties = properties;
 	}
 
 }
