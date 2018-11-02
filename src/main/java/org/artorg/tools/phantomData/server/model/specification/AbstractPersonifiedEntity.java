@@ -76,9 +76,8 @@ public abstract class AbstractPersonifiedEntity<ITEM extends AbstractPersonified
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (!(obj instanceof AbstractBaseEntity)) return false;
+		if (!(obj instanceof AbstractPersonifiedEntity)) return false;
 		AbstractPersonifiedEntity<?> other = (AbstractPersonifiedEntity<?>) obj;
-		if (!EntityUtils.equals(id, other.id)) return false;
 		if (!EntityUtils.equals(changer, other.changer)) return false;
 		if (!EntityUtils.equals(creator, other.creator)) return false;
 		if (!EntityUtils.equals(dateAdded, other.dateAdded)) return false;

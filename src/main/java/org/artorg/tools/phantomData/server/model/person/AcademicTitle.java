@@ -39,8 +39,8 @@ public class AcademicTitle implements DbPersistentUUID<AcademicTitle>, NameGener
 	
 	@Override
 	public String toString() {
-		return String.format("AcademicTitle [prefix=%s, description=%s, %s]", prefix,
-			description, super.toString());
+		return String.format("prefix=%s, description=%s", prefix,
+			description);
 	}
 
 	@Override

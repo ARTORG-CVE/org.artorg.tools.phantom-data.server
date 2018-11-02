@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.specification.AbstractBaseEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
@@ -18,19 +20,27 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 	implements Comparable<Phantomina>, Serializable, DbPersistentUUID<Phantomina> {
 	private static final long serialVersionUID = 8708084186934082241L;
 
-	@Column(name = "PRODUCT_ID", nullable = false)
+	@Column(name = "PRODUCT_ID", unique = true, nullable = false)
 	private String productId;
 
 	@OneToOne
+	@JoinColumn(nullable = false)
+	@NotNull
 	private AnnulusDiameter annulusDiameter;
 
 	@OneToOne
+	@JoinColumn(nullable = false)
+	@NotNull
 	private FabricationType fabricationType;
 
 	@OneToOne
+	@JoinColumn(nullable = false)
+	@NotNull
 	private LiteratureBase literatureBase;
 
 	@OneToOne
+	@JoinColumn(nullable = false)
+	@NotNull
 	private Special special;
 
 	public Phantomina() {}
