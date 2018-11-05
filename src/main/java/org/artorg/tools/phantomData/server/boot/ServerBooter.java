@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 
-public abstract class ServerBooter extends BeanEntityBooter {
+public abstract class ServerBooter extends PropertiesBooter {
 	private boolean serverStartedEmbedded;
 
 	{

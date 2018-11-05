@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleStartupServerBooter;
 import org.artorg.tools.phantomData.server.boot.SwingStartupProgressFrame;
-import org.artorg.tools.phantomData.server.model.DbFile;
+import org.artorg.tools.phantomData.server.model.base.DbFile;
 
 import huma.io.ConsoleDiverter;
 
@@ -31,7 +31,7 @@ public class DesktopSwingResetBootServer extends SwingConsoleStartupServerBooter
 			prepareFileStructure();
 			
 			if (!isConnected()) {
-				getStartupFrame().setnConsoleLines(191);
+				getStartupFrame().setnConsoleLines(221);
 				getStartupFrame().setTitle("Phantom Database");
 				getStartupFrame().setVisible(true);
 				getStartupFrame().setProgressing(true);

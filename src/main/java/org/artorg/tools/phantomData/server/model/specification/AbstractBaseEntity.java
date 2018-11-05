@@ -9,13 +9,13 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.model.DbFile;
-import org.artorg.tools.phantomData.server.model.Note;
-import org.artorg.tools.phantomData.server.model.property.BooleanProperty;
-import org.artorg.tools.phantomData.server.model.property.DateProperty;
-import org.artorg.tools.phantomData.server.model.property.DoubleProperty;
-import org.artorg.tools.phantomData.server.model.property.IntegerProperty;
-import org.artorg.tools.phantomData.server.model.property.StringProperty;
+import org.artorg.tools.phantomData.server.model.base.DbFile;
+import org.artorg.tools.phantomData.server.model.base.Note;
+import org.artorg.tools.phantomData.server.model.base.property.BooleanProperty;
+import org.artorg.tools.phantomData.server.model.base.property.DateProperty;
+import org.artorg.tools.phantomData.server.model.base.property.DoubleProperty;
+import org.artorg.tools.phantomData.server.model.base.property.IntegerProperty;
+import org.artorg.tools.phantomData.server.model.base.property.StringProperty;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
@@ -85,7 +85,7 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 		if (result != 0) return result;
 		result = EntityUtils.compare(dateProperties, that.dateProperties);
 		if (result != 0) return result;
-		return super.compareTo(that);
+		return super.compareToId(that);
 	}
 
 	@Override

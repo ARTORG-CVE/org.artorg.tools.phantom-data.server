@@ -6,11 +6,11 @@ public interface Identifiable<ID extends Comparable<ID>> {
 	
 	void setId(ID id);
 	
-	default boolean equals(Identifiable<ID> that) {
+	default boolean equalsId(Identifiable<ID> that) {
 		return this.getId().equals(that.getId());
 	}
 	
-	default int compareTo(Identifiable<ID> that) {
+	default int compareToId(Identifiable<ID> that) {
 		return this.getId().compareTo(that.getId());
 	}
 
