@@ -29,9 +29,10 @@ public class MeasuredValue extends AbstractPersonifiedEntity<MeasuredValue>
 
 	public MeasuredValue() {}
 
-	public MeasuredValue(Unit unit, Double value) {
+	public MeasuredValue(Unit unit, Double value, String description) {
 		this.unit = unit;
 		this.value = value;
+		this.description = description;
 	}
 
 	@Override
