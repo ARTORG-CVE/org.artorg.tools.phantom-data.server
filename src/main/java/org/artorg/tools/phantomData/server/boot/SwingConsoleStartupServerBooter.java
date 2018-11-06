@@ -12,7 +12,8 @@ public abstract class SwingConsoleStartupServerBooter extends ServerBooter {
 				e.printStackTrace();
 		}
 		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured() && !isDebugConsoleMode())
-			getConsoleFrame().setVisible(false);
+			;
+//			getConsoleFrame().setVisible(false);
 		else if (isRunnableJarExecution()) 
 			getConsoleFrame().setVisible(true);
 		if (isErrorOccured())

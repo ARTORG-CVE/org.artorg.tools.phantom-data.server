@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
+import java.io.IOException;
 
 import huma.io.IOutil;
 import huma.io.PropertiesFile;
@@ -21,11 +22,44 @@ public abstract class PropertiesBooter extends Booter {
 	public void init() {
 		if (!initialized) {
 			if (isRunnableJarExecution()) {
+				try {
 				File parentDir = getRunnableJarExecutionDirectory();
+				
+				System.out.println("parent dir path:      " +parentDir.getPath());
+				
+				System.out.println("parent dir absolut:   " +parentDir.getAbsolutePath());
+				try {
+					System.out.println("parent dir cononical: " +parentDir.getCanonicalPath());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+				Thread.sleep(100);
+				
+				
+				if (parentDir.getPath().contains("sclera"))
+					parentDir = new File("/" +parentDir.getPath());
+				
 				parentDirectory = parentDir.getPath().replace("\\", "/");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				
+				
+				
+				
 			} else {
 				parentDirectory = System.getProperty("user.home").replace("\\", "/") +"/Desktop";
 			}
+			
+			try {
+			System.out.println("parent dir parent directory:      " +parentDirectory);
+			Thread.sleep(100);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			configPath = parentDirectory +"/phantomData/config";
 			

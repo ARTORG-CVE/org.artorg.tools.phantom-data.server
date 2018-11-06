@@ -24,6 +24,10 @@ public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 		catchedBoot(() -> {
 			setStartupFrame(new SwingStartupProgressFrame());
 			init();
+			
+			getConsoleFrame().setVisible(true);
+			
+			
 			prepareFileStructure();
 			DbFile.setFilesPath(getFilesPath());
 			
@@ -36,13 +40,13 @@ public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 				getStartupFrame().setVisible(true);
 				getStartupFrame().setProgressing(true);
 				startSpringServer(args);
-				getStartupFrame().setVisible(false);
+//				getStartupFrame().setVisible(false);
 			} else {
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame, "Server already started!");
 				frame.dispose();
 			}
-			getStartupFrame().dispose();
+//			getStartupFrame().dispose();
 		});
 	}
 
