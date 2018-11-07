@@ -30,12 +30,12 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 	private final JProgressBar progressBar;
 	private final JLabel progressLabel;
 	private JFrame frame;
-	
+
 	{
 		frame = new JFrame();
 		progressBar = new JProgressBar();
 		progressLabel = new JLabel();
-		
+
 		frame.setTitle("Phantom Database");
 		frame.setResizable(false);
 		frame.setUndecorated(true);
@@ -43,14 +43,20 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 
 		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
-		
-		JLabel closeLabel = new JLabel("x"); 
+
+		JLabel closeLabel = new JLabel("x");
 		closeLabel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
 		closeLabel.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {System.exit(0);}
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+
 			public void mousePressed(MouseEvent e) {}
+
 			public void mouseReleased(MouseEvent e) {}
+
 			public void mouseEntered(MouseEvent e) {}
+
 			public void mouseExited(MouseEvent e) {}
 		});
 		JPanel buttonPane = new JPanel();
@@ -58,21 +64,22 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 		buttonPane.add(Box.createHorizontalGlue());
 		buttonPane.add(closeLabel);
 		content.add(buttonPane, BorderLayout.NORTH);
-		
+
 		BufferedImage phantomImage = IOutil.readResourceAsBuffered("img/startup.png");
 		JLabel phantomLabel = new JLabel(new ImageIcon(phantomImage));
-		BufferedImage artortgLogoImage = IOutil.readResourceAsBuffered("img/artorgLogo.png");
+		BufferedImage artortgLogoImage =
+			IOutil.readResourceAsBuffered("img/artorgLogo.png");
 		JLabel artortgLogoLabel = new JLabel(new ImageIcon(artortgLogoImage));
 		BufferedImage inselLogoImage = IOutil.readResourceAsBuffered("img/inselLogo.png");
 		JLabel inselLogoLabel = new JLabel(new ImageIcon(inselLogoImage));
 		JPanel imagePanel = new JPanel();
 		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.LINE_AXIS));
 		imagePanel.add(phantomLabel);
-		imagePanel.add(Box.createRigidArea(new Dimension(20,0)));
+		imagePanel.add(Box.createRigidArea(new Dimension(20, 0)));
 		JPanel logoPanel = new JPanel();
 		logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.PAGE_AXIS));
 		logoPanel.add(artortgLogoLabel);
-		logoPanel.add(Box.createRigidArea(new Dimension(0,50)));
+		logoPanel.add(Box.createRigidArea(new Dimension(0, 50)));
 		logoPanel.add(inselLogoLabel);
 		imagePanel.add(logoPanel);
 		imagePanel.setBorder(new EmptyBorder(new Insets(0, 10, 10, 10)));
@@ -88,7 +95,7 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 		progressPanel.add(progressLabel, BorderLayout.WEST);
 		progressPanel.add(progressBar, BorderLayout.PAGE_END);
 		content.add(progressPanel, BorderLayout.PAGE_END);
-		
+
 		frame.pack();
 		alignFrame(frame);
 	}
@@ -99,33 +106,30 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 	}
-	
+
 	private void updateStartupProgress(List<String> consoleLines, String newLine) {
 		if (isProgressing()) {
 			Pattern pattern = Pattern.compile("[^:]: (.*)");
-			
-			setProgress(getProgress() + 100.0 / getnConsoleLines());
-			progressBar.setValue((int) getProgress());
-			
 			if (consoleLines.size() > 0) {
-				if (consoleLines.size() < 9)
+				if (consoleLines.size() < 10)
 					progressLabel.setText("Launching Spring Boot...");
-				
-				Matcher m = pattern.matcher(newLine);
-				if (m.find())
-					progressLabel.setText(m.group(1));
-				else
-					progressLabel.setText(newLine);
+				else {
+					setProgress(getProgress() + 100.0 / getnConsoleLines());
+					progressBar.setValue((int) getProgress());
+					Matcher m = pattern.matcher(newLine);
+					if (m.find()) progressLabel.setText(m.group(1));
+					else progressLabel.setText(newLine);
+				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		super.setConsoleDiverter(consoleDiverter);
 		consoleDiverter.addOutLineConsumer(this::updateStartupProgress);
 	}
-	
+
 	// Getters & Setters
 	public JProgressBar getProgressBar() {
 		return progressBar;

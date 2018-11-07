@@ -4,97 +4,58 @@
 
 	<groupId>org.artorg.tools</groupId>
 	<artifactId>phantom-data-server</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.0.RELEASE</version>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.0.RELEASE</version>
 	</parent>
-	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Solves: [ERROR] Unable to determine if resource... -->
 		<dependency.locations.enabled>false</dependency.locations.enabled>
-		
 	</properties>
 
-
-
 	<dependencies>
-	
-	
-	
 		<dependency>
 			<groupId>ch.huma</groupId>
 			<artifactId>huma-library-io</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	
-	
-	
-	
-	
-	
-	
-	<!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
-<dependency>
-    <groupId>commons-beanutils</groupId>
-    <artifactId>commons-beanutils</artifactId>
-    <version>1.9.3</version>
-</dependency>
-	
-	
-	
-	
-<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
-<dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-install-plugin</artifactId>
-    <version>3.0.0-M1</version>
-</dependency>
 
-	
-
-	
-	
-		<!-- Optional - Testing -->
+		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- Optional - Reflections f.e. getSubClass -->
+		<!-- Reflections f.e. getSubClass -->
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
 			<version>0.9.11</version>
 		</dependency>
-
-		<!-- Optional - Deleting Directories -->
+		<!-- Deleting Directories -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
-
-		<!-- Optional - Executing Curl commands. For shutdown Spring Boot App -->
+		<!-- Executing Curl commands. For shutdown Spring Boot App -->
 		<dependency>
 			<groupId>org.toile-libre.libe</groupId>
 			<artifactId>curl</artifactId>
 			<version>0.0.19</version>
 		</dependency>
-
-		<!-- Optional - Shuting down tomcat -->
+		<!-- Shuting down tomcat -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
 		<!-- REQUIRED -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -132,30 +93,23 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			
-			<!-- <plugin> -->
-      <!-- <groupId>org.springframework.boot</groupId> -->
-      <!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
-      <!-- <version>2.1.0.RELEASE</version> -->
-      <!-- <configuration> -->
-        <!-- <mainClass>org.artorg.tools.phantomData.server.BootApplication</mainClass> -->
-        <!-- <layout>JAR</layout> -->
-  <!-- <finalName>app-1.0</finalName> -->
-      <!-- </configuration> -->
-      <!-- <executions> -->
-        <!-- <execution> -->
-          <!-- <goals> -->
-            <!-- <goal>repackage</goal> -->
-          <!-- </goals> -->
-        <!-- </execution> -->
-        
-      <!-- </executions> -->
-      
-    <!-- </plugin> -->
-			
-			
-	
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.1.0.RELEASE</version>
+				<configuration>
+					<classifier>spring-boot</classifier>
+					<mainClass>org.artorg.tools.phantomData.server.BootApplication</mainClass>
+					<layout>JAR</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>

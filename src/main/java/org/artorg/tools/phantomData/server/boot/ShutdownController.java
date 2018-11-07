@@ -1,6 +1,5 @@
 package org.artorg.tools.phantomData.server.boot;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;

@@ -31,7 +31,7 @@ public class DesktopSwingResetBootServer extends SwingConsoleStartupServerBooter
 			prepareFileStructure();
 			
 			if (!isConnected()) {
-				getStartupFrame().setnConsoleLines(221);
+				getStartupFrame().setnConsoleLines(39);
 				getStartupFrame().setTitle("Phantom Database");
 				getStartupFrame().setVisible(true);
 				getStartupFrame().setProgressing(true);
