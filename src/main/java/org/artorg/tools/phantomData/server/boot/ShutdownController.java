@@ -18,7 +18,7 @@ public class ShutdownController implements ApplicationContextAware {
     }
  
     @Override
-    public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+    public void setApplicationContext(ApplicationContext ctx) {
         this.context = ctx;
          
     }

@@ -4,20 +4,17 @@
 
 	<groupId>org.artorg.tools</groupId>
 	<artifactId>phantom-data-server</artifactId>
-	<version>0.2.1</version>
+	<version>0.2.1-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.3.RELEASE</version>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.0.RELEASE</version>
 	</parent>
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.target>1.8</maven.compiler.target> 
-		<maven.compiler.source>1.8</maven.compiler.source> 
-		<maven.compiler.testTarget>1.8</maven.compiler.testTarget> 
-		<maven.compiler.testSource>1.8</maven.compiler.testSource>
 
 		<!-- Solves: [ERROR] Unable to determine if resource... -->
 		<dependency.locations.enabled>false</dependency.locations.enabled>
@@ -27,6 +24,8 @@
 
 
 	<dependencies>
+	
+	
 	
 		<dependency>
 			<groupId>ch.huma</groupId>
@@ -50,6 +49,13 @@
 	
 	
 	
+<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
+<dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-install-plugin</artifactId>
+    <version>3.0.0-M1</version>
+</dependency>
+
 	
 
 	
@@ -126,23 +132,30 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-						<configuration>
-							<classifier>spring-boot</classifier>
-							<mainClass>
-								org.artorg.tools.phantomData.server.BootApplication
-							</mainClass>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			
+			
+			<!-- <plugin> -->
+      <!-- <groupId>org.springframework.boot</groupId> -->
+      <!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
+      <!-- <version>2.1.0.RELEASE</version> -->
+      <!-- <configuration> -->
+        <!-- <mainClass>org.artorg.tools.phantomData.server.BootApplication</mainClass> -->
+        <!-- <layout>JAR</layout> -->
+  <!-- <finalName>app-1.0</finalName> -->
+      <!-- </configuration> -->
+      <!-- <executions> -->
+        <!-- <execution> -->
+          <!-- <goals> -->
+            <!-- <goal>repackage</goal> -->
+          <!-- </goals> -->
+        <!-- </execution> -->
+        
+      <!-- </executions> -->
+      
+    <!-- </plugin> -->
+			
+			
+	
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
