@@ -39,7 +39,7 @@ public class SwingStartupProgressFrame extends StartupProgressFrame {
 		frame.setTitle("Phantom Database");
 		frame.setResizable(false);
 		frame.setUndecorated(true);
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
