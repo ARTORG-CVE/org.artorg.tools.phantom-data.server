@@ -20,17 +20,31 @@ public abstract class PropertiesBooter extends Booter {
 
 	public void init() {
 		if (!initialized) {
-			if (isRunnableJarExecution()) {
-				File parentDir = getRunnableJarExecutionDirectory();
-				String path = parentDir.getPath().replace("\\", "/");
-				if (path.startsWith("/")) path = "/" + path;
-				parentDirectory = path;
+			if (isWindowsOs()) {
+				if (isRunnableJarExecution()) {
+					File parentDir = getRunnableJarExecutionDirectory();
+					String path = parentDir.getPath().replace("\\", "/");
+					if (path.startsWith("/")) path = "/" + path;
+					parentDirectory = path;
+				} else {
+					parentDirectory =
+						System.getProperty("user.home").replace("\\", "/") + "/Desktop";
+				}
+				configPath = parentDirectory + "/phantomData/config";
+			} else if (isLinuxOs() || isMacOs()) {
+				if (isRunnableJarExecution()) {
+					File parentDir = getRunnableJarExecutionDirectory();
+					String path = parentDir.getPath();
+					parentDirectory = path;	
+				} else {
+					new UnsupportedOperationException().printStackTrace();
+					System.exit(0);
+				}
+				configPath = parentDirectory + "/phantomData/config";
 			} else {
-				parentDirectory =
-					System.getProperty("user.home").replace("\\", "/") + "/Desktop";
+				new UnsupportedOperationException().printStackTrace();
+				System.exit(0);
 			}
-			configPath = parentDirectory + "/phantomData/config";
-
 			PropertyPut[] configPuts = new PropertyPut[] {
 				new PropertyPut("parent.directory.path", parentDirectory),
 				new PropertyPut("home.path", parentDirectory + "/phantomData"),

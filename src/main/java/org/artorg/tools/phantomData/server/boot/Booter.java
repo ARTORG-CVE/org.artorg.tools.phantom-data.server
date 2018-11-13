@@ -14,7 +14,19 @@ public abstract class Booter implements IBooter {
 	private StartupProgressFrame startupFrame;
 	private boolean errorOccured;
 	private Class<?> bootApplicationClass;
-
+	
+	public boolean isWindowsOs() {
+		return System.getProperty("os.name").matches("(?i).*windows.*");
+	}
+	
+	public boolean isLinuxOs() {
+		return System.getProperty("os.name").matches("(?i).*linux.*");
+	}
+	
+	public boolean isMacOs() {
+		return System.getProperty("os.name").matches("(?i).*mac.*");
+	}
+	
 	public abstract void boot(String[] args);
 	
 	public boolean isRunnableJarExecution() {
@@ -41,7 +53,7 @@ public abstract class Booter implements IBooter {
 			e2.printStackTrace();
 		}
 		
-		Pattern pattern = Pattern.compile("jar:file:/(.*)");
+		Pattern pattern = Pattern.compile("jar:file:(.*)");
 		Matcher m = pattern.matcher(path);
 		File file;
 		if(m.find())
