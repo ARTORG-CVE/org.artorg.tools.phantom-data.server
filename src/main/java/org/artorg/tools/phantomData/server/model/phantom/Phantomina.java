@@ -124,24 +124,11 @@ public class Phantomina extends AbstractBaseEntity<Phantomina>
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!super.equals(obj)) return false;
 		if (!(obj instanceof Phantomina)) return false;
 		Phantomina other = (Phantomina) obj;
-		if (annulusDiameter == null) {
-			if (other.annulusDiameter != null) return false;
-		} else if (!annulusDiameter.equals(other.annulusDiameter)) return false;
-		if (fabricationType == null) {
-			if (other.fabricationType != null) return false;
-		} else if (!fabricationType.equals(other.fabricationType)) return false;
-		if (literatureBase == null) {
-			if (other.literatureBase != null) return false;
-		} else if (!literatureBase.equals(other.literatureBase)) return false;
 		if (productId == null) {
 			if (other.productId != null) return false;
 		} else if (!productId.equals(other.productId)) return false;
-		if (special == null) {
-			if (other.special != null) return false;
-		} else if (!special.equals(other.special)) return false;
 		return true;
 	}
 
