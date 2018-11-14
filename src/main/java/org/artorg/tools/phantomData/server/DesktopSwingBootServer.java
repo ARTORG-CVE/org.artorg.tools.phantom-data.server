@@ -11,11 +11,11 @@ import org.artorg.tools.phantomData.server.model.base.DbFile;
 import huma.io.ConsoleDiverter;
 
 public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
-	
+
 	public static void main(String[] args) {
 		new DesktopSwingBootServer().boot(args);
 	}
-	
+
 	public void boot(String[] args) {
 		setBootApplicationClass(BootApplication.class);
 		setExternalConfigOverridable(false);
@@ -26,9 +26,8 @@ public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 			init();
 			prepareFileStructure();
 			DbFile.setFilesPath(getFilesPath());
-			
-			if (isDebugConsoleMode())
-				getConsoleFrame().setVisible(true);
+
+			if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
 			if (!isConnected()) {
 				getStartupFrame().setnConsoleLines(39);
 				getStartupFrame().setTitle("Phantom Database");
@@ -40,6 +39,7 @@ public class DesktopSwingBootServer extends SwingConsoleStartupServerBooter {
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame, "Server already started!");
 				frame.dispose();
+				System.exit(0);
 			}
 			getStartupFrame().dispose();
 		});

@@ -1,7 +1,6 @@
 package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,41 +29,38 @@ public abstract class Booter implements IBooter {
 	public abstract void boot(String[] args);
 	
 	public boolean isRunnableJarExecution() {
-		String uriPath = null;
 		try {
-			uriPath = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
-		} catch (URISyntaxException e) {
+			String uriPath = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
+			if (uriPath.contains(".jar")) {
+				Matcher m = runnableJarPattern.matcher(uriPath);
+				return m.find();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		if (uriPath.contains(".jar")) {
-			Matcher m = runnableJarPattern.matcher(uriPath);
-			return m.find();
 		}
 		return false;
 	}
 	
 	public File getRunnableJarExecutionDirectory() {
-		String path = null;
-		
 		try {
-			path = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
-		} catch (URISyntaxException e2) {
-			e2.printStackTrace();
+			String path = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
+			Pattern pattern = Pattern.compile("jar:file:(.*)");
+			Matcher m = pattern.matcher(path);
+			File file;
+			if(m.find())
+				file = new File(m.group(1));
+			else 
+				throw new IllegalArgumentException();
+			
+			while (file.getPath().contains(".jar"))
+				file = file.getParentFile();
+			
+			return file;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
 		
-		Pattern pattern = Pattern.compile("jar:file:(.*)");
-		Matcher m = pattern.matcher(path);
-		File file;
-		if(m.find())
-			file = new File(m.group(1));
-		else 
-			throw new IllegalArgumentException();
-		
-		while (file.getPath().contains(".jar"))
-			file = file.getParentFile();
-
-		return file;
 	}
 	
 	public void setConsoleFrameVisible(boolean b) {

@@ -2,6 +2,9 @@ package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import huma.io.IOutil;
 import huma.io.PropertiesFile;
 import huma.io.PropertyPut;
@@ -24,7 +27,7 @@ public abstract class PropertiesBooter extends Booter {
 				if (isRunnableJarExecution()) {
 					File parentDir = getRunnableJarExecutionDirectory();
 					String path = parentDir.getPath().replace("\\", "/");
-					if (path.startsWith("/")) path = "/" + path;
+//					if (path.startsWith("/")) path = "/" + path;
 					parentDirectory = path;
 				} else {
 					parentDirectory =
@@ -35,16 +38,24 @@ public abstract class PropertiesBooter extends Booter {
 				if (isRunnableJarExecution()) {
 					File parentDir = getRunnableJarExecutionDirectory();
 					String path = parentDir.getPath();
-					parentDirectory = path;	
+					if (path.matches("(?i).*zonula.*")
+						|| path.matches("(?i).*sclera.*")) {
+						JFrame frame = new JFrame();
+						JOptionPane.showMessageDialog(frame,
+							"On unix machines application has to be started local!\n"
+								+ "Read install instructions for informations.");
+						frame.dispose();
+						System.exit(0);
+					}
+					parentDirectory = path;
 				} else {
 					new UnsupportedOperationException().printStackTrace();
-					System.exit(0);
 				}
 				configPath = parentDirectory + "/phantomData/config";
 			} else {
 				new UnsupportedOperationException().printStackTrace();
-				System.exit(0);
 			}
+
 			PropertyPut[] configPuts = new PropertyPut[] {
 				new PropertyPut("parent.directory.path", parentDirectory),
 				new PropertyPut("home.path", parentDirectory + "/phantomData"),
