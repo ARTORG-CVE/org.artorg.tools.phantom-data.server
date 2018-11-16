@@ -8,7 +8,7 @@ public class BootApplication {
 	private static final Reflections reflections = new Reflections("org.artorg.tools.phantomData");
 
 	public static void main(String[] args) {
-		new DesktopSwingBootServer().boot(args);
+		new DesktopFxBootServer().boot(args);
 	}
 	
 	public static Reflections getReflections() {
