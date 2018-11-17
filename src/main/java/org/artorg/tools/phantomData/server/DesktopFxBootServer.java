@@ -5,14 +5,15 @@ import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.artorg.tools.phantomData.server.boot.FxConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.FxStartupProgressController;
 import org.artorg.tools.phantomData.server.boot.ServerBooter;
-import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
 import org.artorg.tools.phantomData.server.model.base.DbFile;
 import org.artorg.tools.phantomData.server.util.FxUtil;
 
 import huma.io.ConsoleDiverter;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -28,17 +29,17 @@ public class DesktopFxBootServer extends Application {
 	private String[] args;
 	private double xOffset = 0;
 	private double yOffset = 0;
-
+	
 	public DesktopFxBootServer() {}
-
+	
 	public String[] getArgs() {
 		return args;
 	}
-
+	
 	public void setArgs(String[] args) {
 		this.args = args;
 	}
-
+	
 	public static void main(String[] args) {
 		new DesktopFxBootServer().boot(args);
 	}
@@ -47,13 +48,13 @@ public class DesktopFxBootServer extends Application {
 		setArgs(args);
 		Application.launch(args);
 	}
-
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		controller = new FxStartupProgressController(stage);
 		Pane pane = FxUtil.loadFXML("fxml/Boot.fxml", controller, getClass());
 		Scene scene = new Scene(pane, Color.DARKSLATEGRAY);
-
+		
 		scene.getStylesheets().add(FxUtil.readCSSstylesheet("css/application.css"));
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.getIcons().add(new Image("img/startup.png"));
@@ -63,7 +64,7 @@ public class DesktopFxBootServer extends Application {
 		stage.show();
 		stage.requestFocus();
 		stage.toFront();
-
+		
 		pane.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -78,29 +79,31 @@ public class DesktopFxBootServer extends Application {
 				stage.setY(event.getScreenY() - yOffset);
 			}
 		});
-
-		if (args == null) args = new String[] {};
-		ServerBooter booter = createBooter(controller);
-		booter.boot(args);
-
+		
+		Platform.runLater(() -> {
+			if (args == null) args = new String[] {};
+			ServerBooter booter = createBooter(controller);
+			booter.boot(args);
+		});
+		
 	}
-
+	
 	public ServerBooter createBooter(FxStartupProgressController controller) {
 		return new ServerBooter() {
-
+			
 			@Override
 			public void boot(String[] args) {
 				try {
 					setBootApplicationClass(BootApplication.class);
 					setExternalConfigOverridable(false);
 					setConsoleDiverter(new ConsoleDiverter());
-					setConsoleFrame(new SwingConsoleFrame());
-
+					setConsoleFrame(new FxConsoleFrame());
+					
 					setStartupFrame(controller);
 					init();
 					prepareFileStructure();
 					DbFile.setFilesPath(getFilesPath());
-
+					
 					if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
 					if (!isConnected()) {
 						getStartupFrame().setnConsoleLines(39);
@@ -110,7 +113,11 @@ public class DesktopFxBootServer extends Application {
 						Task<Void> task = new Task<Void>() {
 							@Override
 							protected Void call() throws Exception {
-								startSpringServer(args);
+								try {
+									startSpringServer(args);
+								} catch (Exception e) {
+									handleException(e);
+								}
 								return null;
 							}
 						};
@@ -124,6 +131,7 @@ public class DesktopFxBootServer extends Application {
 						frame.dispose();
 						System.exit(0);
 					}
+					
 				} catch (Exception e) {
 					getConsoleFrame().setTitle("Phantom Database - Exception thrown!");
 					setErrorOccured(true);
@@ -131,16 +139,27 @@ public class DesktopFxBootServer extends Application {
 					finish();
 				}
 			}
-
+			
+			@Override
+			public boolean handleException(Exception e) {
+				if (!super.handleException(e)) e.printStackTrace();
+				getConsoleFrame().setTitle("Phantom Database - Exception thrown!");
+				setErrorOccured(true);
+				getConsoleFrame().setVisible(true);
+				return true;
+			}
+			
 			private void finish() {
 				getStartupFrame().setVisible(false);
 				getStartupFrame().dispose();
-				if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
-					&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
-				else if (isRunnableJarExecution()) getConsoleFrame().setVisible(true);
+				if (!getConsoleFrame().isErrorOccured() && !isErrorOccured() && !isDebugConsoleMode())
+					getConsoleFrame().setVisible(false);
+				else
+//					if (isRunnableJarExecution()) 
+					getConsoleFrame().setVisible(true);
 			}
 		};
-
+		
 	}
-
+	
 }

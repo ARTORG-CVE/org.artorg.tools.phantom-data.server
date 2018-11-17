@@ -22,9 +22,11 @@ import javax.swing.text.StyledDocument;
 
 import huma.io.ConsoleDiverter;
 
-public class SwingConsoleFrame extends ConsoleFrame {
+public class SwingConsoleFrame implements ConsoleFrame {
 	private final JTextPane textArea;
 	private JFrame frame;
+	private ConsoleDiverter consoleDiverter;
+	private boolean errorOccured;
 	
 	{
 		frame = new JFrame();
@@ -86,7 +88,7 @@ public class SwingConsoleFrame extends ConsoleFrame {
 	
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
-		super.setConsoleDiverter(consoleDiverter);
+		this.consoleDiverter = consoleDiverter;
 		consoleDiverter.addOutLineConsumer( 
 				(consoleLines, newLine) -> updateTextArea(this::appendToPaneOut, newLine));
 		consoleDiverter.addErrLineConsumer( 
@@ -107,6 +109,21 @@ public class SwingConsoleFrame extends ConsoleFrame {
 	@Override
 	public JFrame getGraphic() {
 		return frame;
+	}
+
+	@Override
+	public boolean isErrorOccured() {
+		return errorOccured;
+	}
+
+	@Override
+	public void setErrorOccured(boolean b) {
+		this.errorOccured = b;
+	}
+
+	@Override
+	public ConsoleDiverter getConsoleDiverter() {
+		return consoleDiverter;
 	}
 
 }
