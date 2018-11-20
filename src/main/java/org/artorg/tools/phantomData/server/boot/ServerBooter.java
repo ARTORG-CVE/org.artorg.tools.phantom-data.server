@@ -14,7 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
+import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.model.base.DbFile;
 import org.springframework.boot.SpringApplication;
+
+import huma.io.ConsoleDiverter;
 
 public abstract class ServerBooter extends PropertiesBooter {
 	private boolean serverStartedEmbedded;
@@ -22,49 +26,72 @@ public abstract class ServerBooter extends PropertiesBooter {
 	{
 		serverStartedEmbedded = false;
 	}
-	
-	public boolean handleException(Exception e) {
-		if (e instanceof org.springframework.boot.web.embedded.tomcat.ConnectorStartFailedException) {
-			JFrame frame = new JFrame();
-			JOptionPane.showMessageDialog(frame, "Couldn't configured to listen on port " +getPort());
-			frame.dispose();
-			return true;
-		} 
-		return false;
+
+	public void finish() {
+		getStartupFrame().setVisible(false);
+		getStartupFrame().dispose();
+		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
+			&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
+		else getConsoleFrame().setVisible(true);
 	}
 	
+	public void initBeforeServerStart(Class<?> bootApplicationClass,
+		ConsoleFrame consoleFrame, StartupProgressFrame startupProgressFrame) {
+		setBootApplicationClass(BootApplication.class);
+		setExternalConfigOverridable(false);
+		setConsoleDiverter(new ConsoleDiverter());
+		setConsoleFrame(consoleFrame);
+		setStartupFrame(startupProgressFrame);
+		init();
+		prepareFileStructure();
+		DbFile.setFilesPath(getFilesPath());
+	}
+
+	@Override
+	public void handleException(Exception e) {
+		e.printStackTrace();
+		if (e instanceof org.springframework.boot.web.embedded.tomcat.ConnectorStartFailedException) {
+			JFrame frame = new JFrame();
+			JOptionPane.showMessageDialog(frame,
+				"Couldn't configured to listen on port " + getPort());
+			frame.dispose();
+		} else {
+			getConsoleFrame().setTitle("Phantom Database - Exception thrown!");
+			setErrorOccured(true);
+			getConsoleFrame().setVisible(true);
+		}
+	}
+
 	public void deleteFileStructure() {
 		try {
 			FileUtils.deleteDirectory(new File(getHomePath()));
 			FileUtils.deleteDirectory(new File(getDatabasePath()));
 			FileUtils.deleteDirectory(new File(getFilesPath()));
 			FileUtils.deleteDirectory(new File(getLogsPath()));
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		this.setInitialized(false);
 	}
-	
+
 	public void prepareFileStructure() {
 		new File(getHomePath()).mkdirs();
 		new File(getDatabasePath()).mkdirs();
 		new File(getFilesPath()).mkdirs();
 		new File(getLogsPath()).mkdirs();
 	}
-	
+
 	public void startSpringServer(String[] args) {
-		if (!this.isInitialized()) 
-			throw new RuntimeException("Not initialized!");
-		if (!isConnected()) 
-			SpringApplication.run(getBootApplicationClass(), args);
-		if (!isConnected()) 
-			throw new IllegalArgumentException("server couldn't load configuration: url Localhost: " +getUrlLocalhost());
+		if (!this.isInitialized()) throw new RuntimeException("Not initialized!");
+		if (!isConnected()) SpringApplication.run(getBootApplicationClass(), args);
+		if (!isConnected()) throw new IllegalArgumentException(
+			"server couldn't load configuration: url Localhost: " + getUrlLocalhost());
 	}
-	
+
 	public void shutdownSpringServer() {
 		if (isConnected()) {
-			curl("-X POST " +getUrlShutdownActuator());
+			curl("-X POST " + getUrlShutdownActuator());
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
@@ -72,38 +99,33 @@ public abstract class ServerBooter extends PropertiesBooter {
 			}
 		}
 	}
-	
+
 	public boolean isConnected() {
-        try {
-            URL siteURL = new URL(getUrlLocalhost());
-            HttpURLConnection connection = (HttpURLConnection) siteURL
-                    .openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
- 
-            int code = connection.getResponseCode();
-            if (code == 200) {
-                return true;
-            }
-        } catch (Exception e) {
-        }
-        return false;
-    }
-	
+		try {
+			URL siteURL = new URL(getUrlLocalhost());
+			HttpURLConnection connection = (HttpURLConnection) siteURL.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			int code = connection.getResponseCode();
+			if (code == 200) {
+				return true;
+			}
+		} catch (Exception e) {}
+		return false;
+	}
+
 	public Connection getConnection() {
 		try {
-			Class.forName (getSqlDriver());
-			return DriverManager.getConnection (
-					getSpringDatasourceUrl(), 
-					getDatabaseUsername(),
-					getDatabasePassword()); 
+			Class.forName(getSqlDriver());
+			return DriverManager.getConnection(getSpringDatasourceUrl(),
+				getDatabaseUsername(), getDatabasePassword());
 		} catch (ClassNotFoundException | SQLException e1) {
 			e1.printStackTrace();
 		}
 		throw new RuntimeException();
 	}
-	
-	
+
 	public boolean isServerStartedEmbedded() {
 		return serverStartedEmbedded;
 	}

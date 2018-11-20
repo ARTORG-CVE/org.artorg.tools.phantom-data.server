@@ -13,43 +13,37 @@ import huma.io.ConsoleDiverter;
 public class DesktopSwingBootServer extends ServerBooter {
 
 	public static void main(String[] args) {
-		new DesktopSwingBootServer().boot(args);
+		new DesktopSwingBootServer().catchedBoot(args);
 	}
 
-	public void boot(String[] args) {
-		try {
-			setBootApplicationClass(BootApplication.class);
-			setExternalConfigOverridable(false);
-			setConsoleDiverter(new ConsoleDiverter());
-			setConsoleFrame(new SwingConsoleFrame());
-			setStartupFrame(new SwingStartupProgressFrame());
-			init();
-			prepareFileStructure();
-			DbFile.setFilesPath(getFilesPath());
+	@Override
+	protected void uncatchedBoot(String[] args) {
+		initBeforeServerStart(BootApplication.class, new SwingConsoleFrame(), new SwingStartupProgressFrame());
+		
+		setBootApplicationClass(BootApplication.class);
+		setExternalConfigOverridable(false);
+		setConsoleDiverter(new ConsoleDiverter());
+		setConsoleFrame(new SwingConsoleFrame());
+		setStartupFrame(new SwingStartupProgressFrame());
+		init();
+		prepareFileStructure();
+		DbFile.setFilesPath(getFilesPath());
 
-			if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
-			if (!isConnected()) {
-				getStartupFrame().setnConsoleLines(39);
-				getStartupFrame().setTitle("Phantom Database");
-				getStartupFrame().setVisible(true);
-				getStartupFrame().setProgressing(true);
-				startSpringServer(args);
-				getStartupFrame().setVisible(false);
-			} else {
-				JFrame frame = new JFrame();
-				JOptionPane.showMessageDialog(frame, "Server already started!");
-				frame.dispose();
-				System.exit(0);
-			}
-			getStartupFrame().dispose();
-		} catch (Exception e) {
-			getConsoleFrame().setTitle("Phantom Database - Exception thrown!");
-			setErrorOccured(true);
-			if (!super.handleException(e)) e.printStackTrace();
+		if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
+		if (!isConnected()) {
+			getStartupFrame().setnConsoleLines(39);
+			getStartupFrame().setTitle("Phantom Database");
+			getStartupFrame().setVisible(true);
+			getStartupFrame().setProgressing(true);
+			startSpringServer(args);
+			getStartupFrame().setVisible(false);
+		} else {
+			JFrame frame = new JFrame();
+			JOptionPane.showMessageDialog(frame, "Server already started!");
+			frame.dispose();
+			System.exit(0);
 		}
-		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
-			&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
-		else if (isRunnableJarExecution()) getConsoleFrame().setVisible(true);
+		getStartupFrame().dispose();
 	}
 
 }

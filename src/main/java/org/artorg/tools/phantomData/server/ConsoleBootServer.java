@@ -6,10 +6,11 @@ import org.artorg.tools.phantomData.server.model.base.DbFile;
 public class ConsoleBootServer extends ServerBooter {
 
 	public static void main(String[] args) {
-		new ConsoleBootServer().boot(args);
+		new ConsoleBootServer().uncatchedBoot(args);
 	}
 
-	public void boot(String[] args) {
+	@Override
+	public void uncatchedBoot(String[] args) {
 		setBootApplicationClass(BootApplication.class);
 		setExternalConfigOverridable(false);
 
@@ -23,7 +24,6 @@ public class ConsoleBootServer extends ServerBooter {
 			System.out.println("Server already started!");
 			System.exit(0);
 		}
-
 	}
 
 }

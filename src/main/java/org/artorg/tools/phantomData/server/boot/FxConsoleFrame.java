@@ -29,8 +29,8 @@ public class FxConsoleFrame implements ConsoleFrame {
 		scrollPane = new ScrollPane();
 		scrollPane.setContent(textArea);
 		
-		Scene scene = new Scene(scrollPane);
-		scene.getStylesheets().add(FxUtil.readCSSstylesheet("css/startup.css"));
+		Scene scene = FxUtil.createScene(scrollPane);
+		scrollPane.getStyleClass().add("console-pane");
 		
 		textArea.maxHeight(Double.MAX_VALUE);
 		scrollPane.maxHeight(Double.MAX_VALUE);
