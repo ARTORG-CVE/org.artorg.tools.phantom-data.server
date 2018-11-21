@@ -17,10 +17,14 @@ public class Special extends AbstractBaseEntity<Special> implements DbPersistent
 	@Column(name = "SHORTCUT", unique=true, nullable = false)
 	private String shortcut;
 	
+	@Column(name = "DESCRIPTION", nullable = false)
+	private String description;
+	
 	public Special() {}
 	
-	public Special(String shortcut) {
+	public Special(String shortcut, String description) {
 		this.shortcut = shortcut;
+		this.description = description;
 	}
 	
 	@Override
@@ -50,7 +54,6 @@ public class Special extends AbstractBaseEntity<Special> implements DbPersistent
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!super.equals(obj)) return false;
 		if (!(obj instanceof Special)) return false;
 		Special other = (Special) obj;
 		if (shortcut == null) {
@@ -67,5 +70,13 @@ public class Special extends AbstractBaseEntity<Special> implements DbPersistent
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }
