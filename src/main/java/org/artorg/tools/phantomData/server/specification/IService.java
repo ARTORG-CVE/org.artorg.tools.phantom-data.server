@@ -2,13 +2,12 @@ package org.artorg.tools.phantomData.server.specification;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IService<T extends DbPersistent<T,?>> {
+public interface IService<T> {
 	
-	CrudRepository<T, UUID> getRepository();
+	CrudRepository<T, ?> getRepository();
 	
 	default List<T> getAll() {
 		List<T> list = new ArrayList<>();
@@ -16,8 +15,9 @@ public interface IService<T extends DbPersistent<T,?>> {
 		return list;
 	}
 	
-	default T getById(UUID id) {
-		T obj = getRepository().findById(id).get();
+	@SuppressWarnings("unchecked")
+	default <U extends Identifiable<ID>, ID extends Comparable<ID>> U getById(ID id) {
+		U obj = ((CrudRepository<U,ID>)getRepository()).findById(id).get();
 		return obj;
 	}
 	
@@ -26,9 +26,8 @@ public interface IService<T extends DbPersistent<T,?>> {
 		
 	}
 	
-	default void delete(UUID id) {
+	default <U extends Identifiable<ID>, ID extends Comparable<ID>> void delete(ID id) {
 		getRepository().delete(getById(id));
-		
 	}
 	
 	default boolean add(T t) {
@@ -43,8 +42,9 @@ public interface IService<T extends DbPersistent<T,?>> {
 //        return true;
 	}
 	
-	default Boolean existById(UUID id) {
-		return getRepository().existsById(id);
+	@SuppressWarnings("unchecked")
+	default <U extends Identifiable<ID>, ID extends Comparable<ID>> Boolean existById(ID id) {
+		return ((CrudRepository<U,ID>)getRepository()).existsById(id);
 	}
 
 }

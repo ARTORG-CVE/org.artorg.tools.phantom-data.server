@@ -1,7 +1,6 @@
 package org.artorg.tools.phantomData.server.specification;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,15 +14,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public abstract class ControllerSpec<T extends DbPersistent<T, ?>, I_SERVICE_TYPE extends IService<T>> {
+public abstract class ControllerSpec<T extends Identifiable<?>, I_SERVICE_TYPE extends IService<T>> {
 
 	@Autowired
 	protected I_SERVICE_TYPE service;
 
 	@GetMapping("get-by-id/{id}")
-	public ResponseEntity<T> getById(@PathVariable("id") UUID id) {
-		T m = service.getById(id);
-		return new ResponseEntity<T>(m, HttpStatus.OK);
+	public <U extends Identifiable<ID>, ID extends Comparable<ID>> ResponseEntity<U> getById(@PathVariable("id") ID id) {
+		U m = service.getById(id);
+		return new ResponseEntity<U>(m, HttpStatus.OK);
 	}
 
 	@GetMapping("get-all")
@@ -49,13 +48,13 @@ public abstract class ControllerSpec<T extends DbPersistent<T, ?>, I_SERVICE_TYP
 	}
 
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
+	public <U extends Identifiable<ID>, ID extends Comparable<ID>> ResponseEntity<Void> delete(@PathVariable("id") ID id) {
 		service.delete(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("exist-by-id/{id}")
-	public ResponseEntity<Boolean> existById(@PathVariable("id") UUID id) {
+	public <U extends Identifiable<ID>, ID extends Comparable<ID>> ResponseEntity<Boolean> existById(@PathVariable("id") ID id) {
 		Boolean b = service.existById(id);
 		return new ResponseEntity<Boolean>(b, HttpStatus.OK);
 	}
