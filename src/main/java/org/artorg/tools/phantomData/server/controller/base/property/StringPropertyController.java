@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.controller.base.property;
 import org.artorg.tools.phantomData.server.model.base.property.PropertyField;
 import org.artorg.tools.phantomData.server.model.base.property.StringProperty;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IstringPropertyService;
-import org.artorg.tools.phantomData.server.specification.ControllerSpec;
+import org.artorg.tools.phantomData.server.specification.ControllerSpecDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("string-properties")
-public class StringPropertyController extends ControllerSpec<StringProperty, IstringPropertyService<StringProperty>> {
+public class StringPropertyController extends ControllerSpecDefault<StringProperty, IstringPropertyService<StringProperty>> {
 
 	@GetMapping("get-by-property-field/{property-field}")
 	public ResponseEntity<StringProperty> getByPropertyField(

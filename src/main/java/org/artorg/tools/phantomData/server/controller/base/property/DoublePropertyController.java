@@ -3,7 +3,7 @@ package org.artorg.tools.phantomData.server.controller.base.property;
 import org.artorg.tools.phantomData.server.model.base.property.DoubleProperty;
 import org.artorg.tools.phantomData.server.model.base.property.PropertyField;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IdoublePropertyService;
-import org.artorg.tools.phantomData.server.specification.ControllerSpec;
+import org.artorg.tools.phantomData.server.specification.ControllerSpecDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("double-properties")
-public class DoublePropertyController extends ControllerSpec<DoubleProperty, IdoublePropertyService<DoubleProperty>> {
+public class DoublePropertyController extends ControllerSpecDefault<DoubleProperty, IdoublePropertyService<DoubleProperty>> {
 	
 	@GetMapping("get-by-property-field/{property-field}")
 	public ResponseEntity<DoubleProperty> getByPropertyField(

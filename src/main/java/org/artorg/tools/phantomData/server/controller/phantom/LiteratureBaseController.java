@@ -2,7 +2,7 @@ package org.artorg.tools.phantomData.server.controller.phantom;
 
 import org.artorg.tools.phantomData.server.model.phantom.LiteratureBase;
 import org.artorg.tools.phantomData.server.serviceSpec.phantom.IliteratureBaseService;
-import org.artorg.tools.phantomData.server.specification.ControllerSpec;
+import org.artorg.tools.phantomData.server.specification.ControllerSpecDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("literature-bases")
-public class LiteratureBaseController extends ControllerSpec<LiteratureBase, IliteratureBaseService<LiteratureBase>> {
+public class LiteratureBaseController extends ControllerSpecDefault<LiteratureBase, IliteratureBaseService<LiteratureBase>> {
 	
 	@GetMapping("get-by-shortcut/{shortcut}")
 	public ResponseEntity<LiteratureBase> getByShortcut(@PathVariable("shortcut") String shortcut) {

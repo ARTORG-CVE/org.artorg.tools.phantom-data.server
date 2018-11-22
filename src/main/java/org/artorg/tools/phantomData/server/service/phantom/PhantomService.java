@@ -4,13 +4,13 @@ import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.phantom.Phantom;
 import org.artorg.tools.phantomData.server.repository.phantom.PhantomRepository;
-import org.artorg.tools.phantomData.server.specification.IService;
+import org.artorg.tools.phantomData.server.specification.IServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PhantomService implements IService<Phantom> {
+public class PhantomService implements IServiceDefault<Phantom> {
 
 	@Autowired
 	private PhantomRepository repository;

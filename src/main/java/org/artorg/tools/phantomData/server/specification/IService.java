@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IService<T> {
+public interface IService<T,ID> {
 	
-	CrudRepository<T, ?> getRepository();
+	CrudRepository<T, ID> getRepository();
 	
 	default List<T> getAll() {
 		List<T> list = new ArrayList<>();
@@ -15,9 +15,10 @@ public interface IService<T> {
 		return list;
 	}
 	
-	@SuppressWarnings("unchecked")
-	default <U extends Identifiable<ID>, ID extends Comparable<ID>> U getById(ID id) {
-		U obj = ((CrudRepository<U,ID>)getRepository()).findById(id).get();
+	default T getById(ID id) {
+		System.out.println("IService: " +id.getClass().getSimpleName());
+		
+		T obj = getRepository().findById(id).get();
 		return obj;
 	}
 	
@@ -26,7 +27,7 @@ public interface IService<T> {
 		
 	}
 	
-	default <U extends Identifiable<ID>, ID extends Comparable<ID>> void delete(ID id) {
+	default void delete(ID id) {
 		getRepository().delete(getById(id));
 	}
 	
@@ -42,9 +43,8 @@ public interface IService<T> {
 //        return true;
 	}
 	
-	@SuppressWarnings("unchecked")
-	default <U extends Identifiable<ID>, ID extends Comparable<ID>> Boolean existById(ID id) {
-		return ((CrudRepository<U,ID>)getRepository()).existsById(id);
+	default Boolean existById(ID id) {
+		return getRepository().existsById(id);
 	}
 
 }

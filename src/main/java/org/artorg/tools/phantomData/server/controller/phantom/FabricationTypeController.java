@@ -2,7 +2,7 @@ package org.artorg.tools.phantomData.server.controller.phantom;
 
 import org.artorg.tools.phantomData.server.model.phantom.FabricationType;
 import org.artorg.tools.phantomData.server.serviceSpec.phantom.IfabricationTypeService;
-import org.artorg.tools.phantomData.server.specification.ControllerSpec;
+import org.artorg.tools.phantomData.server.specification.ControllerSpecDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("fabrication-types")
 public class FabricationTypeController
-		extends ControllerSpec<FabricationType, IfabricationTypeService<FabricationType>> {
+		extends ControllerSpecDefault<FabricationType, IfabricationTypeService<FabricationType>> {
 
 	@GetMapping("get-by-shortcut/{shortcut}")
 	public ResponseEntity<FabricationType> getByShortcut(@PathVariable("shortcut") String shortcut) {
