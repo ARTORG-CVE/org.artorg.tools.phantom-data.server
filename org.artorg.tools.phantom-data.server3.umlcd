@@ -15,37 +15,47 @@
     </contents>
   </eAnnotations>
   <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WcQb4PGMEeiLLf1C1hMmTw"/>
-  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_bRuWAPGMEeiLLf1C1hMmTw" target="_bSS9yfGMEeiLLf1C1hMmTw">
+  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_bRuWAPGMEeiLLf1C1hMmTw" sourceAnchor="45.0,27.0" targetAnchor="50.0,0.0" target="_bSS9yfGMEeiLLf1C1hMmTw" source="__Moq4PGcEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpIaWvGMEeiLLf1C1hMmTw"/>
-    <nameVisual xmi:id="_bRuWAfGMEeiLLf1C1hMmTw" text=""/>
+    <nameVisual xmi:id="_bRuWAfGMEeiLLf1C1hMmTw" text="">
+      <visualProperties xmi:id="__U7rQPGcEeiLLf1C1hMmTw" position="2.0,-8.0"/>
+    </nameVisual>
     <sourceRole xmi:id="_bRuWAvGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="measurements" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojyivGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="__U1kpfGcEeiLLf1C1hMmTw" position="1.0,17.5" visible="false"/>
       <visibility xmi:id="_bRuWA_GMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bRuWBPGMEeiLLf1C1hMmTw" label="1..*" max="-1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bRuWBfGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpIaWPGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="__U7rQfGcEeiLLf1C1hMmTw" position="-24.0,-63.333333333333314"/>
       <visibility xmi:id="_bRuWBvGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bRuWB_GMEeiLLf1C1hMmTw" label="1..*" max="-1" min="1"/>
+      <cardinality xmi:id="_bRuWB_GMEeiLLf1C1hMmTw" label="*" max="-1"/>
     </targetRole>
   </edges>
-  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_bSS9wPGMEeiLLf1C1hMmTw" sourceAnchor="148.0,0.0" targetAnchor="255.0,78.0" target="_bU93QPGMEeiLLf1C1hMmTw" source="_bSS9yfGMEeiLLf1C1hMmTw">
+  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_bSS9wPGMEeiLLf1C1hMmTw" sourceAnchor="399.0,0.0" targetAnchor="255.0,78.0" target="_bU93QPGMEeiLLf1C1hMmTw" source="_bSS9yfGMEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpUngPGMEeiLLf1C1hMmTw"/>
     <stereotypes xmi:id="_bSS9wfGMEeiLLf1C1hMmTw" name="Reference">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpauIPGMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <nameVisual xmi:id="_bSS9wvGMEeiLLf1C1hMmTw" text="">
-      <visualProperties xmi:id="_brF4QvGMEeiLLf1C1hMmTw" position="-18.0,-8.0"/>
+      <visualProperties xmi:id="_brF4QvGMEeiLLf1C1hMmTw" position="-17.5,-8.5"/>
     </nameVisual>
     <sourceRole xmi:id="_bSS9w_GMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpUngfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_brF4QfGMEeiLLf1C1hMmTw" position="2.0,-49.0"/>
+      <visualProperties xmi:id="_brF4QfGMEeiLLf1C1hMmTw" position="2.5,-52.333333333333314"/>
       <visibility xmi:id="_bSS9xPGMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bSS9xfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bSS9xvGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="phantomina" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4fGMEeiLLf1C1hMmTw"/>
       <visualProperties xmi:id="_brF4Q_GMEeiLLf1C1hMmTw" position="-137.0,-11.499999999999972" visible="false"/>
+      <stereotypes xmi:id="_5hqsIPGcEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4vGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_5hqsIfGcEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr5_GMEeiLLf1C1hMmTw"/>
+      </stereotypes>
       <visibility xmi:id="_bSS9x_GMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bSS9yPGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </targetRole>
@@ -56,17 +66,23 @@
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpg0wPGMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <nameVisual xmi:id="_bUZPgPGMEeiLLf1C1hMmTw" text="">
-      <visualProperties xmi:id="_brF4RfGMEeiLLf1C1hMmTw" position="-17.5,-8.5"/>
+      <visualProperties xmi:id="_brF4RfGMEeiLLf1C1hMmTw" position="-18.0,-9.0"/>
     </nameVisual>
     <sourceRole xmi:id="_bUfWIPGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WpauIvGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_brF4RPGMEeiLLf1C1hMmTw" position="2.5,-49.666666666666686"/>
+      <visualProperties xmi:id="_brF4RPGMEeiLLf1C1hMmTw" position="2.0,-50.0"/>
       <visibility xmi:id="_bUlcwfGMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bUlcwPGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bUfWIfGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="annulusDiameter" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wop5IfGMEeiLLf1C1hMmTw"/>
       <visualProperties xmi:id="_brF4RvGMEeiLLf1C1hMmTw" position="-29.25,-86.0" visible="false"/>
+      <stereotypes xmi:id="_5hqsIvGcEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wop5IvGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_5hqsI_GcEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_wPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
       <visibility xmi:id="_bUlcw_GMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bUlcwvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </targetRole>
@@ -77,17 +93,23 @@
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpm7YPGMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <nameVisual xmi:id="_bUfWI_GMEeiLLf1C1hMmTw" text="">
-      <visualProperties xmi:id="_brF4SPGMEeiLLf1C1hMmTw" position="-18.0,-8.5"/>
+      <visualProperties xmi:id="_brF4SPGMEeiLLf1C1hMmTw" position="-18.0,-9.0"/>
     </nameVisual>
     <sourceRole xmi:id="_bUfWJPGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpg0wvGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_brF4R_GMEeiLLf1C1hMmTw" position="2.0,-49.666666666666686"/>
+      <visualProperties xmi:id="_brF4R_GMEeiLLf1C1hMmTw" position="2.0,-50.0"/>
       <visibility xmi:id="_bUlcx_GMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bUlcxvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bUfWJfGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="fabricationType" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_xfGMEeiLLf1C1hMmTw"/>
       <visualProperties xmi:id="_brF4SfGMEeiLLf1C1hMmTw" position="2.0,1.0000000000000142" visible="false"/>
+      <stereotypes xmi:id="_5hqsJPGcEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_xvGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_5hqsJfGcEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_x_GMEeiLLf1C1hMmTw"/>
+      </stereotypes>
       <visibility xmi:id="_bUlcyfGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bUlcyPGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </targetRole>
@@ -98,17 +120,23 @@
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpm7Y_GMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <nameVisual xmi:id="_bUfWJ_GMEeiLLf1C1hMmTw" text="">
-      <visualProperties xmi:id="_brL-4fGMEeiLLf1C1hMmTw" position="-18.0,-8.5"/>
+      <visualProperties xmi:id="_brL-4fGMEeiLLf1C1hMmTw" position="-18.0,-9.0"/>
     </nameVisual>
     <sourceRole xmi:id="_bUfWKPGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpm7YvGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_brL-4PGMEeiLLf1C1hMmTw" position="2.0,-49.666666666666686"/>
+      <visualProperties xmi:id="_brL-4PGMEeiLLf1C1hMmTw" position="2.0,-50.0"/>
       <visibility xmi:id="_bUlczfGMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bUlczPGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bUfWKfGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="literatureBase" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zPGMEeiLLf1C1hMmTw"/>
       <visualProperties xmi:id="_brL-4vGMEeiLLf1C1hMmTw" position="2.0,1.0" visible="false"/>
+      <stereotypes xmi:id="_5hqsJvGcEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zfGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_5hqsJ_GcEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zvGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
       <visibility xmi:id="_bUlcz_GMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bUlczvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </targetRole>
@@ -119,17 +147,23 @@
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WptCAPGMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <nameVisual xmi:id="_bUlc1PGMEeiLLf1C1hMmTw" text="">
-      <visualProperties xmi:id="_brL-5PGMEeiLLf1C1hMmTw" position="2.0,-8.5"/>
+      <visualProperties xmi:id="_brL-5PGMEeiLLf1C1hMmTw" position="2.0,-9.0"/>
     </nameVisual>
     <sourceRole xmi:id="_bUlc1fGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wpm7ZfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_brL-4_GMEeiLLf1C1hMmTw" position="-17.0,-49.666666666666686"/>
+      <visualProperties xmi:id="_brL-4_GMEeiLLf1C1hMmTw" position="-17.0,-50.0"/>
       <visibility xmi:id="_bUlc1vGMEeiLLf1C1hMmTw" label="+"/>
       <cardinality xmi:id="_bUlc1_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_bUlc2PGMEeiLLf1C1hMmTw" aggregationKind="NONE" name="special" navigable="true">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_0_GMEeiLLf1C1hMmTw"/>
       <visualProperties xmi:id="_brL-5fGMEeiLLf1C1hMmTw" position="41.0,18.000000000000057" visible="false"/>
+      <stereotypes xmi:id="_5hqsKPGcEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_1PGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_5hqsKfGcEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_1fGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
       <visibility xmi:id="_bUlc2fGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bUlc2vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
     </targetRole>
@@ -137,8 +171,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:GeneralizationVisual" xmi:id="_qPmDgPGMEeiLLf1C1hMmTw" sourceAnchor="54.0,0.0" targetAnchor="85.0,63.0" superClass="_qQKrQPGMEeiLLf1C1hMmTw" subClass="_bPJjIPGMEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wmv0qfGMEeiLLf1C1hMmTw"/>
     <visualProperties xmi:id="_GE3hQPGNEeiLLf1C1hMmTw" position="549.0,33.0"/>
-    <bendpoints xmi:id="_kM0MQPGNEeiLLf1C1hMmTw" sourceY="-30" targetX="-141" targetY="33"/>
-    <bendpoints xmi:id="_kM0MQfGNEeiLLf1C1hMmTw" sourceX="141" sourceY="-30" targetY="33"/>
+    <bendpoints xmi:id="_EkuJ4PGdEeiLLf1C1hMmTw" sourceY="-30" targetX="-141" targetY="33"/>
+    <bendpoints xmi:id="_EkuJ4fGdEeiLLf1C1hMmTw" sourceX="141" sourceY="-30" targetY="33"/>
   </edges>
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:GeneralizationVisual" xmi:id="_qPsKIPGMEeiLLf1C1hMmTw" sourceAnchor="52.0,0.0" targetAnchor="85.0,63.0" superClass="_qQKrQPGMEeiLLf1C1hMmTw" subClass="_bPuK4PGMEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wm17QvGMEeiLLf1C1hMmTw"/>
@@ -147,8 +181,8 @@
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:GeneralizationVisual" xmi:id="_qPsKIfGMEeiLLf1C1hMmTw" sourceAnchor="47.0,0.0" targetAnchor="85.0,63.0" superClass="_qQKrQPGMEeiLLf1C1hMmTw" subClass="_bQlGgPGMEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wm8B4vGMEeiLLf1C1hMmTw"/>
     <visualProperties xmi:id="_GE3hQvGNEeiLLf1C1hMmTw" position="549.0,33.0"/>
-    <bendpoints xmi:id="_kM0MQvGNEeiLLf1C1hMmTw" sourceY="-30" targetX="127" targetY="33"/>
-    <bendpoints xmi:id="_kM0MQ_GNEeiLLf1C1hMmTw" sourceX="-127" sourceY="-30" targetY="33"/>
+    <bendpoints xmi:id="_EkuJ4vGdEeiLLf1C1hMmTw" sourceY="-30" targetX="127" targetY="33"/>
+    <bendpoints xmi:id="_EkuJ4_GdEeiLLf1C1hMmTw" sourceX="-127" sourceY="-30" targetY="33"/>
   </edges>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_bU93QPGMEeiLLf1C1hMmTw" name="Phantomina" associationsIn="_bSS9wPGMEeiLLf1C1hMmTw" associationsOut="_bTDywPGMEeiLLf1C1hMmTw _bTuhIPGMEeiLLf1C1hMmTw _bUG7oPGMEeiLLf1C1hMmTw _bUlc0vGMEeiLLf1C1hMmTw">
     <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
@@ -176,12 +210,12 @@
     </attributes>
     <attributes xmi:id="_bU93S_GMEeiLLf1C1hMmTw" name="annulusDiameter">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wop5IfGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bU93TPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wop5IvGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bU93TfGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_wPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
+      <stereotypes xmi:id="_5iDGoPGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGofGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iDGovGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGo_GcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iJNQ_GcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iJNRPGcEeiLLf1C1hMmTw" name="Annotations"/>
       <visibility xmi:id="_bU93TvGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bU93T_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
       <type xmi:id="_bU93UPGMEeiLLf1C1hMmTw" name="AnnulusDiameter">
@@ -190,12 +224,12 @@
     </attributes>
     <attributes xmi:id="_bU93UfGMEeiLLf1C1hMmTw" name="fabricationType">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_xfGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bU93UvGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_xvGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bU93U_GMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_x_GMEeiLLf1C1hMmTw"/>
-      </stereotypes>
+      <stereotypes xmi:id="_5iDGpPGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGpfGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iDGpvGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGp_GcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iJNRfGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iJNRvGcEeiLLf1C1hMmTw" name="Annotations"/>
       <visibility xmi:id="_bU93VPGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bU93VfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
       <type xmi:id="_bU93VvGMEeiLLf1C1hMmTw" name="FabricationType">
@@ -204,12 +238,12 @@
     </attributes>
     <attributes xmi:id="_bU93V_GMEeiLLf1C1hMmTw" name="literatureBase">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zPGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bU93WPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zfGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bU93WfGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_zvGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
+      <stereotypes xmi:id="_5iDGqPGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGqfGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iDGqvGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iDGq_GcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iJNR_GcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iJNSPGcEeiLLf1C1hMmTw" name="Annotations"/>
       <visibility xmi:id="_bU93WvGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bU93W_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
       <type xmi:id="_bU93XPGMEeiLLf1C1hMmTw" name="LiteratureBase">
@@ -218,12 +252,12 @@
     </attributes>
     <attributes xmi:id="_bU93XfGMEeiLLf1C1hMmTw" name="special">
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_0_GMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bU93XvGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_1PGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bU93X_GMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wov_1fGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
+      <stereotypes xmi:id="_5iDGrPGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iJNQPGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iJNQfGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iJNQvGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iJNSfGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iPT4PGcEeiLLf1C1hMmTw" name="Annotations"/>
       <visibility xmi:id="_bU93YPGMEeiLLf1C1hMmTw" label="-"/>
       <cardinality xmi:id="_bU93YfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
       <type xmi:id="_bU93YvGMEeiLLf1C1hMmTw" name="Special">
@@ -627,268 +661,6 @@
         <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wn5EIvGMEeiLLf1C1hMmTw"/>
         <cardinality xmi:id="_bU94B_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
         <type xmi:id="_bU94CPGMEeiLLf1C1hMmTw" name="Object">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WnajAfGMEeiLLf1C1hMmTw"/>
-        </type>
-      </parameters>
-    </operations>
-  </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_bSS9yfGMEeiLLf1C1hMmTw" name="Phantom" associationsIn="_bRuWAPGMEeiLLf1C1hMmTw" associationsOut="_bSS9wPGMEeiLLf1C1hMmTw">
-    <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
-    <visualProperties xmi:id="_bSS9yvGMEeiLLf1C1hMmTw" position="443.0,370.0" size="-1.0,-1.0"/>
-    <stereotypes xmi:id="_bSS9y_GMEeiLLf1C1hMmTw" name="Table">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAPGMEeiLLf1C1hMmTw"/>
-    </stereotypes>
-    <stereotypes xmi:id="_bSS9zPGMEeiLLf1C1hMmTw" name="JPA1StyledElement">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAfGMEeiLLf1C1hMmTw"/>
-    </stereotypes>
-    <stereotypes xmi:id="_bSS9zfGMEeiLLf1C1hMmTw" name="TechnicalSupplement">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAvGMEeiLLf1C1hMmTw"/>
-    </stereotypes>
-    <visibility xmi:id="_bSS9zvGMEeiLLf1C1hMmTw" label="+"/>
-    <attributes xmi:id="_bSS9z_GMEeiLLf1C1hMmTw" name="productId">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WoXlQPGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bSS90PGMEeiLLf1C1hMmTw" name="Column">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4PGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS90fGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS90vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <type xmi:id="_bSS90_GMEeiLLf1C1hMmTw" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_bSS91PGMEeiLLf1C1hMmTw" name="phantomina">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4fGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bSS91fGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4vGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS91vGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr5_GMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS91_GMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS92PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <type xmi:id="_bSS92fGMEeiLLf1C1hMmTw" name="Phantomina">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_bSS92vGMEeiLLf1C1hMmTw" name="number">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojygPGMEeiLLf1C1hMmTw"/>
-      <stereotypes xmi:id="_bSS92_GMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojygfGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS93PGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojyhvGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS93fGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS93vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <type xmi:id="_bSS93_GMEeiLLf1C1hMmTw" name="int">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_bSS94PGMEeiLLf1C1hMmTw" name="measurements">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojyivGMEeiLLf1C1hMmTw"/>
-      <visibility xmi:id="_bSS94fGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS94vGMEeiLLf1C1hMmTw" label="1..*" max="-1" min="1"/>
-      <type xmi:id="_bSS94_GMEeiLLf1C1hMmTw" name="Measurement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlURQfGMEeiLLf1C1hMmTw"/>
-      </type>
-    </attributes>
-    <operations xmi:id="_bSS95PGMEeiLLf1C1hMmTw" name="_initializer1">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XoPGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYYPGMEeiLLf1C1hMmTw" visible="false"/>
-      <keywords xmi:id="_bSS95fGMEeiLLf1C1hMmTw" keyword="init"/>
-      <stereotypes xmi:id="_bSS95vGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4Xo_GMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS95_GMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS96PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-    </operations>
-    <operations xmi:id="_bSS96fGMEeiLLf1C1hMmTw" name="Phantom">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XpPGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYYfGMEeiLLf1C1hMmTw" visible="false"/>
-      <keywords xmi:id="_bSS96vGMEeiLLf1C1hMmTw" keyword="create"/>
-      <stereotypes xmi:id="_bSS96_GMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4Xp_GMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS97PGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS97fGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS97vGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqPGMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS97_GMEeiLLf1C1hMmTw" name="Phantom">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
-        </type>
-      </outParameters>
-    </operations>
-    <operations xmi:id="_bSS98PGMEeiLLf1C1hMmTw" name="toName">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYYvGMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS98fGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS98vGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQfGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS98_GMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS99PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS99fGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqvGMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS99vGMEeiLLf1C1hMmTw" name="String">
-          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </type>
-      </outParameters>
-    </operations>
-    <operations xmi:id="_bSS99_GMEeiLLf1C1hMmTw" name="updateProductId">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQ_GMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYY_GMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS9-PGMEeiLLf1C1hMmTw" name="StyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eRPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS9-fGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS9-vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-    </operations>
-    <operations xmi:id="_bSS9-_GMEeiLLf1C1hMmTw" name="getItemClass">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eRfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYZPGMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS9_PGMEeiLLf1C1hMmTw" name="Generics">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgEk4PGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS9_fGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgEk4fGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS9_vGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrgPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS9__GMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-APGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-AfGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WnajAPGMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-AvGMEeiLLf1C1hMmTw" name="Class">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WmpuCPGMEeiLLf1C1hMmTw"/>
-        </type>
-      </outParameters>
-    </operations>
-    <operations xmi:id="_bSS-A_GMEeiLLf1C1hMmTw" name="toString">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrgvGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYZfGMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS-BPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrhPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS-BfGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrhfGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS-BvGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-B_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-CPGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrg_GMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-CfGMEeiLLf1C1hMmTw" name="String">
-          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </type>
-      </outParameters>
-    </operations>
-    <operations xmi:id="_bSS-CvGMEeiLLf1C1hMmTw" name="Phantom">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrwfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYZvGMEeiLLf1C1hMmTw" visible="false"/>
-      <keywords xmi:id="_bSS-C_GMEeiLLf1C1hMmTw" keyword="create"/>
-      <stereotypes xmi:id="_bSS-DPGMEeiLLf1C1hMmTw" name="StyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrx_GMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS-DfGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-DvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-D_GMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrxvGMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-EPGMEeiLLf1C1hMmTw" name="Phantom">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
-        </type>
-      </outParameters>
-      <parameters xmi:id="_bSS-EfGMEeiLLf1C1hMmTw" name="phantomina">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrwvGMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-EvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-E_GMEeiLLf1C1hMmTw" name="Phantomina">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
-        </type>
-      </parameters>
-      <parameters xmi:id="_bSS-FPGMEeiLLf1C1hMmTw" name="number">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrw_GMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-FfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-FvGMEeiLLf1C1hMmTw" name="int">
-          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
-        </type>
-      </parameters>
-    </operations>
-    <operations xmi:id="_bSS-F_GMEeiLLf1C1hMmTw" name="createProductId" staticOperation="true">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryPGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_dBNWovGMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS-GPGMEeiLLf1C1hMmTw" name="StyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS-GfGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-GvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-G_GMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsry_GMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-HPGMEeiLLf1C1hMmTw" name="String">
-          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </type>
-      </outParameters>
-      <parameters xmi:id="_bSS-HfGMEeiLLf1C1hMmTw" name="phantomina">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryfGMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-HvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-H_GMEeiLLf1C1hMmTw" name="Phantomina">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
-        </type>
-      </parameters>
-      <parameters xmi:id="_bSS-IPGMEeiLLf1C1hMmTw" name="number">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryvGMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-IfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-IvGMEeiLLf1C1hMmTw" name="int">
-          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
-        </type>
-      </parameters>
-    </operations>
-    <operations xmi:id="_bSS-I_GMEeiLLf1C1hMmTw" name="compareTo">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzfGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYZ_GMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS-JPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsr0PGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS-JfGMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsr0fGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS-JvGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-J_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-KPGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrz_GMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-KfGMEeiLLf1C1hMmTw" name="int">
-          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
-        </type>
-      </outParameters>
-      <parameters xmi:id="_bSS-KvGMEeiLLf1C1hMmTw" name="that">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzvGMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-K_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-LPGMEeiLLf1C1hMmTw" name="Phantom">
-          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
-        </type>
-      </parameters>
-    </operations>
-    <operations xmi:id="_bSS-LfGMEeiLLf1C1hMmTw" name="equals">
-      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngpofGMEeiLLf1C1hMmTw"/>
-      <visualProperties xmi:id="_eYwYaPGMEeiLLf1C1hMmTw" visible="false"/>
-      <stereotypes xmi:id="_bSS-LvGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngppPGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <stereotypes xmi:id="_bSS-L_GMEeiLLf1C1hMmTw" name="Annotations">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngppfGMEeiLLf1C1hMmTw"/>
-      </stereotypes>
-      <visibility xmi:id="_bSS-MPGMEeiLLf1C1hMmTw" label="+"/>
-      <cardinality xmi:id="_bSS-MfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-      <outParameters xmi:id="_bSS-MvGMEeiLLf1C1hMmTw">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wngpo_GMEeiLLf1C1hMmTw"/>
-        <type xmi:id="_bSS-M_GMEeiLLf1C1hMmTw" name="boolean">
-          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
-        </type>
-      </outParameters>
-      <parameters xmi:id="_bSS-NPGMEeiLLf1C1hMmTw" name="obj">
-        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngpovGMEeiLLf1C1hMmTw"/>
-        <cardinality xmi:id="_bSS-NfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
-        <type xmi:id="_bSS-NvGMEeiLLf1C1hMmTw" name="Object">
           <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WnajAfGMEeiLLf1C1hMmTw"/>
         </type>
       </parameters>
@@ -1483,5 +1255,275 @@
       <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WkjcQPGMEeiLLf1C1hMmTw"/>
     </stereotypes>
     <visibility xmi:id="_qQKrQ_GMEeiLLf1C1hMmTw" label="+"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_bSS9yfGMEeiLLf1C1hMmTw" name="Phantom" associationsIn="_bRuWAPGMEeiLLf1C1hMmTw" associationsOut="_bSS9wPGMEeiLLf1C1hMmTw">
+    <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
+    <visualProperties xmi:id="_bSS9yvGMEeiLLf1C1hMmTw" position="192.0,381.0" size="682.0,97.0"/>
+    <stereotypes xmi:id="_bSS9y_GMEeiLLf1C1hMmTw" name="Table">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAPGMEeiLLf1C1hMmTw"/>
+    </stereotypes>
+    <stereotypes xmi:id="_bSS9zPGMEeiLLf1C1hMmTw" name="JPA1StyledElement">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAfGMEeiLLf1C1hMmTw"/>
+    </stereotypes>
+    <stereotypes xmi:id="_bSS9zfGMEeiLLf1C1hMmTw" name="TechnicalSupplement">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfyRAvGMEeiLLf1C1hMmTw"/>
+    </stereotypes>
+    <visibility xmi:id="_bSS9zvGMEeiLLf1C1hMmTw" label="+"/>
+    <attributes xmi:id="_bSS9z_GMEeiLLf1C1hMmTw" name="productId">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WoXlQPGMEeiLLf1C1hMmTw"/>
+      <stereotypes xmi:id="_bSS90PGMEeiLLf1C1hMmTw" name="Column">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4PGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS90fGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS90vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <type xmi:id="_bSS90_GMEeiLLf1C1hMmTw" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_bSS91PGMEeiLLf1C1hMmTw" name="phantomina">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wodr4fGMEeiLLf1C1hMmTw"/>
+      <stereotypes xmi:id="_5h9AAPGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5h9AAfGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5h9AAvGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5h9AA_GcEeiLLf1C1hMmTw" name="Annotations"/>
+      <stereotypes xmi:id="_5iPT4fGcEeiLLf1C1hMmTw" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_5iPT4vGcEeiLLf1C1hMmTw" name="Annotations"/>
+      <visibility xmi:id="_bSS91_GMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS92PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <type xmi:id="_bSS92fGMEeiLLf1C1hMmTw" name="Phantomina">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_bSS92vGMEeiLLf1C1hMmTw" name="number">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojygPGMEeiLLf1C1hMmTw"/>
+      <stereotypes xmi:id="_bSS92_GMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojygfGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS93PGMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojyhvGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS93fGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS93vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <type xmi:id="_bSS93_GMEeiLLf1C1hMmTw" name="int">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_bSS94PGMEeiLLf1C1hMmTw" name="measurements">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WojyivGMEeiLLf1C1hMmTw"/>
+      <visibility xmi:id="_bSS94fGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS94vGMEeiLLf1C1hMmTw" label="1..*" max="-1" min="1"/>
+      <type xmi:id="_bSS94_GMEeiLLf1C1hMmTw" name="Measurement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlURQfGMEeiLLf1C1hMmTw"/>
+      </type>
+    </attributes>
+    <operations xmi:id="_bSS95PGMEeiLLf1C1hMmTw" name="_initializer1">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XoPGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYYPGMEeiLLf1C1hMmTw" visible="false"/>
+      <keywords xmi:id="_bSS95fGMEeiLLf1C1hMmTw" keyword="init"/>
+      <stereotypes xmi:id="_bSS95vGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4Xo_GMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS95_GMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS96PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+    </operations>
+    <operations xmi:id="_bSS96fGMEeiLLf1C1hMmTw" name="Phantom">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XpPGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYYfGMEeiLLf1C1hMmTw" visible="false"/>
+      <keywords xmi:id="_bSS96vGMEeiLLf1C1hMmTw" keyword="create"/>
+      <stereotypes xmi:id="_bSS96_GMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4Xp_GMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS97PGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS97fGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS97vGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqPGMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS97_GMEeiLLf1C1hMmTw" name="Phantom">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_bSS98PGMEeiLLf1C1hMmTw" name="toName">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqfGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYYvGMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS98fGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS98vGMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQfGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS98_GMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS99PGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS99fGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf4XqvGMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS99vGMEeiLLf1C1hMmTw" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_bSS99_GMEeiLLf1C1hMmTw" name="updateProductId">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eQ_GMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYY_GMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS9-PGMEeiLLf1C1hMmTw" name="StyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eRPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS9-fGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS9-vGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+    </operations>
+    <operations xmi:id="_bSS9-_GMEeiLLf1C1hMmTw" name="getItemClass">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wf-eRfGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYZPGMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS9_PGMEeiLLf1C1hMmTw" name="Generics">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgEk4PGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS9_fGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgEk4fGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS9_vGMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrgPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS9__GMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-APGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-AfGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WnajAPGMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-AvGMEeiLLf1C1hMmTw" name="Class">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WmpuCPGMEeiLLf1C1hMmTw"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_bSS-A_GMEeiLLf1C1hMmTw" name="toString">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrgvGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYZfGMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS-BPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrhPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS-BfGMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrhfGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS-BvGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-B_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-CPGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgKrg_GMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-CfGMEeiLLf1C1hMmTw" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </outParameters>
+    </operations>
+    <operations xmi:id="_bSS-CvGMEeiLLf1C1hMmTw" name="Phantom">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrwfGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYZvGMEeiLLf1C1hMmTw" visible="false"/>
+      <keywords xmi:id="_bSS-C_GMEeiLLf1C1hMmTw" keyword="create"/>
+      <stereotypes xmi:id="_bSS-DPGMEeiLLf1C1hMmTw" name="StyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrx_GMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS-DfGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-DvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-D_GMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrxvGMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-EPGMEeiLLf1C1hMmTw" name="Phantom">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_bSS-EfGMEeiLLf1C1hMmTw" name="phantomina">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrwvGMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-EvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-E_GMEeiLLf1C1hMmTw" name="Phantomina">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
+        </type>
+      </parameters>
+      <parameters xmi:id="_bSS-FPGMEeiLLf1C1hMmTw" name="number">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrw_GMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-FfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-FvGMEeiLLf1C1hMmTw" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </parameters>
+    </operations>
+    <operations xmi:id="_bSS-F_GMEeiLLf1C1hMmTw" name="createProductId" staticOperation="true">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryPGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_dBNWovGMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS-GPGMEeiLLf1C1hMmTw" name="StyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS-GfGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-GvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-G_GMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsry_GMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-HPGMEeiLLf1C1hMmTw" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_bSS-HfGMEeiLLf1C1hMmTw" name="phantomina">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryfGMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-HvGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-H_GMEeiLLf1C1hMmTw" name="Phantomina">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WgW4wPGMEeiLLf1C1hMmTw"/>
+        </type>
+      </parameters>
+      <parameters xmi:id="_bSS-IPGMEeiLLf1C1hMmTw" name="number">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsryvGMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-IfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-IvGMEeiLLf1C1hMmTw" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </parameters>
+    </operations>
+    <operations xmi:id="_bSS-I_GMEeiLLf1C1hMmTw" name="compareTo">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzfGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYZ_GMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS-JPGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsr0PGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS-JfGMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsr0fGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS-JvGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-J_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-KPGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wlsrz_GMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-KfGMEeiLLf1C1hMmTw" name="int">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_bSS-KvGMEeiLLf1C1hMmTw" name="that">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlsrzvGMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-K_GMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-LPGMEeiLLf1C1hMmTw" name="Phantom">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WfmD0PGMEeiLLf1C1hMmTw"/>
+        </type>
+      </parameters>
+    </operations>
+    <operations xmi:id="_bSS-LfGMEeiLLf1C1hMmTw" name="equals">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngpofGMEeiLLf1C1hMmTw"/>
+      <visualProperties xmi:id="_eYwYaPGMEeiLLf1C1hMmTw" visible="false"/>
+      <stereotypes xmi:id="_bSS-LvGMEeiLLf1C1hMmTw" name="LegacyStyledElement">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngppPGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <stereotypes xmi:id="_bSS-L_GMEeiLLf1C1hMmTw" name="Annotations">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngppfGMEeiLLf1C1hMmTw"/>
+      </stereotypes>
+      <visibility xmi:id="_bSS-MPGMEeiLLf1C1hMmTw" label="+"/>
+      <cardinality xmi:id="_bSS-MfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+      <outParameters xmi:id="_bSS-MvGMEeiLLf1C1hMmTw">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_Wngpo_GMEeiLLf1C1hMmTw"/>
+        <type xmi:id="_bSS-M_GMEeiLLf1C1hMmTw" name="boolean">
+          <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </type>
+      </outParameters>
+      <parameters xmi:id="_bSS-NPGMEeiLLf1C1hMmTw" name="obj">
+        <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WngpovGMEeiLLf1C1hMmTw"/>
+        <cardinality xmi:id="_bSS-NfGMEeiLLf1C1hMmTw" label="1" max="1" min="1"/>
+        <type xmi:id="_bSS-NvGMEeiLLf1C1hMmTw" name="Object">
+          <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WnajAfGMEeiLLf1C1hMmTw"/>
+        </type>
+      </parameters>
+    </operations>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="__Moq4PGcEeiLLf1C1hMmTw" name="Measurement" associationsOut="_bRuWAPGMEeiLLf1C1hMmTw">
+    <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlURQfGMEeiLLf1C1hMmTw"/>
+    <visualProperties xmi:id="__Moq4fGcEeiLLf1C1hMmTw" position="197.0,255.0" size="-1.0,-1.0"/>
+    <stereotypes xmi:id="__Moq4vGcEeiLLf1C1hMmTw" name="Reference">
+      <modelElement href="org.artorg.tools.phantom-data.server3.uml#_WlaX4PGMEeiLLf1C1hMmTw"/>
+    </stereotypes>
+    <visibility xmi:id="__Moq4_GcEeiLLf1C1hMmTw" label="+"/>
   </nodes>
 </com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

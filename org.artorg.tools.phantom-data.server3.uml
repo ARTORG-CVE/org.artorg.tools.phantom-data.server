@@ -856,6 +856,7 @@
                   </packagedElement>
                   <packagedElement xmi:type="uml:Association" xmi:id="_WpIaWvGMEeiLLf1C1hMmTw" name="" memberEnd="_WojyivGMEeiLLf1C1hMmTw _WpIaWPGMEeiLLf1C1hMmTw">
                     <ownedEnd xmi:id="_WpIaWPGMEeiLLf1C1hMmTw" name="" type="_WfmD0PGMEeiLLf1C1hMmTw" association="_WpIaWvGMEeiLLf1C1hMmTw">
+                      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0KFuAPGdEeiLLf1C1hMmTw"/>
                       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_WpIaWfGMEeiLLf1C1hMmTw" value="*"/>
                     </ownedEnd>
                   </packagedElement>
