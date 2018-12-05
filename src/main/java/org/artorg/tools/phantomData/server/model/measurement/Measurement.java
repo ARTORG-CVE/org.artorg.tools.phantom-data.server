@@ -3,12 +3,10 @@ package org.artorg.tools.phantomData.server.model.measurement;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -37,12 +35,6 @@ public class Measurement extends AbstractBaseEntity<Measurement> implements Seri
 	@JoinColumn(nullable = false)
 	private Person person;
 	
-	@ManyToMany
-	private List<Unit> units;
-	
-	@ManyToMany
-	private List<MeasuredValue> measuredValues;
-	
 	public Measurement() {}
 	
 	public Measurement(String name, String description, Date startDate, String dateFormat, Person person) {
@@ -66,8 +58,8 @@ public class Measurement extends AbstractBaseEntity<Measurement> implements Seri
 	@Override
 	public String toString() {
 		return String.format(
-			"Measurement [name=%s, description=%s, startDate=%s, dateFormat=%s, person=%s, units=%s, measuredValues=%s, %s]",
-			name, description, startDate, dateFormat, person, units, measuredValues, super.toString());
+			"Measurement [name=%s, description=%s, startDate=%s, dateFormat=%s, person=%s, %s]",
+			name, description, startDate, dateFormat, person, super.toString());
 	}
 
 	@Override
@@ -80,8 +72,6 @@ public class Measurement extends AbstractBaseEntity<Measurement> implements Seri
 		if (!EntityUtils.equals(description, other.description)) return false;
 		if (!EntityUtils.equals(startDate, other.startDate)) return false;
 		if (!EntityUtils.equals(dateFormat, other.dateFormat)) return false;
-		if (!EntityUtils.equals(units, other.units)) return false;
-		if (!EntityUtils.equals(measuredValues, other.measuredValues)) return false;
 		return true;
 	}
 
@@ -124,22 +114,6 @@ public class Measurement extends AbstractBaseEntity<Measurement> implements Seri
 
 	public void setPerson(Person person) {
 		this.person = person;
-	}
-
-	public List<Unit> getUnits() {
-		return units;
-	}
-
-	public void setUnits(List<Unit> units) {
-		this.units = units;
-	}
-
-	public List<MeasuredValue> getMeasuredValues() {
-		return measuredValues;
-	}
-
-	public void setMeasuredValues(List<MeasuredValue> measuredValues) {
-		this.measuredValues = measuredValues;
 	}
 	
 }
