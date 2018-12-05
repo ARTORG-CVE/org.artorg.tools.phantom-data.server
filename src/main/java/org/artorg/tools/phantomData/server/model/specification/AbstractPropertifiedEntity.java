@@ -9,8 +9,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
-import org.artorg.tools.phantomData.server.model.base.DbFile;
-import org.artorg.tools.phantomData.server.model.base.Note;
 import org.artorg.tools.phantomData.server.model.base.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.base.property.DateProperty;
 import org.artorg.tools.phantomData.server.model.base.property.DoubleProperty;
@@ -21,16 +19,12 @@ import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
+public abstract class AbstractPropertifiedEntity<ITEM extends AbstractPropertifiedEntity<ITEM>>
 	extends AbstractPersonifiedEntity<ITEM>
 	implements DbPersistentUUID<ITEM>, Serializable, NameGeneratable {
 	private static final long serialVersionUID = -2814334933013431607L;
 
-	@ManyToMany
-	private List<DbFile> files;
-
-	@ManyToMany
-	private List<Note> notes;
+	
 
 	@ManyToMany
 	private List<BooleanProperty> booleanProperties;
@@ -47,9 +41,8 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 	@ManyToMany
 	private List<DateProperty> dateProperties;
 
-	public AbstractBaseEntity() {
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
+	public AbstractPropertifiedEntity() {
+		
 		booleanProperties = new ArrayList<BooleanProperty>();
 		dateProperties = new ArrayList<DateProperty>();
 		stringProperties = new ArrayList<StringProperty>();
@@ -63,18 +56,14 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 			"booleanProperties=%s, integerProperties=%s, doubleProperties=%s, "
 				+ "stringProperties=%s, dateProperties=%s, files=%s, notes=%s, %s",
 			booleanProperties, integerProperties, doubleProperties, stringProperties,
-			dateProperties, files, notes, super.toString());
+			dateProperties, super.toString());
 	}
 
 	@Override
 	public int compareTo(ITEM item) {
 		if (item == null) return -1;
-		AbstractBaseEntity<?> that = (AbstractBaseEntity<?>) item;
+		AbstractPropertifiedEntity<?> that = (AbstractPropertifiedEntity<?>) item;
 		int result;
-		result = EntityUtils.compare(files, that.files);
-		if (result != 0) return result;
-		result = EntityUtils.compare(notes, that.notes);
-		if (result != 0) return result;
 		result = EntityUtils.compare(booleanProperties, that.booleanProperties);
 		if (result != 0) return result;
 		result = EntityUtils.compare(integerProperties, that.integerProperties);
@@ -92,10 +81,9 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;
-		if (!(obj instanceof AbstractBaseEntity)) return false;
-		AbstractBaseEntity<?> other = (AbstractBaseEntity<?>) obj;
-		if (!EntityUtils.equals(files, other.files)) return false;
-		if (!EntityUtils.equals(notes, other.notes)) return false;
+		if (!(obj instanceof AbstractPropertifiedEntity)) return false;
+		AbstractPropertifiedEntity<?> other = (AbstractPropertifiedEntity<?>) obj;
+		
 		if (!EntityUtils.equals(booleanProperties, other.booleanProperties)) return false;
 		if (!EntityUtils.equals(integerProperties, other.integerProperties)) return false;
 		if (!EntityUtils.equals(doubleProperties, other.doubleProperties)) return false;
@@ -104,21 +92,7 @@ public abstract class AbstractBaseEntity<ITEM extends AbstractBaseEntity<ITEM>>
 	}
 
 	// Getters & Setters
-	public List<DbFile> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<DbFile> files) {
-		this.files = files;
-	}
-
-	public List<Note> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
-	}
+	
 
 	public List<BooleanProperty> getBooleanProperties() {
 		return booleanProperties;

@@ -1,14 +1,21 @@
 package org.artorg.tools.phantomData.server.model.specification;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
+import org.artorg.tools.phantomData.server.model.base.DbFile;
+import org.artorg.tools.phantomData.server.model.base.Note;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
+import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 @MappedSuperclass
 public abstract class AbstractShortcutValueEntity<
 	ITEM extends AbstractShortcutValueEntity<ITEM, U, V>, U extends Comparable<U>,
-	V extends Comparable<V>> extends AbstractBaseEntity<ITEM>
+	V extends Comparable<V>> extends AbstractPropertifiedEntity<ITEM>
 	implements DbPersistentUUID<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
 
@@ -17,6 +24,17 @@ public abstract class AbstractShortcutValueEntity<
 
 	@Column(name = "VALUE", nullable = false)
 	private V value;
+
+	@ManyToMany
+	private List<DbFile> files;
+
+	@ManyToMany
+	private List<Note> notes;
+
+	{
+		files = new ArrayList<DbFile>();
+		notes = new ArrayList<Note>();
+	}
 
 	public AbstractShortcutValueEntity() {}
 
@@ -33,11 +51,12 @@ public abstract class AbstractShortcutValueEntity<
 	public String toName() {
 		return String.format("shortcut: %s, value: %s", shortcut, toString(value));
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s [shortcut=%s, value=%s, %s]", getItemClass().getSimpleName(),
-			shortcut, value, super.toString());
+		return String.format("%s [shortcut=%s, value=%s, files=%s, notes=%S %s]",
+			getItemClass().getSimpleName(), shortcut, value, files, notes,
+			super.toString());
 	}
 
 	@Override
@@ -48,21 +67,34 @@ public abstract class AbstractShortcutValueEntity<
 		if (result != 0) return result;
 		result = getValue().compareTo(that.getValue());
 		if (result != 0) return result;
+		result = EntityUtils.compare(files, that.getFiles());
+		if (result != 0) return result;
+		result = EntityUtils.compare(notes, that.getNotes());
+		if (result != 0) return result;
 		return super.compareTo(that);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;
 		if (!(obj instanceof AbstractShortcutValueEntity)) return false;
-		AbstractShortcutValueEntity<?,?,?> other = (AbstractShortcutValueEntity<?,?,?>) obj;
+		AbstractShortcutValueEntity<ITEM, U, V> other;
+		try {
+			other = (AbstractShortcutValueEntity<ITEM, U, V>) obj;
+		} catch (Exception e) {
+			return false;
+		}
 		if (shortcut == null) {
 			if (other.shortcut != null) return false;
 		} else if (!shortcut.equals(other.shortcut)) return false;
-		if (value == null) {
-			if (other.value != null) return false;
-		} else if (!value.equals(other.value)) return false;
+
+		if (!EntityUtils.equals(shortcut, other.shortcut)) return false;
+		if (!EntityUtils.equals(value, other.value)) return false;
+
+		if (!EntityUtils.equals(files, other.files)) return false;
+		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
 	}
 
@@ -81,6 +113,22 @@ public abstract class AbstractShortcutValueEntity<
 
 	public void setValue(V value) {
 		this.value = value;
+	}
+
+	public List<DbFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<DbFile> files) {
+		this.files = files;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
 }
