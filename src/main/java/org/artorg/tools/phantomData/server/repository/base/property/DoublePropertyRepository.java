@@ -1,4 +1,4 @@
-package org.artorg.tools.phantomData.server.repository.property;
+package org.artorg.tools.phantomData.server.repository.base.property;
 
 import java.util.List;
 import java.util.UUID;

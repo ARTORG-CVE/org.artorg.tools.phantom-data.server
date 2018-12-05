@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.base.property.PropertyField;
 import org.artorg.tools.phantomData.server.model.base.property.StringProperty;
-import org.artorg.tools.phantomData.server.repository.property.StringPropertyRepository;
+import org.artorg.tools.phantomData.server.repository.base.property.StringPropertyRepository;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IstringPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;

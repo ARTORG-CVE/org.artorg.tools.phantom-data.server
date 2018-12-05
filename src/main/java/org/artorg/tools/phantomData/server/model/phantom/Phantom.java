@@ -107,9 +107,9 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		if (!(obj instanceof Phantom)) return false;
 		Phantom other = (Phantom) obj;
 		if (number != other.number) return false;
-		if (!EntityUtils.equals(productId, productId)) return false;
-		if (!EntityUtils.equals(phantomina, phantomina)) return false;
-		if (!EntityUtils.equals(measurements, measurements)) return false;
+		if (!EntityUtils.equals(productId, other.productId)) return false;
+		if (!EntityUtils.equals(phantomina, other.phantomina)) return false;
+		if (!EntityUtils.equals(measurements, other.measurements)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;

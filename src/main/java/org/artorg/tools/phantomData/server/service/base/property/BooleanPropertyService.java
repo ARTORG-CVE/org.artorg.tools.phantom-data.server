@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.artorg.tools.phantomData.server.model.base.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.model.base.property.PropertyField;
-import org.artorg.tools.phantomData.server.repository.property.BooleanPropertyRepository;
+import org.artorg.tools.phantomData.server.repository.base.property.BooleanPropertyRepository;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IbooleanPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
