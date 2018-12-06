@@ -44,6 +44,11 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@JoinColumn(nullable = false)
 	@NotNull
 	private ExperimentalSetup experimentalSetup;
+	
+	@OneToOne
+	@JoinColumn(nullable = true)
+	@NotNull
+	private DbFile protocolFile;
 
 	@ManyToMany
 	private List<DbFile> files;
@@ -59,11 +64,12 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	public Measurement() {}
 
 	public Measurement(Date startDate, Person person, Project project,
-		ExperimentalSetup setup) {
+		ExperimentalSetup setup, DbFile protocolFile) {
 		this.startDate = startDate;
 		this.person = person;
 		this.project = project;
 		this.experimentalSetup = setup;
+		this.protocolFile = protocolFile;
 	}
 
 	@Override
@@ -80,8 +86,8 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@Override
 	public String toString() {
 		return String.format(
-			"Measurement [startDate=%s, person=%s, project=%s, experimentalSetup=%s, files=%s, notes=%s, %s]",
-			startDate, person, project, experimentalSetup, files, notes, super.toString());
+			"Measurement [startDate=%s, person=%s, project=%s, experimentalSetup=%s, protocolFile=%s, files=%s, notes=%s, %s]",
+			startDate, person, project, experimentalSetup, protocolFile, files, notes, super.toString());
 	}
 
 	@Override
@@ -95,6 +101,8 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 		result = project.compareTo(that.project);
 		if (result != 0) return result;
 		result = experimentalSetup.compareTo(that.experimentalSetup);
+		if (result != 0) return result;
+		result = protocolFile.compareTo(that.protocolFile);
 		if (result != 0) return result;
 		result = EntityUtils.compare(files, that.files);
 		if (result != 0) return result;
@@ -113,6 +121,7 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 		if (!EntityUtils.equals(person, other.person)) return false;
 		if (!EntityUtils.equals(project, other.project)) return false;
 		if (!EntityUtils.equals(experimentalSetup, other.experimentalSetup)) return false;
+		if (!EntityUtils.equals(protocolFile, other.protocolFile)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
@@ -149,6 +158,14 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 
 	public void setExperimentalSetup(ExperimentalSetup experimentalSetup) {
 		this.experimentalSetup = experimentalSetup;
+	}
+	
+	public DbFile getProtocolFile() {
+		return protocolFile;
+	}
+
+	public void setProtocolFile(DbFile protocolFile) {
+		this.protocolFile = protocolFile;
 	}
 
 	public List<DbFile> getFiles() {
