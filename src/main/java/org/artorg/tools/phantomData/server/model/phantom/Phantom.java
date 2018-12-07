@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.base.DbFile;
 import org.artorg.tools.phantomData.server.model.base.Note;
@@ -21,7 +22,7 @@ import org.artorg.tools.phantomData.server.util.EntityUtils;
 @Entity
 @Table(name = "PHANTOMS")
 public class Phantom extends AbstractPropertifiedEntity<Phantom>
-	implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
+		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
 
 	@Column(name = "PRODUCT_ID", nullable = false)
@@ -33,6 +34,14 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	@Column(name = "NUMBER", nullable = false)
 	private int number;
+
+	@Column(name = "THICKNESS", nullable = false)
+	private float thickness;
+
+	@OneToOne
+	@JoinColumn(nullable = false)
+	@NotNull
+	private Manufacturing manufacturing;
 
 	@ManyToMany
 	private List<Measurement> measurements;
@@ -51,9 +60,12 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	public Phantom() {}
 
-	public Phantom(Phantomina phantomina, int number) {
+	public Phantom(Phantomina phantomina, int number, Manufacturing manufacturing,
+			float thickness) {
 		this.phantomina = phantomina;
 		this.number = number;
+		this.manufacturing = manufacturing;
+		this.thickness = thickness;
 		updateProductId();
 	}
 
@@ -79,8 +91,9 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@Override
 	public String toString() {
 		return String.format(
-			"Phantom [productId=%s, phantomina=%s, number=%s, measurements=%s, files=%s, notes=%s %s]",
-			productId, phantomina, number, measurements, files, notes, super.toString());
+				"Phantom [productId=%s, phantomina=%s, number=%s, thickness=%s, manufacturing=%s, measurements=%s, files=%s, notes=%s, %s]",
+				productId, phantomina, number, thickness, manufacturing, measurements, files, notes,
+				super.toString());
 	}
 
 	@Override
@@ -90,6 +103,10 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		result = Phantomina.comparePid(productId, that.productId);
 		if (result != 0) return result;
 		result = Integer.compare(number, that.number);
+		if (result != 0) return result;
+		result = Float.compare(thickness, that.thickness);
+		if (result != 0) return result;
+		result = manufacturing.compareTo(that.manufacturing);
 		if (result != 0) return result;
 		result = EntityUtils.compare(measurements, that.measurements);
 		if (result != 0) return result;
@@ -109,6 +126,8 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		if (number != other.number) return false;
 		if (!EntityUtils.equals(productId, other.productId)) return false;
 		if (!EntityUtils.equals(phantomina, other.phantomina)) return false;
+		if (thickness != other.thickness) return false;
+		if (!EntityUtils.equals(manufacturing, other.manufacturing)) return false;
 		if (!EntityUtils.equals(measurements, other.measurements)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
@@ -164,6 +183,22 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	public float getThickness() {
+		return thickness;
+	}
+
+	public void setThickness(float thickness) {
+		this.thickness = thickness;
+	}
+
+	public Manufacturing getManufacturing() {
+		return manufacturing;
+	}
+
+	public void setManufacturing(Manufacturing manufacturing) {
+		this.manufacturing = manufacturing;
 	}
 
 }
