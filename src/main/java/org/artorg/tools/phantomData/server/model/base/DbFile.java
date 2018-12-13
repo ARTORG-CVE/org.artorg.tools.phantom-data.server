@@ -11,12 +11,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
+import org.artorg.tools.phantomData.server.model.phantom.Phantom;
 import org.artorg.tools.phantomData.server.model.specification.AbstractPersonifiedEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "FILES")
+@JsonIdentityInfo(
+	  generator = ObjectIdGenerators.PropertyGenerator.class, 
+	  property = "id")
 public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersistentUUID<DbFile> {
 	private static final long serialVersionUID = 1575607671219807521L;
 	private static String filesPath;
@@ -29,6 +36,12 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	
 	@ManyToMany
 	private List<FileTag> fileTags;
+	
+	@ManyToMany (mappedBy="files")
+	private List<Phantom> phantoms;
+	
+	@ManyToMany
+	private List<Note> notes;
 	
 	{
 		fileTags = new ArrayList<FileTag>();
@@ -91,6 +104,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 		if (!EntityUtils.equals(extension, other.extension)) return false;
 		if (!EntityUtils.equals(name, other.name)) return false;
 		if (!EntityUtils.equals(fileTags, other.fileTags)) return false;
+		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
 	}
 	
@@ -105,6 +119,14 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	// Getters & Setters
 	public String getName() {
 		return name;
+	}
+
+	public List<Phantom> getPhantoms() {
+		return phantoms;
+	}
+
+	public void setPhantoms(List<Phantom> phantoms) {
+		this.phantoms = phantoms;
 	}
 
 	public void setName(String name) {
@@ -125,6 +147,14 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 
 	public void setFileTags(List<FileTag> fileTags) {
 		this.fileTags = fileTags;
+	}
+	
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
 }

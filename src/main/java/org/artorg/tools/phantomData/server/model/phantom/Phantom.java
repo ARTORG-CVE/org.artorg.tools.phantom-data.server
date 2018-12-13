@@ -3,6 +3,7 @@ package org.artorg.tools.phantomData.server.model.phantom;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +20,14 @@ import org.artorg.tools.phantomData.server.model.specification.AbstractPropertif
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "PHANTOMS")
+@JsonIdentityInfo(
+	  generator = ObjectIdGenerators.PropertyGenerator.class, 
+	  property = "id")
 public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
@@ -71,7 +78,18 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	@Override
 	public String toName() {
-		return getProductId();
+		List<String> list = new ArrayList<>();
+		if (!files.isEmpty()) 
+			list.add("files: " +files.size());
+		if (!measurements.isEmpty()) 
+			list.add("measurements: " +measurements.size());
+		if (!notes.isEmpty()) 
+			list.add("notes: " +notes.size());
+		String suffix = "";
+		if (!list.isEmpty())
+			suffix = list.stream().collect(Collectors.joining(", ", " (", ")"));
+		
+		return getProductId() +suffix;
 	}
 
 	public void updateProductId() {
