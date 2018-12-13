@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -35,7 +36,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@Column(name = "PRODUCT_ID", nullable = false)
 	private String productId;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Phantomina phantomina;
 
