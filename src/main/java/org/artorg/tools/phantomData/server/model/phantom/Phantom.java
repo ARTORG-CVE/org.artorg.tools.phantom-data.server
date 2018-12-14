@@ -83,7 +83,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		if (!files.isEmpty()) 
 			list.add("files: " +files.size());
 		if (!measurements.isEmpty()) 
-			list.add("measurements: " +measurements.size());
+			list.add("meas.: " +measurements.size());
 		if (!notes.isEmpty()) 
 			list.add("notes: " +notes.size());
 		String suffix = "";

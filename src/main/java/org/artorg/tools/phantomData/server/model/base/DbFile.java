@@ -11,7 +11,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.io.FileUtils;
+import org.artorg.tools.phantomData.server.model.measurement.ExperimentalSetup;
+import org.artorg.tools.phantomData.server.model.measurement.Measurement;
+import org.artorg.tools.phantomData.server.model.measurement.Project;
+import org.artorg.tools.phantomData.server.model.phantom.AnnulusDiameter;
+import org.artorg.tools.phantomData.server.model.phantom.FabricationType;
+import org.artorg.tools.phantomData.server.model.phantom.LiteratureBase;
+import org.artorg.tools.phantomData.server.model.phantom.Manufacturing;
 import org.artorg.tools.phantomData.server.model.phantom.Phantom;
+import org.artorg.tools.phantomData.server.model.phantom.Phantomina;
+import org.artorg.tools.phantomData.server.model.phantom.Special;
 import org.artorg.tools.phantomData.server.model.specification.AbstractPersonifiedEntity;
 import org.artorg.tools.phantomData.server.specification.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
@@ -35,18 +44,41 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	private String extension;
 	
 	@ManyToMany
-	private List<FileTag> fileTags;
-	
-	@ManyToMany (mappedBy="files")
-	private List<Phantom> phantoms;
+	private List<Note> notes = new ArrayList<>();
 	
 	@ManyToMany
-	private List<Note> notes;
+	private List<FileTag> fileTags = new ArrayList<>();
 	
-	{
-		fileTags = new ArrayList<FileTag>();
-	}
+	@ManyToMany (mappedBy="files")
+	private List<Phantom> phantoms = new ArrayList<>();
 	
+	@ManyToMany (mappedBy="files")
+	private List<Phantomina> phantominas = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<ExperimentalSetup> experimentalSetups = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<Measurement> measurements = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<Project> projects = new ArrayList<>();
+
+	@ManyToMany (mappedBy="files")
+	private List<AnnulusDiameter> annulusDiameter = new ArrayList<>();
+
+	@ManyToMany (mappedBy="files")
+	private List<FabricationType> fabricationTypes = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<LiteratureBase> literatureBases = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<Manufacturing> manufacturing = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="files")
+	private List<Special> specials = new ArrayList<>();
+
 	public DbFile() {}
 	
 	public DbFile(File srcFile, String name, String extension) {
@@ -117,16 +149,24 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	}
 
 	// Getters & Setters
-	public String getName() {
-		return name;
-	}
-
 	public List<Phantom> getPhantoms() {
 		return phantoms;
 	}
 
 	public void setPhantoms(List<Phantom> phantoms) {
 		this.phantoms = phantoms;
+	}
+	
+	public List<Phantomina> getPhantominas() {
+		return phantominas;
+	}
+
+	public void setPhantominas(List<Phantomina> phantominas) {
+		this.phantominas = phantominas;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public void setName(String name) {
@@ -156,5 +196,69 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
+	
+	public List<ExperimentalSetup> getExperimentalSetups() {
+		return experimentalSetups;
+	}
 
+	public void setExperimentalSetups(List<ExperimentalSetup> experimentalSetups) {
+		this.experimentalSetups = experimentalSetups;
+	}
+	
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+	
+	public List<AnnulusDiameter> getAnnulusDiameter() {
+		return annulusDiameter;
+	}
+
+	public void setAnnulusDiameter(List<AnnulusDiameter> annulusDiameter) {
+		this.annulusDiameter = annulusDiameter;
+	}
+
+	public List<FabricationType> getFabricationTypes() {
+		return fabricationTypes;
+	}
+
+	public void setFabricationTypes(List<FabricationType> fabricationTypes) {
+		this.fabricationTypes = fabricationTypes;
+	}
+
+	public List<LiteratureBase> getLiteratureBases() {
+		return literatureBases;
+	}
+
+	public void setLiteratureBases(List<LiteratureBase> literatureBases) {
+		this.literatureBases = literatureBases;
+	}
+
+	public List<Manufacturing> getManufacturing() {
+		return manufacturing;
+	}
+
+	public void setManufacturing(List<Manufacturing> manufacturing) {
+		this.manufacturing = manufacturing;
+	}
+
+	public List<Special> getSpecials() {
+		return specials;
+	}
+
+	public void setSpecials(List<Special> specials) {
+		this.specials = specials;
+	}
+	
 }

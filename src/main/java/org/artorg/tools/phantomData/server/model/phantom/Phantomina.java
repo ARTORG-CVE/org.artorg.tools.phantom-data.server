@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -55,9 +54,6 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 
 	@ManyToMany
 	private List<Note> notes;
-	
-	@OneToMany (mappedBy="phantomina")
-	private List<Phantom> phantoms;
 
 	{
 		files = new ArrayList<DbFile>();
@@ -221,16 +217,6 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
-	}
-
-	public List<Phantom> getPhantoms() {
-		return phantoms;
-	}
-
-	public void setPhantoms(List<Phantom> phantoms) {
-		this.phantoms = phantoms;
-	}
-	
-	
+	}	
 
 }
