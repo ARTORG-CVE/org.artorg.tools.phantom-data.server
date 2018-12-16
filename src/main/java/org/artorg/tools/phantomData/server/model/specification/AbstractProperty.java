@@ -16,25 +16,24 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY,
-	property = "itemClass")
-public abstract class AbstractProperty<PROPERTY extends AbstractProperty<PROPERTY, VALUE>,
-	VALUE extends Comparable<VALUE>> extends AbstractPersonifiedEntity<PROPERTY>
-	implements DbPersistentUUID<PROPERTY>, Serializable {
+		property = "itemClass")
+public abstract class AbstractProperty<T, R> extends AbstractPersonifiedEntity<T>
+		implements DbPersistentUUID<T>, Serializable {
 	private static final long serialVersionUID = -6436598935465710135L;
 
 	@OneToOne
 	private PropertyField propertyField;
 
 	@Column(name = "VALUE", nullable = false)
-	private VALUE value;
+	private R value;
 
-	public abstract String toString(VALUE value);
+	public abstract String toString(R value);
 
-	public abstract VALUE fromStringToValue(String s);
+	public abstract R fromStringToValue(String s);
 
 	public AbstractProperty() {}
 
-	public AbstractProperty(PropertyField propertyField, VALUE value) {
+	public AbstractProperty(PropertyField propertyField, R value) {
 		this.propertyField = propertyField;
 		this.value = value;
 	}
@@ -47,16 +46,18 @@ public abstract class AbstractProperty<PROPERTY extends AbstractProperty<PROPERT
 	@Override
 	public String toString() {
 		return String.format("%s [propertyField=%s, value=%s, %s]", getItemClass().getSimpleName(),
-			propertyField, value, super.toString());
+				propertyField, value, super.toString());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public int compareTo(PROPERTY that) {
+	public int compareTo(T that) {
 		if (that == null) return -1;
 		int result = 0;
-		result = getPropertyField().compareTo(that.getPropertyField());
+		result = getPropertyField().compareTo(((AbstractProperty<T, ?>) that).getPropertyField());
 		if (result != 0) return result;
-		result = getValue().compareTo(that.getValue());
+		result = ((Comparable<T>) getValue())
+				.compareTo((T) ((AbstractProperty<T, ?>) that).getValue());
 		if (result != 0) return result;
 		result = super.compareTo(that);
 		if (result != 0) return result;
@@ -87,11 +88,11 @@ public abstract class AbstractProperty<PROPERTY extends AbstractProperty<PROPERT
 		this.propertyField = propertyField;
 	}
 
-	public VALUE getValue() {
+	public R getValue() {
 		return value;
 	}
 
-	public void setValue(VALUE value) {
+	public void setValue(R value) {
 		this.value = value;
 	}
 

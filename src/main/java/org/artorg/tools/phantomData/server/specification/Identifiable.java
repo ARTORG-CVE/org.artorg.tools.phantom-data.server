@@ -1,17 +1,18 @@
 package org.artorg.tools.phantomData.server.specification;
 
-public interface Identifiable<ID extends Comparable<ID>> {
+public interface Identifiable<ID> {
 	
 	ID getId();
 	
 	void setId(ID id);
 	
-	default boolean equalsId(Identifiable<ID> that) {
-		return this.getId().equals(that.getId());
+	default boolean equalsId(Identifiable<?> that) {
+		return this.getId().toString().equals(that.getId().toString());
 	}
 	
-	default int compareToId(Identifiable<ID> that) {
-		return this.getId().compareTo(that.getId());
+	@SuppressWarnings("unchecked")
+	default int compareToId(Identifiable<?> that) {
+		return ((Comparable<ID>)this.getId()).compareTo((ID) that.getId());
 	}
 
 }
