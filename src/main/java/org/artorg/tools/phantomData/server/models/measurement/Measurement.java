@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,8 +21,14 @@ import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.base.person.Person;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "MEASUREMENTS")
+@JsonIdentityInfo(
+	  generator = ObjectIdGenerators.PropertyGenerator.class, 
+	  property = "id")
 public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	implements Serializable, Comparable<Measurement> {
 	private static final long serialVersionUID = 3949155160834848919L;
@@ -30,17 +37,17 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@Column(name = "START_DATE")
 	private Date startDate;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Person person;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Project project;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private ExperimentalSetup experimentalSetup;
@@ -51,15 +58,10 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	private DbFile protocolFile;
 
 	@ManyToMany
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
-
-	{
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
-	}
+	private List<Note> notes = new ArrayList<>();
 
 	public Measurement() {}
 

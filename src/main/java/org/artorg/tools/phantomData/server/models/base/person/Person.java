@@ -1,6 +1,7 @@
 package org.artorg.tools.phantomData.server.models.base.person;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -9,14 +10,24 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.model.NameGeneratable;
+import org.artorg.tools.phantomData.server.models.measurement.Measurement;
+import org.artorg.tools.phantomData.server.models.measurement.Project;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "USERS")
+@JsonIdentityInfo(
+	  generator = ObjectIdGenerators.PropertyGenerator.class, 
+	  property = "id")
 public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person>, NameGeneratable {
 	private static final long serialVersionUID = 8153106662017090155L;
 
@@ -35,6 +46,15 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 
 	@OneToOne
 	private Gender gender;
+	
+	@OneToMany (mappedBy="person")
+	private List<Measurement> measurements = new ArrayList<>();
+	
+	@OneToMany (mappedBy="leader")
+	private List<Project> leaderProjects = new ArrayList<>();
+	
+	@ManyToMany (mappedBy="members")
+	private List<Project> memberProjects = new ArrayList<>();
 
 	public Person() {}
 
@@ -181,5 +201,29 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	public void setAcademicTitle(AcademicTitle academicTitle) {
 		this.academicTitle = academicTitle;
 	}
+
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
+
+	public List<Project> getLeaderProjects() {
+		return leaderProjects;
+	}
+
+	public void setLeaderProjects(List<Project> leaderProjects) {
+		this.leaderProjects = leaderProjects;
+	}
+
+	public List<Project> getMemberProjects() {
+		return memberProjects;
+	}
+
+	public void setMemberProjects(List<Project> memberProjects) {
+		this.memberProjects = memberProjects;
+	}	
 
 }

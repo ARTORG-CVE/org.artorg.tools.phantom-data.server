@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
@@ -31,15 +32,13 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	private String description;
 	
 	@ManyToMany
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
+	private List<Note> notes = new ArrayList<>();
 	
-	{
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
-	}
+	@OneToMany (mappedBy ="experimentalSetup")
+	private List<Measurement> measurements = new ArrayList<>();
 	
 	public ExperimentalSetup() {}
 	
@@ -136,6 +135,14 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
 	}
 
 }

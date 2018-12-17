@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -19,8 +21,14 @@ import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.base.person.Person;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "PROJECTS")
+@JsonIdentityInfo(
+	  generator = ObjectIdGenerators.PropertyGenerator.class, 
+	  property = "id")
 public class Project extends AbstractPropertifiedEntity<Project>
 	implements Comparable<Project>, Serializable, DbPersistentUUID<Project> {
 	private static final long serialVersionUID = 6517832474752854870L;
@@ -34,24 +42,22 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@Column(name = "START_YEAR", nullable = false)
 	private short startYear;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Person leader;
 	
 	@ManyToMany
-	private List<Person> members;
+	private List<Person> members = new ArrayList<>();
 	
 	@ManyToMany
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
+	private List<Note> notes = new ArrayList<>();
 	
-	{
-		files = new ArrayList<>();
-		notes = new ArrayList<>();
-	}
+	@OneToMany (mappedBy ="project")
+	private List<Measurement> measurements = new ArrayList<>();
 	
 	public Project() {}
 	
@@ -169,5 +175,17 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
+
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
+
+
+	
+	
 
 }
