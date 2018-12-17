@@ -1,7 +1,7 @@
 package org.artorg.tools.phantomData.server;
 
 import org.artorg.tools.phantomData.server.boot.ServerBooter;
-import org.artorg.tools.phantomData.server.model.base.DbFile;
+import org.artorg.tools.phantomData.server.models.base.DbFile;
 
 public class ConsoleBootServer extends ServerBooter {
 

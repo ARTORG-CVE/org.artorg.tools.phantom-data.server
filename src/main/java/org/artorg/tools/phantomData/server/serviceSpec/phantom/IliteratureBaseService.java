@@ -1,8 +1,8 @@
 package org.artorg.tools.phantomData.server.serviceSpec.phantom;
 
-import org.artorg.tools.phantomData.server.model.phantom.LiteratureBase;
-import org.artorg.tools.phantomData.server.specification.DbPersistent;
-import org.artorg.tools.phantomData.server.specification.IServiceDefault;
+import org.artorg.tools.phantomData.server.model.DbPersistent;
+import org.artorg.tools.phantomData.server.models.phantom.LiteratureBase;
+import org.artorg.tools.phantomData.server.service.IServiceDefault;
 
 public interface IliteratureBaseService<T extends DbPersistent<T,?>> extends IServiceDefault<T> {
 	

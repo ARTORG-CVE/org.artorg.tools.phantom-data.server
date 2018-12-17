@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.BootApplication;
-import org.artorg.tools.phantomData.server.model.base.DbFile;
+import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.springframework.boot.SpringApplication;
 
 import huma.io.ConsoleDiverter;

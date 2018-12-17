@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import org.artorg.tools.phantomData.server.boot.ServerBooter;
 import org.artorg.tools.phantomData.server.boot.SwingConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.SwingStartupProgressFrame;
-import org.artorg.tools.phantomData.server.model.base.DbFile;
+import org.artorg.tools.phantomData.server.models.base.DbFile;
 
 import huma.io.ConsoleDiverter;
 
