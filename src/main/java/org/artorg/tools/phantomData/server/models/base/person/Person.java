@@ -20,14 +20,8 @@ import org.artorg.tools.phantomData.server.model.NameGeneratable;
 import org.artorg.tools.phantomData.server.models.measurement.Measurement;
 import org.artorg.tools.phantomData.server.models.measurement.Project;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name = "USERS")
-@JsonIdentityInfo(
-	  generator = ObjectIdGenerators.PropertyGenerator.class, 
-	  property = "id")
 public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person>, NameGeneratable {
 	private static final long serialVersionUID = 8153106662017090155L;
 
