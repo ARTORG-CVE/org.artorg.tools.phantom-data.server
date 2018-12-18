@@ -1,11 +1,18 @@
 package org.artorg.tools.phantomData.server.boot;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
+import org.artorg.tools.phantomData.server.logging.Logger;
 import org.artorg.tools.phantomData.server.util.FxUtil;
 
 import huma.io.ConsoleDiverter;
@@ -78,6 +85,23 @@ public class FxConsoleFrame implements ConsoleFrame {
             ); 
 		fileChooser.setInitialFileName(dtf.format(LocalDateTime.now()) +"_log.txt");
 		File file = fileChooser.showSaveDialog(stage);
+		
+		BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter(file));
+			String text = textArea.getChildren().stream().map(node -> ((Text)node).getText()).collect(Collectors.joining(""));
+		    writer.write(text);
+		     
+		    writer.close();
+		    Logger.info.println("File created \"" +file.getPath() +"\"");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 	}
 	
 	private void updateTextArea(BiConsumer<TextFlow, String> textWriter, String newLine) {

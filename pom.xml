@@ -25,6 +25,12 @@
 			<artifactId>huma-library-io</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+		<groupId>ch.huma</groupId>
+	<artifactId>huma-library</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	</dependency>
 
 		<!-- Testing -->
 		<dependency>
