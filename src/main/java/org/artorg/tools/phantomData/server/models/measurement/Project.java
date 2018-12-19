@@ -26,41 +26,39 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PROJECTS")
-@JsonIdentityInfo(
-	  generator = ObjectIdGenerators.PropertyGenerator.class, 
-	  property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Project extends AbstractPropertifiedEntity<Project>
-	implements Comparable<Project>, Serializable, DbPersistentUUID<Project> {
+		implements Comparable<Project>, Serializable, DbPersistentUUID<Project> {
 	private static final long serialVersionUID = 6517832474752854870L;
-	
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	
+
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
-	
+
 	@Column(name = "START_YEAR", nullable = false)
 	private short startYear;
-	
+
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Person leader;
-	
+
 	@ManyToMany
 	private List<Person> members = new ArrayList<>();
-	
+
 	@ManyToMany
 	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
-	
-	@OneToMany (mappedBy ="project")
-	private List<Measurement> measurements = new ArrayList<>();
-	
+
+//	@OneToMany(mappedBy = "project")
+//	private List<Measurement> measurements = new ArrayList<>();
+
 	public Project() {}
-	
+
 	public Project(String name, String description, short startYear, Person leader) {
 		this.name = name;
 		this.description = description;
@@ -72,7 +70,7 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	public String toName() {
 		return name;
 	}
-	
+
 	@Override
 	public Class<Project> getItemClass() {
 		return Project.class;
@@ -81,10 +79,10 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@Override
 	public String toString() {
 		return String.format(
-			"Project [name=%s, description=%s, startYear=%s, leader=%s, members=%s, files=%s, notes=%s, %s]",
-			name, description, startYear, leader, members, files, notes, super.toString());
+				"Project [name=%s, description=%s, startYear=%s, leader=%s, members=%s, files=%s, notes=%s, %s]",
+				name, description, startYear, leader, members, files, notes, super.toString());
 	}
-	
+
 	@Override
 	public int compareTo(Project that) {
 		if (that == null) return -1;
@@ -103,7 +101,7 @@ public class Project extends AbstractPropertifiedEntity<Project>
 		if (result != 0) return result;
 		return super.compareTo(that);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
@@ -176,16 +174,12 @@ public class Project extends AbstractPropertifiedEntity<Project>
 		this.notes = notes;
 	}
 
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
-
-
-	
-	
+//	public List<Measurement> getMeasurements() {
+//		return measurements;
+//	}
+//
+//	public void setMeasurements(List<Measurement> measurements) {
+//		this.measurements = measurements;
+//	}
 
 }

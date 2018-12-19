@@ -20,15 +20,20 @@ import org.artorg.tools.phantomData.server.model.NameGeneratable;
 import org.artorg.tools.phantomData.server.models.measurement.Measurement;
 import org.artorg.tools.phantomData.server.models.measurement.Project;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "USERS")
-public class Person implements Comparable<Person>, Serializable, DbPersistentUUID<Person>, NameGeneratable {
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Person
+		implements Comparable<Person>, Serializable, DbPersistentUUID<Person>, NameGeneratable {
 	private static final long serialVersionUID = 8153106662017090155L;
 
 	@Id
 	@Column(name = "ID", nullable = false)
 	private UUID id = UUID.randomUUID();
-	
+
 	@OneToOne
 	private AcademicTitle academicTitle;
 
@@ -40,20 +45,19 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 
 	@OneToOne
 	private Gender gender;
-	
-	@OneToMany (mappedBy="person")
-	private List<Measurement> measurements = new ArrayList<>();
-	
-	@OneToMany (mappedBy="leader")
-	private List<Project> leaderProjects = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="members")
-	private List<Project> memberProjects = new ArrayList<>();
+
+//	@OneToMany(mappedBy = "person")
+//	private List<Measurement> measurements = new ArrayList<>();
+//
+//	@OneToMany(mappedBy = "leader")
+//	private List<Project> leaderProjects = new ArrayList<>();
+//
+//	@ManyToMany(mappedBy = "members")
+//	private List<Project> memberProjects = new ArrayList<>();
 
 	public Person() {}
 
-	public Person(AcademicTitle academicTitle, String firstname, String lastname,
-		Gender gender) {
+	public Person(AcademicTitle academicTitle, String firstname, String lastname, Gender gender) {
 		this.academicTitle = academicTitle;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -61,10 +65,12 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	}
 
 	public String getAcademicName() {
+		if (academicTitle.getPrefix().isEmpty()) return getName();
 		return academicTitle.getPrefix() + " " + getName();
 	}
 
 	public String getSimpleAcademicName() {
+		if (academicTitle.getPrefix().isEmpty()) return getSimpleName();
 		return academicTitle.getPrefix() + " " + getSimpleName();
 	}
 
@@ -74,15 +80,15 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 
 	public String getSimpleName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-			.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
+				.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
 		return firstnameAbreviation + lastname;
 	}
 
 	public String getInitialsName() {
 		String firstnameAbreviation = getFirstnameInitials().stream()
-			.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
-		String lastnameAbreviation = getLastnameInitials().stream()
-			.map(c -> String.valueOf(c)).collect(Collectors.joining(". "));
+				.map(c -> String.valueOf(c) + ". ").collect(Collectors.joining());
+		String lastnameAbreviation = getLastnameInitials().stream().map(c -> String.valueOf(c))
+				.collect(Collectors.joining(". "));
 		return firstnameAbreviation + lastnameAbreviation + ".";
 	}
 
@@ -102,14 +108,14 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 
 	public List<Character> getInitials(String name) {
 		return Arrays.asList(name.split(" ")).stream().filter(s -> s.length() != 0)
-			.map(s -> s.trim()).map(s -> s.charAt(0)).collect(Collectors.toList());
+				.map(s -> s.trim()).map(s -> s.charAt(0)).collect(Collectors.toList());
 	}
 
 	@Override
 	public String toName() {
 		return getSimpleAcademicName();
 	}
-	
+
 	@Override
 	public Class<Person> getItemClass() {
 		return Person.class;
@@ -117,9 +123,8 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 
 	@Override
 	public String toString() {
-		return String.format(
-			"Person [academicTitle=%s, firstname=%s, lastname=%s, gender=%s]",
-			academicTitle, firstname, lastname, gender);
+		return String.format("Person [academicTitle=%s, firstname=%s, lastname=%s, gender=%s]",
+				academicTitle, firstname, lastname, gender);
 	}
 
 	@Override
@@ -163,7 +168,7 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	
+
 	public Gender getGender() {
 		return gender;
 	}
@@ -196,28 +201,28 @@ public class Person implements Comparable<Person>, Serializable, DbPersistentUUI
 		this.academicTitle = academicTitle;
 	}
 
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
-
-	public List<Project> getLeaderProjects() {
-		return leaderProjects;
-	}
-
-	public void setLeaderProjects(List<Project> leaderProjects) {
-		this.leaderProjects = leaderProjects;
-	}
-
-	public List<Project> getMemberProjects() {
-		return memberProjects;
-	}
-
-	public void setMemberProjects(List<Project> memberProjects) {
-		this.memberProjects = memberProjects;
-	}	
+//	public List<Measurement> getMeasurements() {
+//		return measurements;
+//	}
+//
+//	public void setMeasurements(List<Measurement> measurements) {
+//		this.measurements = measurements;
+//	}
+//
+//	public List<Project> getLeaderProjects() {
+//		return leaderProjects;
+//	}
+//
+//	public void setLeaderProjects(List<Project> leaderProjects) {
+//		this.leaderProjects = leaderProjects;
+//	}
+//
+//	public List<Project> getMemberProjects() {
+//		return memberProjects;
+//	}
+//
+//	public void setMemberProjects(List<Project> memberProjects) {
+//		this.memberProjects = memberProjects;
+//	}
 
 }

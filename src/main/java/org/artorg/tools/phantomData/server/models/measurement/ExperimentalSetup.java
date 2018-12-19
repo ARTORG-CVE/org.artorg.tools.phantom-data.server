@@ -16,32 +16,36 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "EXPERIMENTAL_SETUPS")
-public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSetup>
-	implements Comparable<ExperimentalSetup>, Serializable, DbPersistentUUID<ExperimentalSetup> {
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSetup> implements
+		Comparable<ExperimentalSetup>, Serializable, DbPersistentUUID<ExperimentalSetup> {
 	private static final long serialVersionUID = 3415494342551630885L;
 
 	@Column(name = "SHORT_NAME", nullable = false)
 	private String shortName;
-	
+
 	@Column(name = "LONG_NAME", nullable = false)
 	private String longName;
-	
+
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
-	
+
 	@ManyToMany
 	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
-	
-	@OneToMany (mappedBy ="experimentalSetup")
-	private List<Measurement> measurements = new ArrayList<>();
-	
+
+//	@OneToMany(mappedBy = "experimentalSetup")
+//	private List<Measurement> measurements = new ArrayList<>();
+
 	public ExperimentalSetup() {}
-	
+
 	public ExperimentalSetup(String shortName, String longName, String description) {
 		this.shortName = shortName;
 		this.longName = longName;
@@ -52,7 +56,7 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	public String toName() {
 		return longName;
 	}
-	
+
 	@Override
 	public Class<ExperimentalSetup> getItemClass() {
 		return ExperimentalSetup.class;
@@ -61,10 +65,10 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	@Override
 	public String toString() {
 		return String.format(
-			"ExperimentalSetup [shortName=%s, longName=%s, description=%s, files=%s, notes=%s, %s]",
-			shortName, longName, description, files, notes, super.toString());
+				"ExperimentalSetup [shortName=%s, longName=%s, description=%s, files=%s, notes=%s, %s]",
+				shortName, longName, description, files, notes, super.toString());
 	}
-	
+
 	@Override
 	public int compareTo(ExperimentalSetup that) {
 		if (that == null) return -1;
@@ -81,7 +85,7 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 		if (result != 0) return result;
 		return super.compareTo(that);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
@@ -137,12 +141,12 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 		this.notes = notes;
 	}
 
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
+//	public List<Measurement> getMeasurements() {
+//		return measurements;
+//	}
+//
+//	public void setMeasurements(List<Measurement> measurements) {
+//		this.measurements = measurements;
+//	}
 
 }

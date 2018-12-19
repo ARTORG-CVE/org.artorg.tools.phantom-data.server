@@ -15,10 +15,14 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "SPECIALS")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Special extends AbstractPropertifiedEntity<Special>
-	implements DbPersistentUUID<Special>, Serializable {
+		implements DbPersistentUUID<Special>, Serializable {
 	private static final long serialVersionUID = 4838372606658297575L;
 
 	@Column(name = "SHORTCUT", unique = true, nullable = false)
@@ -57,8 +61,8 @@ public class Special extends AbstractPropertifiedEntity<Special>
 
 	@Override
 	public String toString() {
-		return String.format("Special [shortcut=%s, files=%s, notes=%s %s]", shortcut,
-			files, notes, super.toString());
+		return String.format("Special [shortcut=%s, files=%s, notes=%s %s]", shortcut, files, notes,
+				super.toString());
 	}
 
 	@Override
@@ -117,5 +121,5 @@ public class Special extends AbstractPropertifiedEntity<Special>
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
-	
+
 }

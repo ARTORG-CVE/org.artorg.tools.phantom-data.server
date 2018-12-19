@@ -26,92 +26,104 @@ import org.artorg.tools.phantomData.server.models.phantom.Special;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "FILES")
-@JsonIdentityInfo(
-	  generator = ObjectIdGenerators.PropertyGenerator.class, 
-	  property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersistentUUID<DbFile> {
 	private static final long serialVersionUID = 1575607671219807521L;
 	private static String filesPath;
-	
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	
+
 	@Column(name = "EXTENSION", nullable = false)
 	private String extension;
-	
+
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
-	
+
 	@ManyToMany
 	private List<FileTag> fileTags = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Phantom> phantoms = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Phantomina> phantominas = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<ExperimentalSetup> experimentalSetups = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Measurement> measurements = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Project> projects = new ArrayList<>();
 
-	@ManyToMany (mappedBy="files")
-	private List<AnnulusDiameter> annulusDiameter = new ArrayList<>();
-
-	@ManyToMany (mappedBy="files")
-	private List<FabricationType> fabricationTypes = new ArrayList<>();
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<Phantom> phantoms = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<Phantomina> phantominas = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<ExperimentalSetup> experimentalSetups = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<Measurement> measurements = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<Project> projects = new ArrayList<>();
+//
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<AnnulusDiameter> annulusDiameter = new ArrayList<>();
+//
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<FabricationType> fabricationTypes = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<LiteratureBase> literatureBases = new ArrayList<>();
+//	
 	
-	@ManyToMany (mappedBy="files")
-	private List<LiteratureBase> literatureBases = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Manufacturing> manufacturing = new ArrayList<>();
-	
-	@ManyToMany (mappedBy="files")
-	private List<Special> specials = new ArrayList<>();
+	@JsonIgnoreProperties("files")
+	@ManyToMany(mappedBy = "files")
+	private List<Manufacturing> manufacturings = new ArrayList<>();
+//	
+//	@JsonIgnore
+//	@ManyToMany (mappedBy="files")
+//	private List<Special> specials = new ArrayList<>();
 
 	public DbFile() {}
-	
+
 	public DbFile(File srcFile, String name, String extension) {
 		this.name = name;
 		extension = extension.toLowerCase();
 		this.extension = extension;
-		
-		File destFile = new File(filesPath +"\\" +getId() +"." +extension);
+
+		File destFile = new File(filesPath + "\\" + getId() + "." + extension);
 		try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public File getFile() {
-		return new File(filesPath +"\\" +getId() +"." +extension);
+		return new File(filesPath + "\\" + getId() + "." + extension);
 	}
-	
+
 	@Override
 	public String toName() {
 		return name;
 	}
-	
+
 	@Override
 	public Class<DbFile> getItemClass() {
 		return DbFile.class;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("DbFile [name=%s, extension=%s, fileTags %s]", name,
-			extension, fileTags, super.toString());
+		return String.format("DbFile [name=%s, extension=%s, fileTags %s]", name, extension,
+				fileTags, super.toString());
 	}
 
 	@Override
@@ -139,7 +151,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
 	}
-	
+
 	public static String getFilesPath() {
 		return filesPath;
 	}
@@ -149,22 +161,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	}
 
 	// Getters & Setters
-	public List<Phantom> getPhantoms() {
-		return phantoms;
-	}
 
-	public void setPhantoms(List<Phantom> phantoms) {
-		this.phantoms = phantoms;
-	}
-	
-	public List<Phantomina> getPhantominas() {
-		return phantominas;
-	}
-
-	public void setPhantominas(List<Phantomina> phantominas) {
-		this.phantominas = phantominas;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -180,7 +177,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	
+
 	public List<FileTag> getFileTags() {
 		return fileTags;
 	}
@@ -188,7 +185,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public void setFileTags(List<FileTag> fileTags) {
 		this.fileTags = fileTags;
 	}
-	
+
 	public List<Note> getNotes() {
 		return notes;
 	}
@@ -196,69 +193,85 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
-	
-	public List<ExperimentalSetup> getExperimentalSetups() {
-		return experimentalSetups;
+
+//	public List<ExperimentalSetup> getExperimentalSetups() {
+//		return experimentalSetups;
+//	}
+//
+//	public void setExperimentalSetups(List<ExperimentalSetup> experimentalSetups) {
+//		this.experimentalSetups = experimentalSetups;
+//	}
+//	
+//	public List<Measurement> getMeasurements() {
+//		return measurements;
+//	}
+//
+//	public void setMeasurements(List<Measurement> measurements) {
+//		this.measurements = measurements;
+//	}
+//
+//	public List<Project> getProjects() {
+//		return projects;
+//	}
+//
+//	public void setProjects(List<Project> projects) {
+//		this.projects = projects;
+//	}
+//	
+//	public List<AnnulusDiameter> getAnnulusDiameter() {
+//		return annulusDiameter;
+//	}
+//
+//	public void setAnnulusDiameter(List<AnnulusDiameter> annulusDiameter) {
+//		this.annulusDiameter = annulusDiameter;
+//	}
+//
+//	public List<FabricationType> getFabricationTypes() {
+//		return fabricationTypes;
+//	}
+//
+//	public void setFabricationTypes(List<FabricationType> fabricationTypes) {
+//		this.fabricationTypes = fabricationTypes;
+//	}
+//
+//	public List<LiteratureBase> getLiteratureBases() {
+//		return literatureBases;
+//	}
+//
+//	public void setLiteratureBases(List<LiteratureBase> literatureBases) {
+//		this.literatureBases = literatureBases;
+//	}
+//
+	public List<Manufacturing> getManufacturings() {
+		return manufacturings;
 	}
 
-	public void setExperimentalSetups(List<ExperimentalSetup> experimentalSetups) {
-		this.experimentalSetups = experimentalSetups;
+	public void setManufacturings(List<Manufacturing> manufacturings) {
+		this.manufacturings = manufacturings;
 	}
-	
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
+//
+//	public List<Special> getSpecials() {
+//		return specials;
+//	}
+//
+//	public void setSpecials(List<Special> specials) {
+//		this.specials = specials;
+//	}
+//	
+//	public List<Phantom> getPhantoms() {
+//	return phantoms;
+//}
+//
+//public void setPhantoms(List<Phantom> phantoms) {
+//	this.phantoms = phantoms;
+//}
+//
+//public List<Phantomina> getPhantominas() {
+//	return phantominas;
+//}
+//
+//public void setPhantominas(List<Phantomina> phantominas) {
+//	this.phantominas = phantominas;
+//}
 
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-	
-	public List<AnnulusDiameter> getAnnulusDiameter() {
-		return annulusDiameter;
-	}
-
-	public void setAnnulusDiameter(List<AnnulusDiameter> annulusDiameter) {
-		this.annulusDiameter = annulusDiameter;
-	}
-
-	public List<FabricationType> getFabricationTypes() {
-		return fabricationTypes;
-	}
-
-	public void setFabricationTypes(List<FabricationType> fabricationTypes) {
-		this.fabricationTypes = fabricationTypes;
-	}
-
-	public List<LiteratureBase> getLiteratureBases() {
-		return literatureBases;
-	}
-
-	public void setLiteratureBases(List<LiteratureBase> literatureBases) {
-		this.literatureBases = literatureBases;
-	}
-
-	public List<Manufacturing> getManufacturing() {
-		return manufacturing;
-	}
-
-	public void setManufacturing(List<Manufacturing> manufacturing) {
-		this.manufacturing = manufacturing;
-	}
-
-	public List<Special> getSpecials() {
-		return specials;
-	}
-
-	public void setSpecials(List<Special> specials) {
-		this.specials = specials;
-	}
-	
 }

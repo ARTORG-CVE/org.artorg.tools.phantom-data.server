@@ -20,10 +20,14 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "PHANTOMINAS")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
-	implements Comparable<Phantomina>, Serializable, DbPersistentUUID<Phantomina> {
+		implements Comparable<Phantomina>, Serializable, DbPersistentUUID<Phantomina> {
 	private static final long serialVersionUID = 8708084186934082241L;
 
 	@Column(name = "PRODUCT_ID", unique = true, nullable = false)
@@ -63,7 +67,7 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 	public Phantomina() {}
 
 	public Phantomina(AnnulusDiameter annulusDiameter, FabricationType fType,
-		LiteratureBase litBase, Special special) {
+			LiteratureBase litBase, Special special) {
 		this.annulusDiameter = annulusDiameter;
 		this.fabricationType = fType;
 		this.literatureBase = litBase;
@@ -77,17 +81,16 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 	}
 
 	public void updateProductId() {
-		setProductId(
-			createProductId(annulusDiameter, fabricationType, literatureBase, special));
+		setProductId(createProductId(annulusDiameter, fabricationType, literatureBase, special));
 	}
 
 	public static String createProductId(AnnulusDiameter annulusDiameter,
-		FabricationType fabricationType, LiteratureBase literatureBase, Special special) {
+			FabricationType fabricationType, LiteratureBase literatureBase, Special special) {
 		return String.format("%s-%s-%s-%s",
-			helper(() -> annulusDiameter.getShortcut().toString(), "??"),
-			helper(() -> fabricationType.getShortcut(), "?"),
-			helper(() -> literatureBase.getShortcut(), "?"),
-			helper(() -> special.getShortcut(), "?"));
+				helper(() -> annulusDiameter.getShortcut().toString(), "??"),
+				helper(() -> fabricationType.getShortcut(), "?"),
+				helper(() -> literatureBase.getShortcut(), "?"),
+				helper(() -> special.getShortcut(), "?"));
 	}
 
 	private static String helper(Supplier<String> supplier, String orElse) {
@@ -101,9 +104,9 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 	@Override
 	public String toString() {
 		return String.format(
-			"Phantomina [productId=%s, annulusDiameter=%s, fabricationType=%s, literatureBase=%s, special=%s, files=%s, notes=%s, %s]",
-			productId, annulusDiameter, fabricationType, literatureBase, special, files,
-			notes, super.toString());
+				"Phantomina [productId=%s, annulusDiameter=%s, fabricationType=%s, literatureBase=%s, special=%s, files=%s, notes=%s, %s]",
+				productId, annulusDiameter, fabricationType, literatureBase, special, files, notes,
+				super.toString());
 	}
 
 	@Override
@@ -134,9 +137,10 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 		int result;
 		for (int i = 0; i < n; i++) {
 			final Pattern pattern = Pattern.compile("\\d+");
-			if (pattern.matcher(splits1[i]).matches()) result =
-				Integer.valueOf(splits1[i]).compareTo(Integer.valueOf(splits2[i]));
-			else result = splits1[i].compareTo(splits2[i]);
+			if (pattern.matcher(splits1[i]).matches())
+				result = Integer.valueOf(splits1[i]).compareTo(Integer.valueOf(splits2[i]));
+			else
+				result = splits1[i].compareTo(splits2[i]);
 			if (result != 0) return result;
 		}
 		return 0;
@@ -217,6 +221,6 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
-	}	
+	}
 
 }

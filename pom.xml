@@ -4,7 +4,7 @@
 
 	<groupId>org.artorg.tools</groupId>
 	<artifactId>phantom-data-server</artifactId>
-	<version>0.3.5</version>
+	<version>0.3.7-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -31,6 +31,16 @@
 	<artifactId>huma-library</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	
+	
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.7</version>
+</dependency>
+	
+	
 
 		<!-- Testing -->
 		<dependency>

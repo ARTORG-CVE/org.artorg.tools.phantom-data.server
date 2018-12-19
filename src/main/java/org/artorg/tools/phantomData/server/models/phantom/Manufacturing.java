@@ -15,41 +15,47 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "MANUFACTURINGS")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 		implements Comparable<Manufacturing>, Serializable, DbPersistentUUID<Manufacturing> {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6968718300969800196L;
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	
+
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
-	
+
 	@ManyToMany
+	@JsonIgnoreProperties("manufacturings")
 	private List<DbFile> files;
 
 	@ManyToMany
 	private List<Note> notes;
-	
+
 	{
 		files = new ArrayList<DbFile>();
 		notes = new ArrayList<Note>();
 	}
-	
+
 	public Manufacturing() {}
-	
+
 	public Manufacturing(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
-	
+
 	@Override
 	public String toName() {
 		return name;
 	}
-	
+
 	@Override
 	public Class<Manufacturing> getItemClass() {
 		return Manufacturing.class;
@@ -57,8 +63,8 @@ public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 
 	@Override
 	public String toString() {
-		return String.format("Manufacturing [name=%s, description=%s, files=%s, notes=%s, %s]", name, description, files,
-				notes, super.toString());
+		return String.format("Manufacturing [name=%s, description=%s, files=%s, notes=%s, %s]",
+				name, description, files, notes, super.toString());
 	}
 
 	@Override
@@ -75,7 +81,7 @@ public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 		if (result != 0) return result;
 		return super.compareTo(that);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
@@ -88,7 +94,7 @@ public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
 	}
-	
+
 	// Getters & Setters
 	public String getName() {
 		return name;

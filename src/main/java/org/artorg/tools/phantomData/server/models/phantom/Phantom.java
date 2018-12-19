@@ -26,9 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PHANTOMS")
-@JsonIdentityInfo(
-	  generator = ObjectIdGenerators.PropertyGenerator.class, 
-	  property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
@@ -80,17 +78,13 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@Override
 	public String toName() {
 		List<String> list = new ArrayList<>();
-		if (!files.isEmpty()) 
-			list.add("files: " +files.size());
-		if (!measurements.isEmpty()) 
-			list.add("meas.: " +measurements.size());
-		if (!notes.isEmpty()) 
-			list.add("notes: " +notes.size());
+		if (!files.isEmpty()) list.add("files: " + files.size());
+		if (!measurements.isEmpty()) list.add("meas.: " + measurements.size());
+		if (!notes.isEmpty()) list.add("notes: " + notes.size());
 		String suffix = "";
-		if (!list.isEmpty())
-			suffix = list.stream().collect(Collectors.joining(", ", " (", ")"));
-		
-		return getProductId() +suffix;
+		if (!list.isEmpty()) suffix = list.stream().collect(Collectors.joining(", ", " (", ")"));
+
+		return getProductId() + suffix;
 	}
 
 	public void updateProductId() {

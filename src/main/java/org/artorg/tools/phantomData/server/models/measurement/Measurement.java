@@ -26,11 +26,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "MEASUREMENTS")
-@JsonIdentityInfo(
-	  generator = ObjectIdGenerators.PropertyGenerator.class, 
-	  property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Measurement extends AbstractPropertifiedEntity<Measurement>
-	implements Serializable, Comparable<Measurement> {
+		implements Serializable, Comparable<Measurement> {
 	private static final long serialVersionUID = 3949155160834848919L;
 	private static final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -51,7 +49,7 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@JoinColumn(nullable = false)
 	@NotNull
 	private ExperimentalSetup experimentalSetup;
-	
+
 	@OneToOne
 	@JoinColumn(nullable = true)
 	@NotNull
@@ -65,8 +63,8 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 
 	public Measurement() {}
 
-	public Measurement(Date startDate, Person person, Project project,
-		ExperimentalSetup setup, DbFile protocolFile) {
+	public Measurement(Date startDate, Person person, Project project, ExperimentalSetup setup,
+			DbFile protocolFile) {
 		this.startDate = startDate;
 		this.person = person;
 		this.project = project;
@@ -82,14 +80,15 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@Override
 	public String toName() {
 		return format.format(startDate) + ": " + experimentalSetup.getShortName() + ", "
-			+ project.toName();
+				+ project.toName();
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
-			"Measurement [startDate=%s, person=%s, project=%s, experimentalSetup=%s, protocolFile=%s, files=%s, notes=%s, %s]",
-			startDate, person, project, experimentalSetup, protocolFile, files, notes, super.toString());
+				"Measurement [startDate=%s, person=%s, project=%s, experimentalSetup=%s, protocolFile=%s, files=%s, notes=%s, %s]",
+				startDate, person, project, experimentalSetup, protocolFile, files, notes,
+				super.toString());
 	}
 
 	@Override
@@ -153,7 +152,7 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
 	public ExperimentalSetup getExperimentalSetup() {
 		return experimentalSetup;
 	}
@@ -161,7 +160,7 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	public void setExperimentalSetup(ExperimentalSetup experimentalSetup) {
 		this.experimentalSetup = experimentalSetup;
 	}
-	
+
 	public DbFile getProtocolFile() {
 		return protocolFile;
 	}
