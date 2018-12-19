@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
+import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
@@ -22,6 +23,7 @@ import org.artorg.tools.phantomData.server.models.base.person.Person;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -54,8 +56,21 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-//	@OneToMany(mappedBy = "project")
-//	private List<Measurement> measurements = new ArrayList<>();
+	@JsonIgnoreProperties({"project","phantoms"})
+	@OneToMany(mappedBy = "project")
+	private List<Measurement> measurements = new ArrayList<>();
+
+	
+	
+	@BackReference
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	@BackReference
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
 
 	public Project() {}
 

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
+import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
@@ -51,6 +52,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@NotNull
 	private Manufacturing manufacturing;
 
+	@JsonIgnoreProperties({"phantoms","project"})
 	@ManyToMany
 	private List<Measurement> measurements;
 
@@ -179,6 +181,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		updateProductId();
 	}
 
+	
 	public List<Measurement> getMeasurements() {
 		return measurements;
 	}

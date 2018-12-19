@@ -16,12 +16,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
+import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.base.person.Person;
+import org.artorg.tools.phantomData.server.models.phantom.Phantom;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -40,11 +43,13 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@NotNull
 	private Person person;
 
+	@JsonIgnoreProperties("measurements")
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Project project;
 
+	@JsonIgnoreProperties("measurements")
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
@@ -60,6 +65,20 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
+
+	@JsonIgnoreProperties("measurements")
+	@ManyToMany(mappedBy = "measurements")
+	private List<Phantom> phantoms = new ArrayList<>();
+
+	@BackReference
+	public List<Phantom> getPhantoms() {
+		return phantoms;
+	}
+
+	@BackReference
+	public void setPhantoms(List<Phantom> phantoms) {
+		this.phantoms = phantoms;
+	}
 
 	public Measurement() {}
 
@@ -79,6 +98,13 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 
 	@Override
 	public String toName() {
+		if (experimentalSetup == null) {
+			if (project == null) return format.format(startDate);
+			else
+				return format.format(startDate) + ": " + experimentalSetup.getShortName() + ", "
+						+ project.toName();
+		} else if (project == null)
+			return format.format(startDate) + ": " + experimentalSetup.getShortName();
 		return format.format(startDate) + ": " + experimentalSetup.getShortName() + ", "
 				+ project.toName();
 	}

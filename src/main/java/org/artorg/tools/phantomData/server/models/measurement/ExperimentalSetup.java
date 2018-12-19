@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
+import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
@@ -46,8 +48,20 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	@ManyToMany
 	private List<Note> notes;
 
-//	@OneToMany(mappedBy = "experimentalSetup")
-//	private List<Measurement> measurements = new ArrayList<>();
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
+	@OneToMany(mappedBy = "experimentalSetup")
+	private List<Measurement> measurements = new ArrayList<>();
+
+	
+	@BackReference
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
+
+	@BackReference
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
 
 	{
 		files = new ArrayList<>();
