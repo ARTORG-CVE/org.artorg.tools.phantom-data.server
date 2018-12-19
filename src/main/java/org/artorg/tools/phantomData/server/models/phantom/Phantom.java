@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -22,6 +23,7 @@ import org.artorg.tools.phantomData.server.models.measurement.Measurement;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -53,6 +55,9 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	private List<Measurement> measurements;
 
 	@ManyToMany
+//	@JsonIgnoreProperties({"phantoms","manufacturings"})
+//	@JoinTable(name = "PHANTOM_FILES", joinColumns = @JoinColumn(name = "PHANTOMS_ID"),
+//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
 	private List<DbFile> files;
 
 	@ManyToMany

@@ -6,8 +6,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
@@ -17,10 +18,11 @@ import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name = "EXPERIMENTAL_SETUPS")
+@Table(name = "SETUPS")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSetup> implements
 		Comparable<ExperimentalSetup>, Serializable, DbPersistentUUID<ExperimentalSetup> {
@@ -36,14 +38,22 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	private String description;
 
 	@ManyToMany
-	private List<DbFile> files = new ArrayList<>();
+//	@JsonIgnoreProperties("setups")
+//	@JoinTable(name = "SETUP_FILES", joinColumns = @JoinColumn(name = "SETUPS_ID"),
+//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
+	private List<DbFile> files;
 
 	@ManyToMany
-	private List<Note> notes = new ArrayList<>();
+	private List<Note> notes;
 
 //	@OneToMany(mappedBy = "experimentalSetup")
 //	private List<Measurement> measurements = new ArrayList<>();
 
+	{
+		files = new ArrayList<>();
+		notes = new ArrayList<>();
+	}
+	
 	public ExperimentalSetup() {}
 
 	public ExperimentalSetup(String shortName, String longName, String description) {

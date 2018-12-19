@@ -7,28 +7,22 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.model.AbstractPersonifiedEntity;
+import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.measurement.ExperimentalSetup;
-import org.artorg.tools.phantomData.server.models.measurement.Measurement;
-import org.artorg.tools.phantomData.server.models.measurement.Project;
-import org.artorg.tools.phantomData.server.models.phantom.AnnulusDiameter;
-import org.artorg.tools.phantomData.server.models.phantom.FabricationType;
-import org.artorg.tools.phantomData.server.models.phantom.LiteratureBase;
 import org.artorg.tools.phantomData.server.models.phantom.Manufacturing;
 import org.artorg.tools.phantomData.server.models.phantom.Phantom;
-import org.artorg.tools.phantomData.server.models.phantom.Phantomina;
-import org.artorg.tools.phantomData.server.models.phantom.Special;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -50,17 +44,20 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	@ManyToMany
 	private List<FileTag> fileTags = new ArrayList<>();
 
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
+//	@JsonIgnoreProperties("phantomfiles")
+//	@ManyToMany(mappedBy = "phantomfiles")
 //	private List<Phantom> phantoms = new ArrayList<>();
 //	
 //	@JsonIgnore
 //	@ManyToMany (mappedBy="files")
 //	private List<Phantomina> phantominas = new ArrayList<>();
 //	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<ExperimentalSetup> experimentalSetups = new ArrayList<>();
+
+//	@JsonIgnoreProperties("files")
+//	@ManyToMany(mappedBy = "files")
+////	@JoinTable(name = "EXPERIMENTAL_SETUPS_FILES", joinColumns = @JoinColumn(name = "FILES_ID"),
+////	inverseJoinColumns = @JoinColumn(name = "EXPERIMENTAL_SETUPS_ID"))
+//	private List<ExperimentalSetup> setups = new ArrayList<>();
 //	
 //	@JsonIgnore
 //	@ManyToMany (mappedBy="files")
@@ -82,10 +79,12 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 //	@ManyToMany (mappedBy="files")
 //	private List<LiteratureBase> literatureBases = new ArrayList<>();
 //	
-	
-	@JsonIgnoreProperties("files")
-	@ManyToMany(mappedBy = "files")
-	private List<Manufacturing> manufacturings = new ArrayList<>();
+
+//	@JsonIgnoreProperties("files")
+//	@ManyToMany(mappedBy = "files")
+////	@JoinTable(name = "MANUFACTURING_FILES", joinColumns = @JoinColumn(name = "FILES_ID"),
+////			inverseJoinColumns = @JoinColumn(name = "MANUFACTURINGS_ID"))
+//	private List<Manufacturing> manufacturings = new ArrayList<>();
 //	
 //	@JsonIgnore
 //	@ManyToMany (mappedBy="files")
@@ -194,13 +193,6 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 		this.notes = notes;
 	}
 
-//	public List<ExperimentalSetup> getExperimentalSetups() {
-//		return experimentalSetups;
-//	}
-//
-//	public void setExperimentalSetups(List<ExperimentalSetup> experimentalSetups) {
-//		this.experimentalSetups = experimentalSetups;
-//	}
 //	
 //	public List<Measurement> getMeasurements() {
 //		return measurements;
@@ -242,13 +234,27 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 //		this.literatureBases = literatureBases;
 //	}
 //
-	public List<Manufacturing> getManufacturings() {
-		return manufacturings;
-	}
 
-	public void setManufacturings(List<Manufacturing> manufacturings) {
-		this.manufacturings = manufacturings;
-	}
+//	@BackReference
+//	public List<Manufacturing> getManufacturings() {
+//		return manufacturings;
+//	}
+//
+//	@BackReference
+//	public List<ExperimentalSetup> getSetups() {
+//		return setups;
+//	}
+//
+//	@BackReference
+//	public void setSetups(List<ExperimentalSetup> experimentalSetups) {
+//		this.setups = experimentalSetups;
+//	}
+//
+//	@BackReference
+//	public void setManufacturings(List<Manufacturing> manufacturings) {
+//		this.manufacturings = manufacturings;
+//	}
+
 //
 //	public List<Special> getSpecials() {
 //		return specials;
@@ -258,14 +264,16 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 //		this.specials = specials;
 //	}
 //	
+//	@BackReference
 //	public List<Phantom> getPhantoms() {
-//	return phantoms;
-//}
+//		return phantoms;
+//	}
 //
-//public void setPhantoms(List<Phantom> phantoms) {
-//	this.phantoms = phantoms;
-//}
-//
+//	@BackReference
+//	public void setPhantoms(List<Phantom> phantoms) {
+//		this.phantoms = phantoms;
+//	}
+
 //public List<Phantomina> getPhantominas() {
 //	return phantominas;
 //}

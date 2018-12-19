@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -33,7 +35,9 @@ public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 	private String description;
 
 	@ManyToMany
-	@JsonIgnoreProperties("manufacturings")
+//	@JsonIgnoreProperties({"manufacturings","phantoms"})
+//	@JoinTable(name = "MANUFACTURING_FILES", joinColumns = @JoinColumn(name = "MANUFACTURINGS_ID"),
+//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
 	private List<DbFile> files;
 
 	@ManyToMany
