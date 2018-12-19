@@ -23,9 +23,7 @@ import org.artorg.tools.phantomData.server.models.base.person.Person;
 import org.artorg.tools.phantomData.server.models.phantom.Phantom;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "MEASUREMENTS")
@@ -69,16 +67,6 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@JsonIgnoreProperties("measurements")
 	@ManyToMany(mappedBy = "measurements")
 	private List<Phantom> phantoms = new ArrayList<>();
-
-	@BackReference
-	public List<Phantom> getPhantoms() {
-		return phantoms;
-	}
-
-	@BackReference
-	public void setPhantoms(List<Phantom> phantoms) {
-		this.phantoms = phantoms;
-	}
 
 	public Measurement() {}
 
@@ -209,6 +197,16 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
+	}
+	
+	@BackReference
+	public List<Phantom> getPhantoms() {
+		return phantoms;
+	}
+
+	@BackReference
+	public void setPhantoms(List<Phantom> phantoms) {
+		this.phantoms = phantoms;
 	}
 
 }

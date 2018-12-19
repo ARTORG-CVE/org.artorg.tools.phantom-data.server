@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,13 +21,10 @@ import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.base.person.Person;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PROJECTS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Project extends AbstractPropertifiedEntity<Project>
 		implements Comparable<Project>, Serializable, DbPersistentUUID<Project> {
 	private static final long serialVersionUID = 6517832474752854870L;
@@ -59,18 +55,6 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@JsonIgnoreProperties({"project","phantoms"})
 	@OneToMany(mappedBy = "project")
 	private List<Measurement> measurements = new ArrayList<>();
-
-	
-	
-	@BackReference
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
-	@BackReference
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
 
 	public Project() {}
 
@@ -188,13 +172,15 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
+	
+	@BackReference
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
 
-//	public List<Measurement> getMeasurements() {
-//		return measurements;
-//	}
-//
-//	public void setMeasurements(List<Measurement> measurements) {
-//		this.measurements = measurements;
-//	}
+	@BackReference
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
 
 }

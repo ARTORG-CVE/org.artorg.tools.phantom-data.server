@@ -16,9 +16,6 @@ import org.artorg.tools.phantomData.server.models.base.property.IntegerProperty;
 import org.artorg.tools.phantomData.server.models.base.property.StringProperty;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class AbstractPropertifiedEntity<ITEM extends AbstractPropertifiedEntity<ITEM>>

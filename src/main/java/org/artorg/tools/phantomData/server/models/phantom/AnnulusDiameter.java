@@ -5,12 +5,8 @@ import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.AbstractShortcutValueEntity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name = "ANNULUS_DIAMETERS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AnnulusDiameter extends AbstractShortcutValueEntity<AnnulusDiameter, Integer, Double> {
 	private static final long serialVersionUID = -3588992364016922887L;
 

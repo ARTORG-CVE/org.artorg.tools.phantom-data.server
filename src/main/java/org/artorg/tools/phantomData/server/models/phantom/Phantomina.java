@@ -20,12 +20,8 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name = "PHANTOMINAS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 		implements Comparable<Phantomina>, Serializable, DbPersistentUUID<Phantomina> {
 	private static final long serialVersionUID = 8708084186934082241L;
@@ -54,15 +50,10 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 	private Special special;
 
 	@ManyToMany
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
-
-	{
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
-	}
+	private List<Note> notes = new ArrayList<>();
 
 	public Phantomina() {}
 

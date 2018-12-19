@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,13 +17,10 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "SETUPS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSetup> implements
 		Comparable<ExperimentalSetup>, Serializable, DbPersistentUUID<ExperimentalSetup> {
 	private static final long serialVersionUID = 3415494342551630885L;
@@ -40,33 +35,14 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	private String description;
 
 	@ManyToMany
-//	@JsonIgnoreProperties("setups")
-//	@JoinTable(name = "SETUP_FILES", joinColumns = @JoinColumn(name = "SETUPS_ID"),
-//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
+	private List<Note> notes = new ArrayList<>();
 
 	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
 	@OneToMany(mappedBy = "experimentalSetup")
 	private List<Measurement> measurements = new ArrayList<>();
-
-	
-	@BackReference
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
-
-	@BackReference
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
-
-	{
-		files = new ArrayList<>();
-		notes = new ArrayList<>();
-	}
 	
 	public ExperimentalSetup() {}
 
@@ -164,13 +140,15 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
+	
+	@BackReference
+	public List<Measurement> getMeasurements() {
+		return measurements;
+	}
 
-//	public List<Measurement> getMeasurements() {
-//		return measurements;
-//	}
-//
-//	public void setMeasurements(List<Measurement> measurements) {
-//		this.measurements = measurements;
-//	}
-
+	@BackReference
+	public void setMeasurements(List<Measurement> measurements) {
+		this.measurements = measurements;
+	}
+	
 }

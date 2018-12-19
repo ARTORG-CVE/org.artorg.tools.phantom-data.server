@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -16,20 +15,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
-import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.measurement.Measurement;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PHANTOMS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
@@ -54,22 +49,13 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	@JsonIgnoreProperties({"phantoms","project"})
 	@ManyToMany
-	private List<Measurement> measurements;
+	private List<Measurement> measurements = new ArrayList<>();
 
 	@ManyToMany
-//	@JsonIgnoreProperties({"phantoms","manufacturings"})
-//	@JoinTable(name = "PHANTOM_FILES", joinColumns = @JoinColumn(name = "PHANTOMS_ID"),
-//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
-
-	{
-		measurements = new ArrayList<Measurement>();
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
-	}
+	private List<Note> notes = new ArrayList<>();
 
 	public Phantom() {}
 
@@ -180,7 +166,6 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		this.number = number;
 		updateProductId();
 	}
-
 	
 	public List<Measurement> getMeasurements() {
 		return measurements;

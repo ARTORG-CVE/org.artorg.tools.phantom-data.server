@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -17,13 +15,8 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name = "MANUFACTURINGS")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 		implements Comparable<Manufacturing>, Serializable, DbPersistentUUID<Manufacturing> {
 	private static final long serialVersionUID = -6968718300969800196L;
@@ -35,18 +28,10 @@ public class Manufacturing extends AbstractPropertifiedEntity<Manufacturing>
 	private String description;
 
 	@ManyToMany
-//	@JsonIgnoreProperties({"manufacturings","phantoms"})
-//	@JoinTable(name = "MANUFACTURING_FILES", joinColumns = @JoinColumn(name = "MANUFACTURINGS_ID"),
-//	inverseJoinColumns = @JoinColumn(name = "FILES_ID"))
-	private List<DbFile> files;
+	private List<DbFile> files = new ArrayList<>();
 
 	@ManyToMany
-	private List<Note> notes;
-
-	{
-		files = new ArrayList<DbFile>();
-		notes = new ArrayList<Note>();
-	}
+	private List<Note> notes = new ArrayList<>();
 
 	public Manufacturing() {}
 

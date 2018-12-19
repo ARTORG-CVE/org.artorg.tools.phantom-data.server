@@ -7,27 +7,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.model.AbstractPersonifiedEntity;
-import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
-import org.artorg.tools.phantomData.server.models.measurement.ExperimentalSetup;
-import org.artorg.tools.phantomData.server.models.phantom.Manufacturing;
-import org.artorg.tools.phantomData.server.models.phantom.Phantom;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "FILES")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersistentUUID<DbFile> {
 	private static final long serialVersionUID = 1575607671219807521L;
 	private static String filesPath;
@@ -43,52 +32,6 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 
 	@ManyToMany
 	private List<FileTag> fileTags = new ArrayList<>();
-
-//	@JsonIgnoreProperties("phantomfiles")
-//	@ManyToMany(mappedBy = "phantomfiles")
-//	private List<Phantom> phantoms = new ArrayList<>();
-//	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<Phantomina> phantominas = new ArrayList<>();
-//	
-
-//	@JsonIgnoreProperties("files")
-//	@ManyToMany(mappedBy = "files")
-////	@JoinTable(name = "EXPERIMENTAL_SETUPS_FILES", joinColumns = @JoinColumn(name = "FILES_ID"),
-////	inverseJoinColumns = @JoinColumn(name = "EXPERIMENTAL_SETUPS_ID"))
-//	private List<ExperimentalSetup> setups = new ArrayList<>();
-//	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<Measurement> measurements = new ArrayList<>();
-//	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<Project> projects = new ArrayList<>();
-//
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<AnnulusDiameter> annulusDiameter = new ArrayList<>();
-//
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<FabricationType> fabricationTypes = new ArrayList<>();
-//	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<LiteratureBase> literatureBases = new ArrayList<>();
-//	
-
-//	@JsonIgnoreProperties("files")
-//	@ManyToMany(mappedBy = "files")
-////	@JoinTable(name = "MANUFACTURING_FILES", joinColumns = @JoinColumn(name = "FILES_ID"),
-////			inverseJoinColumns = @JoinColumn(name = "MANUFACTURINGS_ID"))
-//	private List<Manufacturing> manufacturings = new ArrayList<>();
-//	
-//	@JsonIgnore
-//	@ManyToMany (mappedBy="files")
-//	private List<Special> specials = new ArrayList<>();
 
 	public DbFile() {}
 
@@ -160,7 +103,6 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	}
 
 	// Getters & Setters
-
 	public String getName() {
 		return name;
 	}
@@ -192,94 +134,5 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
-
-//	
-//	public List<Measurement> getMeasurements() {
-//		return measurements;
-//	}
-//
-//	public void setMeasurements(List<Measurement> measurements) {
-//		this.measurements = measurements;
-//	}
-//
-//	public List<Project> getProjects() {
-//		return projects;
-//	}
-//
-//	public void setProjects(List<Project> projects) {
-//		this.projects = projects;
-//	}
-//	
-//	public List<AnnulusDiameter> getAnnulusDiameter() {
-//		return annulusDiameter;
-//	}
-//
-//	public void setAnnulusDiameter(List<AnnulusDiameter> annulusDiameter) {
-//		this.annulusDiameter = annulusDiameter;
-//	}
-//
-//	public List<FabricationType> getFabricationTypes() {
-//		return fabricationTypes;
-//	}
-//
-//	public void setFabricationTypes(List<FabricationType> fabricationTypes) {
-//		this.fabricationTypes = fabricationTypes;
-//	}
-//
-//	public List<LiteratureBase> getLiteratureBases() {
-//		return literatureBases;
-//	}
-//
-//	public void setLiteratureBases(List<LiteratureBase> literatureBases) {
-//		this.literatureBases = literatureBases;
-//	}
-//
-
-//	@BackReference
-//	public List<Manufacturing> getManufacturings() {
-//		return manufacturings;
-//	}
-//
-//	@BackReference
-//	public List<ExperimentalSetup> getSetups() {
-//		return setups;
-//	}
-//
-//	@BackReference
-//	public void setSetups(List<ExperimentalSetup> experimentalSetups) {
-//		this.setups = experimentalSetups;
-//	}
-//
-//	@BackReference
-//	public void setManufacturings(List<Manufacturing> manufacturings) {
-//		this.manufacturings = manufacturings;
-//	}
-
-//
-//	public List<Special> getSpecials() {
-//		return specials;
-//	}
-//
-//	public void setSpecials(List<Special> specials) {
-//		this.specials = specials;
-//	}
-//	
-//	@BackReference
-//	public List<Phantom> getPhantoms() {
-//		return phantoms;
-//	}
-//
-//	@BackReference
-//	public void setPhantoms(List<Phantom> phantoms) {
-//		this.phantoms = phantoms;
-//	}
-
-//public List<Phantomina> getPhantominas() {
-//	return phantominas;
-//}
-//
-//public void setPhantominas(List<Phantomina> phantominas) {
-//	this.phantominas = phantominas;
-//}
 
 }

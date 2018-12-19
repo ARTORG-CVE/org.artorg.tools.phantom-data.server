@@ -5,12 +5,8 @@ import javax.persistence.Table;
 
 import org.artorg.tools.phantomData.server.model.AbstractShortcutValueEntity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name = "LITERATURE_BASES")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class LiteratureBase extends AbstractShortcutValueEntity<LiteratureBase, String, String> {
 	private static final long serialVersionUID = -3498410825088649494L;
 
