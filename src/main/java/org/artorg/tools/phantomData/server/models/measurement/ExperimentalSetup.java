@@ -20,7 +20,7 @@ import org.artorg.tools.phantomData.server.util.EntityUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "SETUPS")
+@Table(name = "EXPERIMENTAL_SETUPS")
 public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSetup> implements
 		Comparable<ExperimentalSetup>, Serializable, DbPersistentUUID<ExperimentalSetup> {
 	private static final long serialVersionUID = 3415494342551630885L;

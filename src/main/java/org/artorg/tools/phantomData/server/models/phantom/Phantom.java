@@ -47,7 +47,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@NotNull
 	private Manufacturing manufacturing;
 
-	@JsonIgnoreProperties({"phantoms","project"})
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
 	@ManyToMany
 	private List<Measurement> measurements = new ArrayList<>();
 

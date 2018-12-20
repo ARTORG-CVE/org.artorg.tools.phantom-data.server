@@ -52,7 +52,7 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-	@JsonIgnoreProperties({"project","phantoms"})
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
 	@OneToMany(mappedBy = "project")
 	private List<Measurement> measurements = new ArrayList<>();
 
