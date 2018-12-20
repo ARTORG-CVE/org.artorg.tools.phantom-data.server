@@ -4,7 +4,7 @@
 
 	<groupId>org.artorg.tools</groupId>
 	<artifactId>phantom-data-server</artifactId>
-	<version>0.3.7</version>
+	<version>0.3.8</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
