@@ -2,9 +2,6 @@ package org.artorg.tools.phantomData.server;
 
 import java.util.concurrent.Executors;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.artorg.tools.phantomData.server.boot.FxConsoleFrame;
 import org.artorg.tools.phantomData.server.boot.FxStartupProgressController;
 import org.artorg.tools.phantomData.server.boot.ServerBooter;
@@ -16,6 +13,8 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -45,9 +44,9 @@ public class DesktopFxBootServer extends Application {
 			createBooter(startupFrame).catchedBoot(args);
 		});
 	}
-	
+
 	public static void initStartupStage(Stage stage, Parent parent) {
-		Scene scene = FxUtil.createScene(parent);	
+		Scene scene = FxUtil.createScene(parent);
 		FxUtil.addIcon(stage);
 		stage.setScene(scene);
 		stage.initStyle(StageStyle.UNDECORATED);
@@ -65,8 +64,7 @@ public class DesktopFxBootServer extends Application {
 		return new ServerBooter() {
 			@Override
 			protected void uncatchedBoot(String[] args) {
-				initBeforeServerStart(BootApplication.class, new FxConsoleFrame(),
-					controller);
+				initBeforeServerStart(BootApplication.class, new FxConsoleFrame(), controller);
 				if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
 				if (!isConnected()) {
 					getStartupFrame().setnConsoleLines(39);
@@ -74,15 +72,16 @@ public class DesktopFxBootServer extends Application {
 					getStartupFrame().setVisible(true);
 					getStartupFrame().setProgressing(true);
 					Task<Void> task = FxUtil.createTask(() -> startSpringServer(args),
-						e -> handleException(e));
+							e -> handleException(e));
 					task.setOnSucceeded(event -> finish());
 					task.setOnFailed(event -> finish());
 					task.setOnCancelled(event -> finish());
 					Executors.newCachedThreadPool().execute(task);
 				} else {
-					JFrame frame = new JFrame();
-					JOptionPane.showMessageDialog(frame, "Server already started!");
-					frame.dispose();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Starting PhantomData Server");
+					alert.setContentText("Server already started on port " +getPort());
+					alert.showAndWait();
 					System.exit(0);
 				}
 			}

@@ -15,8 +15,10 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
 import org.artorg.tools.phantomData.server.BootApplication;
+import org.artorg.tools.phantomData.server.logging.Logger;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.springframework.boot.SpringApplication;
+
 
 import huma.io.ConsoleDiverter;
 
@@ -33,6 +35,7 @@ public abstract class ServerBooter extends PropertiesBooter {
 		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
 			&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
 		else getConsoleFrame().setVisible(true);
+		
 	}
 	
 	public void initBeforeServerStart(Class<?> bootApplicationClass,
@@ -87,6 +90,9 @@ public abstract class ServerBooter extends PropertiesBooter {
 		if (!isConnected()) SpringApplication.run(getBootApplicationClass(), args);
 		if (!isConnected()) throw new IllegalArgumentException(
 			"server couldn't load configuration: url Localhost: " + getUrlLocalhost());
+		Logger.info.println("Server - Connected to database at " +getDatabasePath());
+		Logger.info.println("Server - Connected to files at " +getFilesPath());
+		Logger.info.println("Server - Started succesful on port " +getPort());
 	}
 
 	public void shutdownSpringServer() {
