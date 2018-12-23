@@ -53,7 +53,7 @@ public abstract class AbstractPropertifiedEntity<ITEM extends AbstractPropertifi
 	public String toString() {
 		return String.format(
 			"booleanProperties=%s, integerProperties=%s, doubleProperties=%s, "
-				+ "stringProperties=%s, dateProperties=%s, files=%s, notes=%s, %s",
+				+ "stringProperties=%s, dateProperties=%s, %s",
 			booleanProperties, integerProperties, doubleProperties, stringProperties,
 			dateProperties, super.toString());
 	}

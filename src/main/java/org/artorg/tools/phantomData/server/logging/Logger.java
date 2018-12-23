@@ -17,7 +17,7 @@ public class Logger {
 	static {
 		setDefaultOut(System.out);
 		setDefaultErr(System.err);
-		setLevel(Level.INFO);
+		setLevel(Level.DEBUG);
 	}
 	
 	private static Supplier<String> createPrefixSupplier(String logType) {
@@ -35,14 +35,20 @@ public class Logger {
 	}
 	
 	public static void setDefaultOut(java.io.PrintStream printStream) {
-		debug = new huma.logging.PrintStream(System.out, createPrefixSupplier("DEBUG"), Level.DEBUG);
-		info = new huma.logging.PrintStream(System.out, createPrefixSupplier("INFO "), Level.INFO );
-		warn = new huma.logging.PrintStream(System.out, createPrefixSupplier("WARN "), Level.WARN);
+		debug = new huma.logging.PrintStream(System.out, createPrefixSupplier("DEBUG"), Level.DEBUG, () -> getLevel());
+		info = new huma.logging.PrintStream(System.out, createPrefixSupplier("INFO "), Level.INFO, () -> getLevel());
+		warn = new huma.logging.PrintStream(System.out, createPrefixSupplier("WARN "), Level.WARN, () -> getLevel());
+		
+		debug.setPrintStackTrace(true);
+		warn.setPrintStackTrace(true);
 	}
 	
 	public static void setDefaultErr(java.io.PrintStream printStream) {
-		error = new huma.logging.PrintStream(System.err, createPrefixSupplier("ERROR"), Level.ERROR);
-		fatal = new huma.logging.PrintStream(System.err, createPrefixSupplier("FATAL"), Level.FATAL);
+		error = new huma.logging.PrintStream(System.err, createPrefixSupplier("ERROR"), Level.ERROR, () -> getLevel());
+		fatal = new huma.logging.PrintStream(System.err, createPrefixSupplier("FATAL"), Level.FATAL, () -> getLevel());
+		
+//		error.setPrintStackTrace(true);
+//		fatal.setPrintStackTrace(true);
 	}
 
 }

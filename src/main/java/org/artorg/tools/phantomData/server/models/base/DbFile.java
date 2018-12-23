@@ -2,6 +2,8 @@ package org.artorg.tools.phantomData.server.models.base;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +41,8 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 		this.name = name;
 		extension = extension.toLowerCase();
 		this.extension = extension;
-
-		File destFile = new File(filesPath + "\\" + getId() + "." + extension);
+		
+		File destFile = Paths.get(filesPath, getId() + "." + extension).toFile();
 		try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e) {
@@ -49,7 +51,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	}
 
 	public File getFile() {
-		return new File(filesPath + "\\" + getId() + "." + extension);
+		return Paths.get(filesPath, getId() + "." + extension).toFile();
 	}
 
 	@Override

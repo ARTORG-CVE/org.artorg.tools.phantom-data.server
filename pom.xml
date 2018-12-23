@@ -4,7 +4,7 @@
 
 	<groupId>org.artorg.tools</groupId>
 	<artifactId>phantom-data-server</artifactId>
-	<version>0.4.0</version>
+	<version>0.4.1</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -29,7 +29,7 @@
 		<dependency>
 		<groupId>ch.huma</groupId>
 	<artifactId>huma-library</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	</dependency>
 	
 	
