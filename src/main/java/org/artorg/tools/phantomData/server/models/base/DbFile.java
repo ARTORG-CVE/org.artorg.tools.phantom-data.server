@@ -37,10 +37,13 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public DbFile() {}
 
 	public DbFile(File srcFile, String name, String extension) {
-		this.name = name;
-		extension = extension.toLowerCase();
-		this.extension = extension;
+		setName(name);
+		setExtension(extension);
 		
+		putFile(srcFile);
+	}
+	
+	public void putFile(File srcFile) {
 		File destFile = Paths.get(filesPath, getId() + "." + extension).toFile();
 		try {
 			FileUtils.copyFile(srcFile, destFile);
@@ -117,7 +120,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	}
 
 	public void setExtension(String extension) {
-		this.extension = extension;
+		this.extension = extension.toLowerCase();
 	}
 
 	public List<FileTag> getFileTags() {

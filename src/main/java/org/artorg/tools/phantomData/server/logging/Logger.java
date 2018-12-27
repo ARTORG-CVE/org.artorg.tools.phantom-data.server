@@ -26,13 +26,7 @@ public class Logger {
 		return () -> dateFormat.format(new Date()) +suffix;
 	}
 	
-	public static Level getLevel() {
-		return level;
-	}
 	
-	public static void setLevel(Level level) {
-		Logger.level = level;
-	}
 	
 	public static void setDefaultOut(java.io.PrintStream printStream) {
 		debug = new huma.logging.PrintStream(System.out, createPrefixSupplier("DEBUG"), Level.DEBUG, () -> getLevel());
@@ -47,8 +41,16 @@ public class Logger {
 		error = new huma.logging.PrintStream(System.err, createPrefixSupplier("ERROR"), Level.ERROR, () -> getLevel());
 		fatal = new huma.logging.PrintStream(System.err, createPrefixSupplier("FATAL"), Level.FATAL, () -> getLevel());
 		
-//		error.setPrintStackTrace(true);
-//		fatal.setPrintStackTrace(true);
+		error.setPrintStackTrace(true);
+		fatal.setPrintStackTrace(true);
+	}
+	
+	public static Level getLevel() {
+		return level;
+	}
+	
+	public static void setLevel(Level level) {
+		Logger.level = level;
 	}
 
 }
