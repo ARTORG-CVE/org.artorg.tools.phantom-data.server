@@ -82,11 +82,11 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	public void updateProductId() {
 		getPhantomina().updateProductId();
-		setProductId(createProductId(getPhantomina(), getNumber()));
+		setProductId(createProductId(getPhantomina().getProductId(), getNumber()));
 	}
 
-	public static String createProductId(Phantomina phantomina, int number) {
-		return String.format("%s-%s", phantomina.getProductId(), number);
+	public static String createProductId(String phantominaProductId, int number) {
+		return String.format("%s-%s", phantominaProductId, number);
 	}
 
 	@Override
