@@ -42,11 +42,6 @@ public abstract class AbstractPersonifiedEntity<T> implements DbPersistentUUID<T
 		this.changer = null;
 	}
 	
-	public void changed(Person changer) {
-		this.dateLastModified = new Date();
-		this.changer = changer;
-	}
-	
 	@Override
 	public String toString() {
 		return String.format(
