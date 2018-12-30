@@ -67,7 +67,7 @@ public class DesktopFxBootServer extends Application {
 				initBeforeServerStart(BootApplication.class, new FxConsoleFrame(), controller);
 				if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
 				if (!isConnected()) {
-					getStartupFrame().setnConsoleLines(39);
+					getStartupFrame().setnConsoleLines(40);
 					getStartupFrame().setTitle("Phantom Database");
 					getStartupFrame().setVisible(true);
 					getStartupFrame().setProgressing(true);

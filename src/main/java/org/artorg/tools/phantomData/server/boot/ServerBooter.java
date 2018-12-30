@@ -96,14 +96,8 @@ public abstract class ServerBooter extends PropertiesBooter {
 	}
 
 	public void shutdownSpringServer() {
-		if (isConnected()) {
+		if (isConnected()) 
 			curl("-X POST " + getUrlShutdownActuator());
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public boolean isConnected() {

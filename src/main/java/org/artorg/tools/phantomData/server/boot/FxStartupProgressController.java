@@ -39,7 +39,7 @@ public class FxStartupProgressController extends StartupProgressFrame {
 		Platform.exit();
 		System.exit(0);
 	}
-	
+
 	@FXML
 	void minimize(MouseEvent event) {
 		stage.setIconified(true);
@@ -53,22 +53,28 @@ public class FxStartupProgressController extends StartupProgressFrame {
 
 	private void updateStartupProgress(List<String> consoleLines, String newLine) {
 		if (isProgressing()) {
-			Pattern pattern = Pattern.compile("[^:]: (.*)");
+			Pattern pattern = Pattern.compile(": (.*)");
 			if (consoleLines.size() > 0) {
 				if (consoleLines.size() < 10) {
 					Platform.runLater(() -> {
 						progressLabel.setText("Launching Spring Boot...");
 					});
 				} else {
-					Double progressValue = (getProgress() + 100.0 / getnConsoleLines()/100.0);
+					Double progressValue = (getProgress() + 100.0 / getnConsoleLines() / 100.0);
 					String progressText = newLine;
 					Matcher m = pattern.matcher(newLine);
-					if (m.find()) progressText = m.group(1);
-					final String text = progressText;
-					Platform.runLater(() -> {
-						setProgress(progressValue);
-						progressLabel.setText(text);
-					});
+					if (m.find()) {
+						progressText = m.group(1);
+						Platform.runLater(() -> {
+							setProgress(progressValue);
+						});
+					} else if (progressText.contains("INFO")) {
+						final String text = progressText;
+						Platform.runLater(() -> {
+							setProgress(progressValue);
+							progressLabel.setText(text);
+						});
+					}
 				}
 			}
 		}
@@ -89,7 +95,8 @@ public class FxStartupProgressController extends StartupProgressFrame {
 	@Override
 	public void setVisible(boolean b) {
 		if (b) stage.show();
-		else stage.hide();
+		else
+			stage.hide();
 	}
 
 	@Override

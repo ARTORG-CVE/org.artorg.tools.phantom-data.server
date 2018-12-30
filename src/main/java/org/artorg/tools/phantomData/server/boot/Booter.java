@@ -42,7 +42,7 @@ public abstract class Booter {
 		}
 		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
 			&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
-		else if (isRunnableJarExecution()) getConsoleFrame().setVisible(true);
+		else getConsoleFrame().setVisible(true);
 	}
 	
 	public void handleException(Exception e) {
