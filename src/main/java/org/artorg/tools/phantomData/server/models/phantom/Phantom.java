@@ -47,7 +47,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@NotNull
 	private Manufacturing manufacturing;
 
-	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
+	@JsonIgnoreProperties({ "experimentalSetup", "project", "phantoms" })
 	@ManyToMany
 	private List<Measurement> measurements = new ArrayList<>();
 
@@ -81,8 +81,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	}
 
 	public void updateProductId() {
-		getPhantomina().updateProductId();
-		setProductId(createProductId(getPhantomina().getProductId(), getNumber()));
+		setProductId(createProductId(Phantomina.createProductId(getPhantomina()), getNumber()));
 	}
 
 	public static String createProductId(String phantominaProductId, int number) {
@@ -166,7 +165,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		this.number = number;
 		updateProductId();
 	}
-	
+
 	public List<Measurement> getMeasurements() {
 		return measurements;
 	}

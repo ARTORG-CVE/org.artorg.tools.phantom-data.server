@@ -39,20 +39,34 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 	public DbFile(File srcFile, String name, String extension) {
 		setName(name);
 		setExtension(extension);
-		
+
 		putFile(srcFile);
 	}
-	
+
 	public void putFile(File srcFile) {
-		File destFile = Paths.get(filesPath, getId() + "." + extension).toFile();
-		try {
-			FileUtils.copyFile(srcFile, destFile);
-		} catch (IOException e) {
-			e.printStackTrace();
+		String[] splits = splitOffFileExtension(srcFile.getName());
+		setName(splits[0]);
+		setExtension(splits[1]);
+
+		File destFile = Paths.get(filesPath, getId() + "." + getExtension()).toFile();
+		if (!srcFile.getPath().equals(destFile.getPath())) {
+			try {
+				FileUtils.copyFile(srcFile, destFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	public File getFile() {
+	private String[] splitOffFileExtension(String name) {
+		int index = name.lastIndexOf('.');
+		String[] splits = new String[2];
+		splits[0] = name.substring(0, index);
+		splits[1] = name.substring(index + 1, name.length());
+		return splits;
+	}
+
+	public File createFile() {
 		return Paths.get(filesPath, getId() + "." + extension).toFile();
 	}
 

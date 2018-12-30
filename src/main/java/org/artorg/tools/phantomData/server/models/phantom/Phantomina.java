@@ -75,6 +75,13 @@ public class Phantomina extends AbstractPropertifiedEntity<Phantomina>
 		setProductId(createProductId(annulusDiameter, fabricationType, literatureBase, special));
 	}
 
+	public static String createProductId(Phantomina phantomina) {
+		if (phantomina == null)
+			return "??-?-?-?";
+		return createProductId(phantomina.getAnnulusDiameter(), phantomina.getFabricationType(),
+				phantomina.getLiteratureBase(), phantomina.getSpecial());
+	}
+
 	public static String createProductId(AnnulusDiameter annulusDiameter,
 			FabricationType fabricationType, LiteratureBase literatureBase, Special special) {
 		return String.format("%s-%s-%s-%s",
