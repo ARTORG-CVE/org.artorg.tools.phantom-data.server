@@ -40,7 +40,7 @@ public class ExperimentalSetup extends AbstractPropertifiedEntity<ExperimentalSe
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms", "simulationPhantoms"})
 	@OneToMany(mappedBy = "experimentalSetup")
 	private List<Measurement> measurements = new ArrayList<>();
 	

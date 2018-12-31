@@ -12,6 +12,12 @@ public class EntityUtils {
 		return true;
 	}
 	
+	public static int compare(boolean b1, boolean b2) {
+		if (b1 == b2) return 0;
+		if (b1) return 1;
+		return -1;
+	}
+	
 	public static <E extends Comparable<E>> int compare(List<E> one, List<E> two) {
 		if (one == null) {
 			if (two == null) {

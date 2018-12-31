@@ -52,9 +52,13 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-	@JsonIgnoreProperties({"experimentalSetup","project","phantoms"})
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms", "simulationPhantoms"})
 	@OneToMany(mappedBy = "project")
 	private List<Measurement> measurements = new ArrayList<>();
+	
+	@JsonIgnoreProperties({"experimentalSetup","project","phantoms", "simulationPhantoms"})
+	@OneToMany(mappedBy = "project")
+	private List<Simulation> simulations = new ArrayList<>();
 
 	public Project() {}
 
@@ -182,5 +186,17 @@ public class Project extends AbstractPropertifiedEntity<Project>
 	public void setMeasurements(List<Measurement> measurements) {
 		this.measurements = measurements;
 	}
+
+	@BackReference
+	public List<Simulation> getSimulations() {
+		return simulations;
+	}
+
+	@BackReference
+	public void setSimulations(List<Simulation> simulations) {
+		this.simulations = simulations;
+	}
+	
+	
 
 }

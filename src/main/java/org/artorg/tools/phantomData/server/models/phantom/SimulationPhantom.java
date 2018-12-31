@@ -10,23 +10,21 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.artorg.tools.phantomData.server.model.AbstractPropertifiedEntity;
 import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
-import org.artorg.tools.phantomData.server.models.measurement.Measurement;
+import org.artorg.tools.phantomData.server.models.measurement.Simulation;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "PHANTOMS")
-public class Phantom extends AbstractPropertifiedEntity<Phantom>
-		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
+@Table(name = "SIMULATION_PHANTOMS")
+public class SimulationPhantom extends AbstractPropertifiedEntity<SimulationPhantom> implements
+		Comparable<SimulationPhantom>, Serializable, DbPersistentUUID<SimulationPhantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
 
 	@Column(name = "PRODUCT_ID", nullable = false)
@@ -41,23 +39,10 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	@Column(name = "THICKNESS", nullable = false)
 	private float thickness;
-	
-	@Column(name = "VIABLE", nullable = false)
-	private boolean viable;
-
-	@OneToOne
-	@JoinColumn(nullable = false)
-	@NotNull
-	private Manufacturing manufacturing;
-	
-	@OneToOne
-	@JoinColumn(nullable = true)
-//	@NotNull
-	private Material material;
 
 	@JsonIgnoreProperties({"experimentalSetup","project","phantoms", "simulationPhantoms"})
 	@ManyToMany
-	private List<Measurement> measurements = new ArrayList<>();
+	private List<Simulation> simulations = new ArrayList<>();
 
 	@ManyToMany
 	private List<DbFile> files = new ArrayList<>();
@@ -65,16 +50,12 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-	public Phantom() {}
+	public SimulationPhantom() {}
 
-	public Phantom(Phantomina phantomina, int number, Manufacturing manufacturing, Material material,
-			float thickness, boolean viable) {
+	public SimulationPhantom(Phantomina phantomina, int number, float thickness) {
 		this.phantomina = phantomina;
 		this.number = number;
-		this.manufacturing = manufacturing;
-		this.material = material;
 		this.thickness = thickness;
-		this.viable = viable;
 		updateProductId();
 	}
 
@@ -82,7 +63,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	public String toName() {
 		List<String> list = new ArrayList<>();
 		if (!files.isEmpty()) list.add("files: " + files.size());
-		if (!measurements.isEmpty()) list.add("meas.: " + measurements.size());
+		if (!simulations.isEmpty()) list.add("meas.: " + simulations.size());
 		if (!notes.isEmpty()) list.add("notes: " + notes.size());
 		String suffix = "";
 		if (!list.isEmpty()) suffix = list.stream().collect(Collectors.joining(", ", " (", ")"));
@@ -99,20 +80,20 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	}
 
 	@Override
-	public Class<Phantom> getItemClass() {
-		return Phantom.class;
+	public Class<SimulationPhantom> getItemClass() {
+		return SimulationPhantom.class;
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"Phantom [productId=%s, phantomina=%s, number=%s, thickness=%s, manufacturing=%s, material=%s, viable=%b, measurements=%s, files=%s, notes=%s, %s]",
-				productId, phantomina, number, thickness, manufacturing, material, viable, measurements, files, notes,
+				"SimulationPhantom [productId=%s, phantomina=%s, number=%s, thickness=%s, measurements=%s, files=%s, notes=%s, %s]",
+				productId, phantomina, number, thickness, simulations, files, notes,
 				super.toString());
 	}
 
 	@Override
-	public int compareTo(Phantom that) {
+	public int compareTo(SimulationPhantom that) {
 		if (that == null) return -1;
 		int result;
 		result = Phantomina.comparePid(productId, that.productId);
@@ -121,13 +102,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		if (result != 0) return result;
 		result = Float.compare(thickness, that.thickness);
 		if (result != 0) return result;
-		result = manufacturing.compareTo(that.manufacturing);
-		if (result != 0) return result;
-		result = material.compareTo(that.material);
-		if (result != 0) return result;
-		result = EntityUtils.compare(viable, that.viable);
-		if (result != 0) return result;
-		result = EntityUtils.compare(measurements, that.measurements);
+		result = EntityUtils.compare(simulations, that.simulations);
 		if (result != 0) return result;
 		result = EntityUtils.compare(files, that.files);
 		if (result != 0) return result;
@@ -140,16 +115,13 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;
-		if (!(obj instanceof Phantom)) return false;
-		Phantom other = (Phantom) obj;
+		if (!(obj instanceof SimulationPhantom)) return false;
+		SimulationPhantom other = (SimulationPhantom) obj;
 		if (number != other.number) return false;
 		if (!EntityUtils.equals(productId, other.productId)) return false;
 		if (!EntityUtils.equals(phantomina, other.phantomina)) return false;
 		if (thickness != other.thickness) return false;
-		if (!EntityUtils.equals(manufacturing, other.manufacturing)) return false;
-		if (!EntityUtils.equals(material, other.material)) return false;
-		if (!(viable == other.viable)) return false;
-		if (!EntityUtils.equals(measurements, other.measurements)) return false;
+		if (!EntityUtils.equals(simulations, other.simulations)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
@@ -182,12 +154,12 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		updateProductId();
 	}
 
-	public List<Measurement> getMeasurements() {
-		return measurements;
+	public List<Simulation> getSimulations() {
+		return simulations;
 	}
 
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
+	public void setSimulations(List<Simulation> simulations) {
+		this.simulations = simulations;
 	}
 
 	public List<DbFile> getFiles() {
@@ -212,30 +184,6 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 
 	public void setThickness(float thickness) {
 		this.thickness = thickness;
-	}
-
-	public Manufacturing getManufacturing() {
-		return manufacturing;
-	}
-
-	public void setManufacturing(Manufacturing manufacturing) {
-		this.manufacturing = manufacturing;
-	}
-
-	public Material getMaterial() {
-		return material;
-	}
-
-	public void setMaterial(Material material) {
-		this.material = material;
-	}
-
-	public boolean isViable() {
-		return viable;
-	}
-
-	public void setViable(boolean viable) {
-		this.viable = viable;
 	}
 
 }

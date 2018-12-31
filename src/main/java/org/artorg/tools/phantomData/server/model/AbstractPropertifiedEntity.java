@@ -18,9 +18,9 @@ import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class AbstractPropertifiedEntity<ITEM extends AbstractPropertifiedEntity<ITEM>>
-	extends AbstractPersonifiedEntity<ITEM>
-	implements DbPersistentUUID<ITEM>, Serializable, NameGeneratable {
+public abstract class AbstractPropertifiedEntity<T extends AbstractPropertifiedEntity<T>>
+	extends AbstractPersonifiedEntity<T>
+	implements DbPersistentUUID<T>, Serializable, NameGeneratable {
 	private static final long serialVersionUID = -2814334933013431607L;
 
 	
@@ -59,7 +59,7 @@ public abstract class AbstractPropertifiedEntity<ITEM extends AbstractPropertifi
 	}
 
 	@Override
-	public int compareTo(ITEM item) {
+	public int compareTo(T item) {
 		if (item == null) return -1;
 		AbstractPropertifiedEntity<?> that = (AbstractPropertifiedEntity<?>) item;
 		int result;

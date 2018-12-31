@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,15 +20,15 @@ import org.artorg.tools.phantomData.server.model.BackReference;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.models.base.Note;
 import org.artorg.tools.phantomData.server.models.base.person.Person;
-import org.artorg.tools.phantomData.server.models.phantom.Phantom;
+import org.artorg.tools.phantomData.server.models.phantom.SimulationPhantom;
 import org.artorg.tools.phantomData.server.util.EntityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "MEASUREMENTS")
-public class Measurement extends AbstractPropertifiedEntity<Measurement>
-		implements Serializable, Comparable<Measurement> {
+@Table(name = "SIMULATIONS")
+public class Simulation extends AbstractPropertifiedEntity<Simulation>
+		implements Serializable, Comparable<Simulation> {
 	private static final long serialVersionUID = 3949155160834848919L;
 	private static final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -39,20 +40,16 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@NotNull
 	private Person person;
 
-	@JsonIgnoreProperties("measurements")
+	@JsonIgnoreProperties("simulations")
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Project project;
 
-	@JsonIgnoreProperties("measurements")
-	@ManyToOne
-	@JoinColumn(nullable = false)
+	@OneToOne
+	@JoinColumn(nullable = true)
 	@NotNull
-	private ExperimentalSetup experimentalSetup;
-
-	@ManyToMany
-	private List<DbFile> protocolFiles = new ArrayList<>();
+	private DbFile protocolFile;
 
 	@ManyToMany
 	private List<DbFile> files = new ArrayList<>();
@@ -60,47 +57,41 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	@ManyToMany
 	private List<Note> notes = new ArrayList<>();
 
-	@JsonIgnoreProperties("measurements")
-	@ManyToMany(mappedBy = "measurements")
-	private List<Phantom> phantoms = new ArrayList<>();
+	@JsonIgnoreProperties("simulations")
+	@ManyToMany(mappedBy = "simulations")
+	private List<SimulationPhantom> simulationPhantoms = new ArrayList<>();
 
-	public Measurement() {}
+	public Simulation() {}
 
-	public Measurement(Date startDate, Person person, Project project, ExperimentalSetup setup,
-			DbFile protocolFile) {
+	public Simulation(Date startDate, Person person, Project project, DbFile protocolFile) {
 		this.startDate = startDate;
 		this.person = person;
 		this.project = project;
-		this.experimentalSetup = setup;
+		this.protocolFile = protocolFile;
 	}
 
 	@Override
-	public Class<Measurement> getItemClass() {
-		return Measurement.class;
+	public Class<Simulation> getItemClass() {
+		return Simulation.class;
 	}
 
 	@Override
 	public String toName() {
-		if (experimentalSetup == null) {
-			if (project == null) return format.format(startDate);
-			else
-				return format.format(startDate) + ": " + project.toName();
-		} else if (project == null)
-			return format.format(startDate) + ": " + experimentalSetup.getShortName();
-		return format.format(startDate) + ": " + experimentalSetup.getShortName() + ", "
-				+ project.toName();
+		if (project == null) return format.format(startDate);
+		else
+			return format.format(startDate) + ": " + project.toName();
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"Measurement [startDate=%s, person=%s, project=%s, experimentalSetup=%s, protocolFile=%s, files=%s, notes=%s, %s]",
-				startDate, person, project, experimentalSetup, protocolFiles, files, notes,
+				"Simulation [startDate=%s, person=%s, project=%s, protocolFile=%s, files=%s, notes=%s, %s]",
+				startDate, person, project, protocolFile, files, notes,
 				super.toString());
 	}
 
 	@Override
-	public int compareTo(Measurement that) {
+	public int compareTo(Simulation that) {
 		if (that == null) return -1;
 		int result;
 		result = startDate.compareTo(that.startDate);
@@ -109,9 +100,7 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 		if (result != 0) return result;
 		result = project.compareTo(that.project);
 		if (result != 0) return result;
-		result = experimentalSetup.compareTo(that.experimentalSetup);
-		if (result != 0) return result;
-		result = EntityUtils.compare(protocolFiles,that.protocolFiles);
+		result = protocolFile.compareTo(that.protocolFile);
 		if (result != 0) return result;
 		result = EntityUtils.compare(files, that.files);
 		if (result != 0) return result;
@@ -124,13 +113,12 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (!super.equals(obj)) return false;
-		if (!(obj instanceof Measurement)) return false;
-		Measurement other = (Measurement) obj;
+		if (!(obj instanceof Simulation)) return false;
+		Simulation other = (Simulation) obj;
 		if (!EntityUtils.equals(startDate, other.startDate)) return false;
 		if (!EntityUtils.equals(person, other.person)) return false;
 		if (!EntityUtils.equals(project, other.project)) return false;
-		if (!EntityUtils.equals(experimentalSetup, other.experimentalSetup)) return false;
-		if (!EntityUtils.equals(protocolFiles, other.protocolFiles)) return false;
+		if (!EntityUtils.equals(protocolFile, other.protocolFile)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
@@ -161,20 +149,12 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 		this.project = project;
 	}
 
-	public ExperimentalSetup getExperimentalSetup() {
-		return experimentalSetup;
+	public DbFile getProtocolFile() {
+		return protocolFile;
 	}
 
-	public void setExperimentalSetup(ExperimentalSetup experimentalSetup) {
-		this.experimentalSetup = experimentalSetup;
-	}
-
-	public List<DbFile> getProtocolFiles() {
-		return protocolFiles;
-	}
-
-	public void setProtocolFiles(List<DbFile> protocolFiles) {
-		this.protocolFiles = protocolFiles;
+	public void setProtocolFile(DbFile protocolFile) {
+		this.protocolFile = protocolFile;
 	}
 
 	public List<DbFile> getFiles() {
@@ -194,13 +174,13 @@ public class Measurement extends AbstractPropertifiedEntity<Measurement>
 	}
 
 	@BackReference
-	public List<Phantom> getPhantoms() {
-		return phantoms;
+	public List<SimulationPhantom> getSimulationPhantoms() {
+		return simulationPhantoms;
 	}
 
 	@BackReference
-	public void setPhantoms(List<Phantom> phantoms) {
-		this.phantoms = phantoms;
+	public void setSimulationPhantoms(List<SimulationPhantom> simulationPhantoms) {
+		this.simulationPhantoms = simulationPhantoms;
 	}
 
 }
