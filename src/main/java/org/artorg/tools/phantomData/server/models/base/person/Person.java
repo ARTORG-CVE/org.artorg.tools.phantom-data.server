@@ -33,16 +33,20 @@ public class Person
 
 	@Column(name = "LASTNAME", nullable = false)
 	private String lastname;
+	
+	@Column(name = "PASSWORD", nullable = false)
+	private String password;
 
 	@OneToOne
 	private Gender gender;	
 	
 	public Person() {}
 
-	public Person(AcademicTitle academicTitle, String firstname, String lastname, Gender gender) {
+	public Person(AcademicTitle academicTitle, String firstname, String lastname, String password, Gender gender) {
 		this.academicTitle = academicTitle;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.password = password;
 		this.gender = gender;
 	}
 
@@ -181,6 +185,14 @@ public class Person
 
 	public void setAcademicTitle(AcademicTitle academicTitle) {
 		this.academicTitle = academicTitle;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
