@@ -51,8 +51,8 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 	private Manufacturing manufacturing;
 	
 	@OneToOne
-	@JoinColumn(nullable = true)
-//	@NotNull
+	@JoinColumn(nullable = false)
+	@NotNull
 	private Material material;
 
 	@JsonIgnoreProperties({"experimentalSetup","project","phantoms", "simulationPhantoms"})
