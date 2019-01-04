@@ -12,7 +12,7 @@ import org.artorg.tools.phantomData.server.model.DbPersistentUUID;
 @Entity
 @Table(name = "PROPERTY_FIELD")
 public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
-	implements DbPersistentUUID<PropertyField>, Serializable {
+		implements DbPersistentUUID<PropertyField>, Serializable {
 	private static final long serialVersionUID = -1078447486967118366L;
 
 	@Column(name = "NAME", nullable = false)
@@ -21,26 +21,26 @@ public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
 	@Column(name = "DESCRIPTION", nullable = false)
 	private String description;
 
-	@Column(name = "TYPE", nullable = false)
-	private String type;
+	@Column(name = "ENTITY_TYPE", nullable = false)
+	private String entityType;
+
+	@Column(name = "PROPERTY_TYPE", nullable = false)
+	private String propertyType;
 
 	public PropertyField() {}
 
-	public PropertyField(String name, String description, Class<?> type) {
+	public PropertyField(String name, String description, Class<?> entityType,
+			Class<?> propertyType) {
 		this.name = name;
 		this.description = description;
-		this.type = type.getName();
+		this.entityType = entityType.getSimpleName();
+		this.propertyType = propertyType.getSimpleName();
 	}
 
 	@Override
 	public String toName() {
-		String type = this.type;
-		try {
-			type = Class.forName(type).getSimpleName();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return String.format("type=%s, name=%s", type, name);
+		return String.format("entityType=%s, propertyType=%s, name=%s", entityType, propertyType,
+				name);
 	}
 
 	@Override
@@ -50,21 +50,18 @@ public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
 
 	@Override
 	public String toString() {
-		String type = this.type;
-		try {
-			type = Class.forName(type).getSimpleName();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return String.format("PropertyField [type=%s, name=%s, description=%s, %s]", type,
-			name, description, super.toString());
+		return String.format(
+				"PropertyField [entityType=%s, propertyType=%s, name=%s, description=%s, %s]",
+				entityType, propertyType, name, description, super.toString());
 	}
 
 	@Override
 	public int compareTo(PropertyField that) {
 		if (that == null) return -1;
 		int result;
-		result = getType().compareTo(that.getType());
+		result = getEntityType().compareTo(that.getEntityType());
+		if (result != 0) return result;
+		result = getPropertyType().compareTo(that.getPropertyType());
 		if (result != 0) return result;
 		result = getName().compareTo(that.getName());
 		if (result != 0) return result;
@@ -77,9 +74,10 @@ public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((entityType == null) ? 0 : entityType.hashCode());
+		result = prime * result + ((propertyType == null) ? 0 : propertyType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		return result;
 	}
 
@@ -95,9 +93,12 @@ public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
 		if (name == null) {
 			if (other.name != null) return false;
 		} else if (!name.equals(other.name)) return false;
-		if (type == null) {
-			if (other.type != null) return false;
-		} else if (!type.equals(other.type)) return false;
+		if (entityType == null) {
+			if (other.entityType != null) return false;
+		} else if (!entityType.equals(other.entityType)) return false;
+		if (propertyType == null) {
+			if (other.propertyType != null) return false;
+		} else if (!propertyType.equals(other.propertyType)) return false;
 		return true;
 	}
 
@@ -118,12 +119,20 @@ public class PropertyField extends AbstractPersonifiedEntity<PropertyField>
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
+	public String getEntityType() {
+		return entityType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setEntityType(String type) {
+		this.entityType = type;
+	}
+
+	public String getPropertyType() {
+		return propertyType;
+	}
+
+	public void setPropertyType(String propertyType) {
+		this.propertyType = propertyType;
 	}
 
 }
