@@ -34,4 +34,9 @@ public class DateProperty extends AbstractProperty<DateProperty, Date> implement
 		return DateProperty.class;
 	}
 
+	@Override
+	public Class<Date> getValueClass() {
+		return Date.class;
+	}
+
 }

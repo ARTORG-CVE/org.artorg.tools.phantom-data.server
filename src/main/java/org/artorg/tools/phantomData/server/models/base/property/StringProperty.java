@@ -32,5 +32,10 @@ public class StringProperty extends AbstractProperty<StringProperty,String> impl
 	public Class<StringProperty> getItemClass() {
 		return StringProperty.class;
 	}
+
+	@Override
+	public Class<String> getValueClass() {
+		return String.class;
+	}
 	
 }

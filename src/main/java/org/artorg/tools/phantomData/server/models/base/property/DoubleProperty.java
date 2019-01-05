@@ -32,5 +32,10 @@ public class DoubleProperty extends AbstractProperty<DoubleProperty, Double> imp
 	public Class<DoubleProperty> getItemClass() {
 		return DoubleProperty.class;
 	}
+
+	@Override
+	public Class<Double> getValueClass() {
+		return Double.class;
+	}
 	
 }

@@ -36,6 +36,9 @@ public class Person
 	
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+	
+	@Column(name = "ACTIVE", nullable = false)
+	private boolean active = true;
 
 	@OneToOne
 	private Gender gender;	
@@ -109,14 +112,16 @@ public class Person
 
 	@Override
 	public String toString() {
-		return String.format("Person [academicTitle=%s, firstname=%s, lastname=%s, gender=%s]",
-				academicTitle, firstname, lastname, gender);
+		return String.format("Person [academicTitle=%s, firstname=%s, lastname=%s, active=%b, gender=%s]",
+				academicTitle, firstname, lastname, active, gender);
 	}
 
 	@Override
 	public int compareTo(Person that) {
 		if (that == null) return -1;
 		int result;
+		result = Boolean.compare(isActive(),that.isActive());
+		if (result != 0) return result;
 		result = getLastname().compareTo(that.getLastname());
 		if (result != 0) return result;
 		result = getFirstname().compareTo(that.getFirstname());
@@ -131,6 +136,7 @@ public class Person
 		if (this == obj) return true;
 		if (!(obj instanceof Person)) return false;
 		Person other = (Person) obj;
+		if (active != other.active) return false;
 		if (academicTitle == null) {
 			if (other.academicTitle != null) return false;
 		} else if (!academicTitle.equals(other.academicTitle)) return false;
@@ -193,6 +199,14 @@ public class Person
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

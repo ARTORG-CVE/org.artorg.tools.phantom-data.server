@@ -32,5 +32,10 @@ public class IntegerProperty extends AbstractProperty<IntegerProperty, Integer> 
 	public Class<IntegerProperty> getItemClass() {
 		return IntegerProperty.class;
 	}
+
+	@Override
+	public Class<Integer> getValueClass() {
+		return Integer.class;
+	}
 	
 }

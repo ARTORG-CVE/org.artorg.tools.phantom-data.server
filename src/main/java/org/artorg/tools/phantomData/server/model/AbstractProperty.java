@@ -29,6 +29,8 @@ public abstract class AbstractProperty<T, R> extends AbstractPersonifiedEntity<T
 	public abstract String toString(R value);
 
 	public abstract R fromStringToValue(String s);
+	
+	public abstract Class<R> getValueClass();
 
 	public AbstractProperty() {}
 

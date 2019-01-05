@@ -32,5 +32,10 @@ public class BooleanProperty extends AbstractProperty<BooleanProperty, Boolean> 
 	public Class<BooleanProperty> getItemClass() {
 		return BooleanProperty.class;
 	}
+
+	@Override
+	public Class<Boolean> getValueClass() {
+		return Boolean.class;
+	}
 	
 }
