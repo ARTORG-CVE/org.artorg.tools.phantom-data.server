@@ -53,9 +53,7 @@ public class DesktopFxBootServer extends Application {
 		stage.setTitle("Phantom Database");
 		FxUtil.addMouseMovingSupport(stage, parent);
 		stage.setResizable(false);
-		stage.show();
-		stage.requestFocus();
-		stage.toFront();
+
 
 		FxUtil.addMouseMovingSupport(stage, parent);
 	}

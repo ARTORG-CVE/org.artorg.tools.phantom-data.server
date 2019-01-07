@@ -94,7 +94,11 @@ public class FxStartupProgressController extends StartupProgressFrame {
 
 	@Override
 	public void setVisible(boolean b) {
-		if (b) stage.show();
+		if (b) {
+			stage.show();
+			stage.requestFocus();
+			stage.toFront();
+		}
 		else
 			stage.hide();
 	}
