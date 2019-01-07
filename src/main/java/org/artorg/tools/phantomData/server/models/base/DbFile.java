@@ -36,11 +36,10 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 
 	public DbFile() {}
 
-	public DbFile(File srcFile, String name, String extension) {
-		setName(name);
-		setExtension(extension);
-
-		putFile(srcFile);
+	public DbFile(File srcFile) {
+		String[] splits = splitOffFileExtension(srcFile.getName());
+		setName(splits[0]);
+		setExtension(splits[1]);
 	}
 
 	public void putFile(File srcFile) {
