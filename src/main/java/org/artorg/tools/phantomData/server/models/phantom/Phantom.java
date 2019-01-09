@@ -29,7 +29,7 @@ public class Phantom extends AbstractPropertifiedEntity<Phantom>
 		implements Comparable<Phantom>, Serializable, DbPersistentUUID<Phantom> {
 	private static final long serialVersionUID = -8429092809434766392L;
 
-	@Column(name = "PRODUCT_ID", nullable = false)
+	@Column(name = "PRODUCT_ID", unique = true, nullable = false)
 	private String productId;
 
 	@ManyToOne

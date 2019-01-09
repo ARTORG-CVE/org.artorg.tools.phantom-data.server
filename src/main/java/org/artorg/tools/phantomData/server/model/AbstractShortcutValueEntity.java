@@ -18,7 +18,7 @@ public abstract class AbstractShortcutValueEntity<
 	implements DbPersistentUUID<ITEM> {
 	private static final long serialVersionUID = -628994366624557217L;
 
-	@Column(name = "SHORTCUT", unique = true, nullable = false)
+	@Column(name = "SHORTCUT", nullable = false)
 	private U shortcut;
 
 	@Column(name = "VALUE", nullable = false)

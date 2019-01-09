@@ -71,7 +71,7 @@ public class DbFile extends AbstractPersonifiedEntity<DbFile> implements DbPersi
 
 	@Override
 	public String toName() {
-		return name;
+		return name +"." +extension;
 	}
 
 	@Override

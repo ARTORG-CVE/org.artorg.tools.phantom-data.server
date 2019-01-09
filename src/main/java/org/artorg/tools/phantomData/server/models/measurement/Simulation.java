@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -45,12 +44,7 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 	@JoinColumn(nullable = false)
 	@NotNull
 	private Project project;
-
-	@OneToOne
-	@JoinColumn(nullable = true)
-	@NotNull
-	private DbFile protocolFile;
-
+	
 	@ManyToMany
 	private List<DbFile> files = new ArrayList<>();
 
@@ -63,11 +57,10 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 
 	public Simulation() {}
 
-	public Simulation(Date startDate, Person person, Project project, DbFile protocolFile) {
+	public Simulation(Date startDate, Person person, Project project) {
 		this.startDate = startDate;
 		this.person = person;
 		this.project = project;
-		this.protocolFile = protocolFile;
 	}
 
 	@Override
@@ -85,8 +78,8 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 	@Override
 	public String toString() {
 		return String.format(
-				"Simulation [startDate=%s, person=%s, project=%s, protocolFile=%s, files=%s, notes=%s, %s]",
-				startDate, person, project, protocolFile, files, notes,
+				"Simulation [startDate=%s, person=%s, project=%s, files=%s, notes=%s, %s]",
+				startDate, person, project, files, notes,
 				super.toString());
 	}
 
@@ -99,8 +92,6 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 		result = person.compareTo(that.person);
 		if (result != 0) return result;
 		result = project.compareTo(that.project);
-		if (result != 0) return result;
-		result = protocolFile.compareTo(that.protocolFile);
 		if (result != 0) return result;
 		result = EntityUtils.compare(files, that.files);
 		if (result != 0) return result;
@@ -118,7 +109,6 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 		if (!EntityUtils.equals(startDate, other.startDate)) return false;
 		if (!EntityUtils.equals(person, other.person)) return false;
 		if (!EntityUtils.equals(project, other.project)) return false;
-		if (!EntityUtils.equals(protocolFile, other.protocolFile)) return false;
 		if (!EntityUtils.equals(files, other.files)) return false;
 		if (!EntityUtils.equals(notes, other.notes)) return false;
 		return true;
@@ -147,14 +137,6 @@ public class Simulation extends AbstractPropertifiedEntity<Simulation>
 
 	public void setProject(Project project) {
 		this.project = project;
-	}
-
-	public DbFile getProtocolFile() {
-		return protocolFile;
-	}
-
-	public void setProtocolFile(DbFile protocolFile) {
-		this.protocolFile = protocolFile;
 	}
 
 	public List<DbFile> getFiles() {
