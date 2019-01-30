@@ -6,8 +6,17 @@ import java.util.regex.Pattern;
 
 import huma.io.ConsoleDiverter;
 
+/**
+ * Base class for booting with startup and console frame. Implement
+ * {@code uncatchedBott} and call {@code catchedBoot} for starting.
+ */
 public abstract class Booter {
-	private static final Pattern runnableJarPattern = Pattern.compile("jar:file:/(.*)[\\u002e]jar");
+	/**
+	 * Simple pattern for proof whether the application is started from a jar. Does
+	 * not work if the application is wrapped in an executable.
+	 */
+	private static final Pattern runnableJarPattern = Pattern
+			.compile("jar:file:/(.*)[\\u002e]jar");
 	private ConsoleDiverter consoleDiverter;
 	private ConsoleFrame consoleFrame;
 	private StartupProgressFrame startupFrame;
@@ -20,28 +29,49 @@ public abstract class Booter {
 		errorOccured = false;
 	}
 	
+	/**
+	 * Main boot method. It's called from {@code catchedBoot}. Call catchedBoot with
+	 * command line arguments for starting successful.
+	 * 
+	 * @param args Command line arguments
+	 * @see catchedBoot
+	 */
 	protected abstract void uncatchedBoot(String[] args);
 	
-	public boolean isWindowsOs() {
+	/**
+	 * @return {@code true} if the application is running on a windows machine
+	 */
+	public final boolean isWindowsOs() {
 		return System.getProperty("os.name").matches("(?i).*windows.*");
 	}
 	
-	public boolean isLinuxOs() {
+	/**
+	 * @return {@code true} if the application is running on a linux machine
+	 */
+	public final boolean isLinuxOs() {
 		return System.getProperty("os.name").matches("(?i).*linux.*");
 	}
 	
-	public boolean isMacOs() {
+	/**
+	 * @return {@code true} if the application is running on a macintosh machine
+	 */
+	public final boolean isMacOs() {
 		return System.getProperty("os.name").matches("(?i).*mac.*");
 	}
 	
-	public void catchedBoot(String[] args) {
+	/**
+	 * Starts the booting process and handles exceptions with the console frame.
+	 * @param args Command line arguments
+	 */
+	public final void catchedBoot(String[] args) {
 		try {
 			uncatchedBoot(args);
 		} catch (Exception e) {
 			handleException(e);
 		}
 		if (!getConsoleFrame().isErrorOccured() && !isErrorOccured()
-			&& !isDebugConsoleMode()) getConsoleFrame().setVisible(false);
+				&& !isDebugConsoleMode())
+			getConsoleFrame().setVisible(false);
 		else getConsoleFrame().setVisible(true);
 	}
 	
@@ -54,7 +84,8 @@ public abstract class Booter {
 	
 	public boolean isRunnableJarExecution() {
 		try {
-			String uriPath = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
+			String uriPath = getBootApplicationClass().getProtectionDomain()
+					.getCodeSource().getLocation().toURI().toString();
 			if (uriPath.contains(".jar")) {
 				Matcher m = runnableJarPattern.matcher(uriPath);
 				return m.find();
@@ -67,14 +98,13 @@ public abstract class Booter {
 	
 	public File getRunnableJarExecutionDirectory() {
 		try {
-			String path = getBootApplicationClass().getProtectionDomain().getCodeSource().getLocation().toURI().toString();
+			String path = getBootApplicationClass().getProtectionDomain().getCodeSource()
+					.getLocation().toURI().toString();
 			Pattern pattern = Pattern.compile("jar:file:(.*)");
 			Matcher m = pattern.matcher(path);
 			File file;
-			if(m.find())
-				file = new File(m.group(1));
-			else 
-				throw new IllegalArgumentException();
+			if (m.find()) file = new File(m.group(1));
+			else throw new IllegalArgumentException();
 			
 			while (file.getPath().contains(".jar"))
 				file = file.getParentFile();
@@ -89,26 +119,22 @@ public abstract class Booter {
 	
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		this.consoleDiverter = consoleDiverter;
-		if (consoleFrame != null)
-			consoleFrame.setConsoleDiverter(consoleDiverter);
-		if (startupFrame != null)
-			startupFrame.setConsoleDiverter(consoleDiverter);
+		if (consoleFrame != null) consoleFrame.setConsoleDiverter(consoleDiverter);
+		if (startupFrame != null) startupFrame.setConsoleDiverter(consoleDiverter);
 	}
-
+	
 	public void setConsoleFrame(ConsoleFrame consoleFrame) {
 		this.consoleFrame = consoleFrame;
-		if (consoleDiverter != null)
-			consoleFrame.setConsoleDiverter(consoleDiverter);
+		if (consoleDiverter != null) consoleFrame.setConsoleDiverter(consoleDiverter);
 	}
-
+	
 	public StartupProgressFrame getStartupFrame() {
 		return startupFrame;
 	}
-
+	
 	public void setStartupFrame(StartupProgressFrame startupFrame) {
 		this.startupFrame = startupFrame;
-		if (startupFrame != null)
-			startupFrame.setConsoleDiverter(consoleDiverter);
+		if (startupFrame != null) startupFrame.setConsoleDiverter(consoleDiverter);
 	}
 	
 	public boolean isErrorOccured() {
@@ -146,7 +172,7 @@ public abstract class Booter {
 	public boolean isDebugConsoleMode() {
 		return debugConsoleMode;
 	}
-
+	
 	public void setDebugConsoleMode(boolean debugConsoleMode) {
 		this.debugConsoleMode = debugConsoleMode;
 	}
