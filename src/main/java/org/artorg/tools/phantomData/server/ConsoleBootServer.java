@@ -6,11 +6,11 @@ import org.artorg.tools.phantomData.server.models.base.DbFile;
 public class ConsoleBootServer extends ServerBooter {
 
 	public static void main(String[] args) {
-		new ConsoleBootServer().uncatchedBoot(args);
+		new ConsoleBootServer().unsecuredBoot(args);
 	}
 
 	@Override
-	public void uncatchedBoot(String[] args) {
+	public void unsecuredBoot(String[] args) {
 		setBootApplicationClass(BootApplication.class);
 		setExternalConfigOverridable(false);
 

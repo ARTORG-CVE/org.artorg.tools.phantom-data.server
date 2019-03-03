@@ -41,7 +41,7 @@ public class DesktopFxBootServer extends Application {
 
 		Platform.runLater(() -> {
 			if (args == null) args = new String[] {};
-			createBooter(startupFrame).catchedBoot(args);
+			createBooter(startupFrame).securedBoot(args);
 		});
 	}
 
@@ -61,7 +61,7 @@ public class DesktopFxBootServer extends Application {
 	public static ServerBooter createBooter(StartupProgressFrame controller) {
 		return new ServerBooter() {
 			@Override
-			protected void uncatchedBoot(String[] args) {
+			protected void unsecuredBoot(String[] args) {
 				initBeforeServerStart(BootApplication.class, new FxConsoleFrame(), controller);
 				if (isDebugConsoleMode()) getConsoleFrame().setVisible(true);
 				if (!isConnected()) {

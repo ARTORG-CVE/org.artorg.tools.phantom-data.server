@@ -14,6 +14,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * An implementation of {@link StartupProgressFrame} using JavaFX.
+ */
 public class FxStartupProgressController extends StartupProgressFrame {
 	private final Stage stage;
 
@@ -80,18 +83,21 @@ public class FxStartupProgressController extends StartupProgressFrame {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		super.setConsoleDiverter(consoleDiverter);
 		consoleDiverter.addOutLineConsumer(this::updateStartupProgress);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void setProgress(double progress) {
 		super.setProgress(progress);
 		progressBar.setProgress(progress);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void setVisible(boolean b) {
 		if (b) {
@@ -103,16 +109,19 @@ public class FxStartupProgressController extends StartupProgressFrame {
 			stage.hide();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void dispose() {
 		stage.hide();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void setTitle(String title) {
 		stage.setTitle(title);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Object getGraphic() {
 		return stage;

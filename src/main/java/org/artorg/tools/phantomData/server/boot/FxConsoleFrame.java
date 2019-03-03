@@ -29,6 +29,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * An implementation of {@link ConsoleFrame} using JavaFX.
+ */
 public class FxConsoleFrame implements ConsoleFrame {
 	private ConsoleDiverter consoleDiverter;
 	private boolean errorOccured;
@@ -95,11 +98,7 @@ public class FxConsoleFrame implements ConsoleFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
-		
-		
+		}	
 	}
 	
 	private void updateTextArea(BiConsumer<TextFlow, String> textWriter, String newLine) {
@@ -124,32 +123,38 @@ public class FxConsoleFrame implements ConsoleFrame {
 		});
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setVisible(boolean visible) {
 		if (visible) stage.show();
 		else stage.hide();
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setTitle(String title) {
 		stage.setTitle(title);
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public Object getGraphic() {
 		return stage;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public boolean isErrorOccured() {
 		return this.errorOccured;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setErrorOccured(boolean b) {
 		this.errorOccured = b;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public void setConsoleDiverter(ConsoleDiverter consoleDiverter) {
 		this.consoleDiverter = consoleDiverter;
@@ -160,6 +165,7 @@ public class FxConsoleFrame implements ConsoleFrame {
 				(consoleLines, newLine) -> setErrorOccured(true)));
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public ConsoleDiverter getConsoleDiverter() {
 		return this.consoleDiverter;
