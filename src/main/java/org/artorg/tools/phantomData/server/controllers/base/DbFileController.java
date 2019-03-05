@@ -1,6 +1,8 @@
 package org.artorg.tools.phantomData.server.controllers.base;
 
-import org.artorg.tools.phantomData.server.controller.ControllerSpecDefault;
+import java.util.UUID;
+
+import org.artorg.tools.phantomData.server.controller.ControllerSpec;
 import org.artorg.tools.phantomData.server.models.base.DbFile;
 import org.artorg.tools.phantomData.server.serviceSpec.IfileService;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("files")
-public class DbFileController extends ControllerSpecDefault<DbFile, IfileService<DbFile>> {
+public class DbFileController extends ControllerSpec<DbFile, UUID, IfileService<DbFile>> {
 
 	@GetMapping("get-by-name/{name}")
 	public ResponseEntity<DbFile> getByName(@PathVariable("name") String name) {

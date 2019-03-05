@@ -1,18 +1,18 @@
 package org.artorg.tools.phantomData.server.boot;
 
 import java.io.File;
+import java.util.AbstractMap.SimpleEntry;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import huma.io.IOutil;
 import huma.io.PropertiesFile;
-import huma.io.PropertyPut;
 
 /**
  * Booter with two external configuration files. Call {@link #init()} for
- * booting. The path of the two config files cannot changed by a setting. The
- * files will be searched in parentDirectory/phantomData/config. The parent
+ * booting. The path of the two configuration files cannot changed by a setting. The
+ * files will be searched in {@code parentDirectory/phantomData/config}. The parent
  * directory is the directory where the runnable *.jar file is placed.
  * 
  * <h3>application.properties</h3> Contains settings for Spring and the
@@ -69,47 +69,49 @@ public abstract class PropertiesBooter extends Booter {
 				new UnsupportedOperationException().printStackTrace();
 			}
 			
-			PropertyPut[] configPuts = new PropertyPut[] {
-					new PropertyPut("parent.directory.path", parentDirectory),
-					new PropertyPut("home.path", parentDirectory + "/phantomData"),
-					new PropertyPut("database.path", parentDirectory + "/phantomData/db"),
-					new PropertyPut("database.name.file", "h2"),
-					new PropertyPut("database.name.ext", "db"),
-					new PropertyPut("files.path", parentDirectory + "/phantomData/data"),
-					new PropertyPut("logs.path", parentDirectory + "/phantomData/logs"),
-					new PropertyPut("localhost.url", "http://localhost:" + "8183"),
-					new PropertyPut("shutdown.actuator.url",
+			@SuppressWarnings("unchecked")
+			SimpleEntry<String,String>[] configPuts = new SimpleEntry[] {
+					new SimpleEntry<>("parent.directory.path", parentDirectory),
+					new SimpleEntry<>("home.path", parentDirectory + "/phantomData"),
+					new SimpleEntry<>("database.path", parentDirectory + "/phantomData/db"),
+					new SimpleEntry<>("database.name.file", "h2"),
+					new SimpleEntry<>("database.name.ext", "db"),
+					new SimpleEntry<>("files.path", parentDirectory + "/phantomData/data"),
+					new SimpleEntry<>("logs.path", parentDirectory + "/phantomData/logs"),
+					new SimpleEntry<>("localhost.url", "http://localhost:" + "8183"),
+					new SimpleEntry<>("shutdown.actuator.url",
 							"http://localhost:" + "8183" + "/actuator/shutdown"),
-					new PropertyPut("debug.console.mode", "false") };
+					new SimpleEntry<>("debug.console.mode", "false") };
 			configFile = new PropertiesFile(getConfigPath() + "/config.properties",
 					configPuts, externalConfigOverridable);
 			
-			PropertyPut[] applicationPuts = new PropertyPut[] {
-					new PropertyPut("spring.datasource.hikari.connection-timeout",
+			@SuppressWarnings("unchecked")
+			SimpleEntry<String,String>[] applicationPuts = new SimpleEntry[] {
+					new SimpleEntry<>("spring.datasource.hikari.connection-timeout",
 							"20000"),
-					new PropertyPut("spring.jpa.properties.hibernate.dialect",
+					new SimpleEntry<>("spring.jpa.properties.hibernate.dialect",
 							"org.hibernate.dialect.MySQL5Dialect"),
-					new PropertyPut("spring.datasource.url",
+					new SimpleEntry<>("spring.datasource.url",
 							"jdbc:h2:" + parentDirectory
 									+ "/phantomData/db/h2;AUTO_SERVER=TRUE"),
-					new PropertyPut("endpoints.shutdown.sensitive", "false"),
-					new PropertyPut("spring.datasource.password", "1234"),
-					new PropertyPut("spring.jpa.properties.hibernate.format_sql", "true"),
-					new PropertyPut("management.endpoint.shutdown.enabled", "true"),
-					new PropertyPut("spring.h2.console.enabled", "true"),
-					new PropertyPut("management.endpoints.web.exposure.include", "*"),
-					new PropertyPut("spring.datasource.username", "admin"),
-					new PropertyPut(
+					new SimpleEntry<>("endpoints.shutdown.sensitive", "false"),
+					new SimpleEntry<>("spring.datasource.password", "1234"),
+					new SimpleEntry<>("spring.jpa.properties.hibernate.format_sql", "true"),
+					new SimpleEntry<>("management.endpoint.shutdown.enabled", "true"),
+					new SimpleEntry<>("spring.h2.console.enabled", "true"),
+					new SimpleEntry<>("management.endpoints.web.exposure.include", "*"),
+					new SimpleEntry<>("spring.datasource.username", "admin"),
+					new SimpleEntry<>(
 							"spring.jpa.properties.hibernate.id.new_generator_mappings",
 							"false"),
-					new PropertyPut("endpoints.shutdown.enabled", "true"),
-					new PropertyPut("sql.driver", "org.h2.Driver"),
-					new PropertyPut("spring.datasource.hikari.maximum-pool-size", "12"),
-					new PropertyPut("server.port", "8183"),
-					new PropertyPut("spring.jpa.hibernate.ddl-auto", "update"),
-					new PropertyPut("spring.datasource.hikari.max-lifetime", "1200000"),
-					new PropertyPut("spring.datasource.hikari.minimum-idle", "5"),
-					new PropertyPut("spring.datasource.hikari.idle-timeout", "300000") };
+					new SimpleEntry<>("endpoints.shutdown.enabled", "true"),
+					new SimpleEntry<>("sql.driver", "org.h2.Driver"),
+					new SimpleEntry<>("spring.datasource.hikari.maximum-pool-size", "12"),
+					new SimpleEntry<>("server.port", "8183"),
+					new SimpleEntry<>("spring.jpa.hibernate.ddl-auto", "update"),
+					new SimpleEntry<>("spring.datasource.hikari.max-lifetime", "1200000"),
+					new SimpleEntry<>("spring.datasource.hikari.minimum-idle", "5"),
+					new SimpleEntry<>("spring.datasource.hikari.idle-timeout", "300000") };
 			applicationFile = new PropertiesFile(
 					getConfigPath() + "/application.properties", applicationPuts,
 					externalConfigOverridable);
@@ -149,7 +151,7 @@ public abstract class PropertiesBooter extends Booter {
 	}
 	
 	/**
-	 * @return Directory of the config files.
+	 * @return Directory of the configuration files.
 	 */
 	public String getConfigPath() {
 		return configPath;

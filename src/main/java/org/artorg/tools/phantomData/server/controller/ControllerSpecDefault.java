@@ -5,7 +5,12 @@ import java.util.UUID;
 import org.artorg.tools.phantomData.server.model.Identifiable;
 import org.artorg.tools.phantomData.server.service.IServiceDefault;
 
-public abstract class ControllerSpecDefault<T extends Identifiable<UUID>,
-	I_SERVICE_TYPE extends IServiceDefault<T>>
-	extends ControllerSpec<T, UUID, I_SERVICE_TYPE> {
-}
+/**
+ * Simplifies implementations of controller classes for this server application.
+ * Default means, that it is especially for this project. Default in other
+ * project can be different.
+ * 
+ * @param <T> Entity type
+ */
+public abstract class ControllerSpecDefault<T extends Identifiable<UUID>>
+		extends ControllerSpec<T, UUID, IServiceDefault<T>> {}

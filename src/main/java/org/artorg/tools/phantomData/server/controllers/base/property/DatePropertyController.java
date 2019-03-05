@@ -1,6 +1,8 @@
 package org.artorg.tools.phantomData.server.controllers.base.property;
 
-import org.artorg.tools.phantomData.server.controller.ControllerSpecDefault;
+import java.util.UUID;
+
+import org.artorg.tools.phantomData.server.controller.ControllerSpec;
 import org.artorg.tools.phantomData.server.models.base.property.DateProperty;
 import org.artorg.tools.phantomData.server.models.base.property.PropertyField;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IdatePropertyService;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("date-properties")
-public class DatePropertyController extends ControllerSpecDefault<DateProperty, IdatePropertyService<DateProperty>> {
+public class DatePropertyController extends ControllerSpec<DateProperty, UUID, IdatePropertyService<DateProperty>> {
 
 	@GetMapping("get-by-property-field/{property-field}")
 	public ResponseEntity<DateProperty> getByPropertyField(

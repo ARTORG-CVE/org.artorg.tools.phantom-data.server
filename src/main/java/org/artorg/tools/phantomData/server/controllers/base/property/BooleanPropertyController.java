@@ -1,6 +1,8 @@
 package org.artorg.tools.phantomData.server.controllers.base.property;
 
-import org.artorg.tools.phantomData.server.controller.ControllerSpecDefault;
+import java.util.UUID;
+
+import org.artorg.tools.phantomData.server.controller.ControllerSpec;
 import org.artorg.tools.phantomData.server.models.base.property.BooleanProperty;
 import org.artorg.tools.phantomData.server.models.base.property.PropertyField;
 import org.artorg.tools.phantomData.server.serviceSpec.base.property.IbooleanPropertyService;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("boolean-properties")
 public class BooleanPropertyController
-		extends ControllerSpecDefault<BooleanProperty, IbooleanPropertyService<BooleanProperty>> {
+		extends ControllerSpec<BooleanProperty, UUID, IbooleanPropertyService<BooleanProperty>> {
 
 	@GetMapping("get-by-property-field/{property-field}")
 	public ResponseEntity<BooleanProperty> getByPropertyField(
